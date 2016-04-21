@@ -5,7 +5,7 @@ $('ul').on('click', 'li div.card section.card-header a.fullscr', function(){
     chart_id = $(li).attr('id');
     options = chartOpts[chart_id].getOption();
     console.log(options);
-    chart = echartObj.init(document.getElementById('modalchart'),'macarons');
+    chart = echartObj.init(document.getElementById('modalchart'));
     chart.setOption(options);
 })
 

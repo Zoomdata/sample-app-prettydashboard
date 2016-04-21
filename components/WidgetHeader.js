@@ -7,12 +7,6 @@ class WidgetHeader extends React.Component{
         super(props, context)
     }
 
-  closeWidget(){
-      this.props.dispatch(closeWidget(this.props.id));
-      console.log(this.props.id)
-      console.log(this.props.dispatch)
-  }
-
   setFullScreen(){
     //this.props.dispatch(setChart());
     console.log('Setting full screen');
@@ -48,7 +42,6 @@ class WidgetHeader extends React.Component{
                         className="del tooltipped"
                         data-position="bottom"
                         data-delay="50"
-                        onClick={this.closeWidget.bind(this)}
                         data-tooltip="Delete">
                             <i className="material-icons md-light">close</i></a>
                   </section>

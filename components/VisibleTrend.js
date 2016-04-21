@@ -79,16 +79,10 @@ class VisibleTrend extends React.Component{
     render(){
         var height = 350;
         var width = 610;
-        var theme = this.props.theme;
-        if(this.props.zoom !== ''){
-            height = 600;
-            width = 1000;
-            theme = '';
-        }
         return(
             //jsx code
                 <div className="trend">
-                    {loadTrend(this.props.data, width, height, this.props.onClick, this.props.type, theme)}
+                    {loadTrend(this.props.data, width, height, this.props.onClick, this.props.type, this.props.theme)}
                 </div>
               )
     }

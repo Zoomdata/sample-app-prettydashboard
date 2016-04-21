@@ -4,14 +4,11 @@ import VisibleTrend  from './VisibleTrend';
 
 class ZoomWidget extends React.Component{
 
-    componentDidMount(){
-        console.log('To zoom '+this.props.zoom);
-    }
-
       closeFullScreen(){
         this.props.dispatch(setChart('#'));
         console.log('Setting full screen');
       }
+
 
     getChart(type) {
         type='TREND';
@@ -55,15 +52,15 @@ class ZoomWidget extends React.Component{
                           <br/>
                         <div className="input-field" style={styles.input}>
                             <input id="filter1" type="text" className="validate"/>
-                          <label for="filter1">Filter 1</label>
+                          <label>Filter 1</label>
                         </div>
                         <div className="input-field" style={styles.input}>
                             <input id="filter2" type="text" className="validate"/>
-                          <label for="filter2">Filter 2</label>
+                          <label>Filter 2</label>
                         </div>
                       </div>
                       <div className="col s10" style={styles.cols10} >
-                          {this.getChart(this.props.zoom)}
+                            <div id="modalchart" style={{height: 550}}></div>
                        </div>
                        <div align="right" style={styles.right}>
                            <a href="#!" 
@@ -76,4 +73,5 @@ class ZoomWidget extends React.Component{
               )
     }
 }
+//{this.getChart(this.props.zoom)}
 export default ZoomWidget
