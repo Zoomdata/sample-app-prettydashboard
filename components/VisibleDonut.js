@@ -26,9 +26,9 @@ const mapStateToProps = (state) => {
     }
 };
 
-const loadDonut = (data, onClick) => {
+const loadDonut = (data, onClick,type) => {
   var height = 410;
-  var width = 350;
+  var width = 620;
   if (!data) {
     return (
         <div className="loading">
@@ -47,14 +47,14 @@ const loadDonut = (data, onClick) => {
     );
   } else {
     return (
-        <div style={{margin:'auto', width:'80%', paddingLeft:'30px'}}>
           <Donut 
             items={data}
             width={width}
             height={height}
             onClick={onClick}
+            type={type}
+            charopts={chartOpts}
           />
-        </div>
     );
   }
 }
@@ -68,7 +68,7 @@ class VisibleDonut extends React.Component{
     render(){
         return(
                 <div>
-                  {loadDonut(this.props.data, this.props.onClick)}
+                  {loadDonut(this.props.data, this.props.onClick, this.props.type)}
                 </div>
               )
     }

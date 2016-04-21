@@ -1,5 +1,4 @@
 import React from 'react';
-import $ from 'jquery';
 import { closeWidget, setChart } from '../redux/actions';
 class WidgetHeader extends React.Component{
 
@@ -14,7 +13,7 @@ class WidgetHeader extends React.Component{
   }
 
   setFullScreen(){
-    this.props.dispatch(setChart(this.props.id));
+    this.props.dispatch(setChart());
     console.log('Setting full screen');
   }
 

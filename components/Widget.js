@@ -2,13 +2,24 @@ import React from 'react';
 import WidgetHeader from './WidgetHeader';
 import WidgetBody from './WidgetBody';
 import ReactDOM from 'react-dom';
+import $ from 'jquery';
+import echarts from 'echarts';
 class Widgets extends React.Component{
 
-    constructor(props, context){
-        super(props, context)
+    constructor(state, context){
+        super(state, context)
+        this.state = {
+            width:400,
+            height:400
+        }
     }
 
-    componentDidMount(){
+      componentDidMount() {
+        var elem = ReactDOM.findDOMNode(this);
+        echartObj = echarts; 
+      }
+
+    componentDidUpdate(){
         var elem = ReactDOM.findDOMNode(this);
         var data = { id:this.props.id,
                  width: elem.clientWidth,
@@ -19,7 +30,7 @@ class Widgets extends React.Component{
 
     render(){
         return (
-                  <li id={this.props.id}
+                  <li id={this.props.type}
                       key={this.props.id}
                       data-row={this.props.drow}
                       data-col={this.props.dcol}
@@ -29,8 +40,8 @@ class Widgets extends React.Component{
                           <WidgetHeader id={this.props.id}
                                         dispatch={this.props.dispatch}
                                         name = {this.props.name}/>
-                          <WidgetBody height={400} 
-                                      width={400} 
+                          <WidgetBody height={this.state.height} 
+                                      width={this.state.width} 
                                       type={this.props.type}
                                       id={this.props.id}/>
                       </div>

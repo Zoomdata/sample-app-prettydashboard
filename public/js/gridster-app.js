@@ -1,15 +1,3 @@
-$('ul').on('click', 'li div.card section.card-header a.fullscr', function(){
-  $('#modal1').openModal();
-  //Get the widget
-    li = $(this).parentsUntil('ul')[2];
-    console.log(li);
-    chart_id = $(li).children('div').children('div').children('div').attr('id');
-    options = mycharts[chart_id].getOption();
-    chart = echarts.init(document.getElementById('modalchart'));
-    chart.setOption(options);
-    console.log(chart);
-})
-
 var jwidget = function(data){
       var widget = ' <li> \
                 <div class="card card-panel dark-grey">\
@@ -43,16 +31,23 @@ var colors = {
   };
 
 function resizeChart(widget){
-    chart_id = widget.children('div').children('div').children('div').attr('id');
-    elem = $('#'+chart_id);
+    chart_id = widget.attr('id');
+    elem = $('div#'+chart_id);
     console.log(elem);
     li = widget[0];
-    elem.height(li.offsetHeight);
+    //TODO: This condition is harcoded for the TREND, due to the extra-option
+    //this can be setted on the redux store.
     elem.width(li.offsetWidth);
-    chart = mycharts[chart_id];
-    options = mycharts[chart_id].getOption();
-    mycharts[chart_id] = echarts.init(document.getElementById(chart_id));
-    mycharts[chart_id].setOption(options);
+    elem.height(li.offsetHeight);
+    if(chart_id == 'TREND')
+        elem.width(li.offsetWidth - 10);
+        elem.height(li.offsetHeight - 60);
+    chart = chartOpts[chart_id];
+    console.log(chart);
+    options = chartOpts[chart_id].getOption();
+    console.log(chartOpts.theme);
+    chartOpts[chart_id] = echartObj.init(elem[0],chartOpts.theme);
+    chartOpts[chart_id].setOption(options);
 }
 
 $(function(){
@@ -66,11 +61,10 @@ $(function(){
      resize: {
             enabled: true,
             resize: function(e, ui, $widget) {
-            //    resizeChart($widget);
-                console.log('');
+                resizeChart($widget);
             },
             stop: function(e, ui, $widget) {
-            //    resizeChart($widget);
+                resizeChart($widget);
             }
           }
     }).data('gridster');
@@ -79,9 +73,3 @@ function rand() {
     return Math.floor(1 + Math.random() * 6)
 }
 
-$('ul').on('click', 'li div.card section.card-header a.del', function(){
-    console.log('asdadas');
-    var elem = $(this).parentsUntil('ul')[2];
-    console.log(elem);
-    gridster.remove_widget(elem);
-})

@@ -9,7 +9,7 @@ import { FilterStatuses } from '../redux/actions'
 export default class KPIs extends Component {
 
     getData(){
-        var kpi = this.props.kpi;
+        var kpi = this.props.type;
         var items;
         if (!this.props.items) {
             items = [];
@@ -55,11 +55,6 @@ export default class KPIs extends Component {
     }
 
     createChart() {
-        // Initialize after dom ready
-        //var domElement = ReactDOM.findDOMNode(this);
-        //if(this.props.skin === 'dark')
-            //this.chart = echarts.init(domElement,dark());
-        //else{ this.chart = echarts.init(domElement) }
         this.updateChart(this.props);
     }
 
@@ -77,15 +72,16 @@ export default class KPIs extends Component {
         else{ this.chart = echarts.init(domElement) }
         var newChartOptions = this.makeChartOptions(nextProps);
         this.chart.setOption(newChartOptions);
+        this.props.charopts[this.props.type] = this.chart;
         this.chart.on('CLICK', nextProps.onClick);
     }
 
     makeChartOptions(nextProps) {
         var colors = {
-            'KPI-PORTFOLIO': '#7E7EFD', //blue
-            'KPI-OS': '#80D280', //green
-            'KPI-DEFAULT-PROPENSITY': '#FFFF7D', //yellow
-            'KPI-DELINQUENCY-RECENCY': '#FF6C5E', //red
+            'KPIPORTFOLIO': '#7E7EFD', //blue
+            'KPIOS': '#80D280', //green
+            'KPIDEFAULTPROPENSITY': '#FFFF7D', //yellow
+            'KPIDELINQUENCYRECENCY': '#FF6C5E', //red
         }
         var value = parseFloat(Math.round(this.getData() * 100) / 100).toFixed(2);
         var labelTop = {
@@ -105,7 +101,7 @@ export default class KPIs extends Component {
         };
         var labelFromatter = {
             normal : {
-                color: colors[this.props.kpi],
+                color: colors[this.props.type],
                 label : {
                     formatter : function (params){
                         return parseFloat(Math.round((100 - params.value) * 100) / 100).toFixed(2) + '%';
@@ -175,6 +171,6 @@ export default class KPIs extends Component {
 
 
     render() {
-        return(<div style={{height: 200, width: 200}} />)
+        return(<div id={this.props.type} style={{height: 200, width: 200}} />)
 	}
 }

@@ -11,7 +11,7 @@ var kpisBlockStyle = {
 
 class VisibleKPIs extends React.Component{
 
-    loadKPIs(data, totals, filters, kpi){
+    loadKPIs(data, totals, filters, type){
       if (totals == undefined) {
         return (
             <div className="loading">
@@ -34,7 +34,8 @@ class VisibleKPIs extends React.Component{
                   items={data}
                   totals={totals}
                   filters={filters}
-                  kpi={kpi}
+                  charopts={chartOpts}
+                  type={type}
                 />
         );
       }
@@ -43,7 +44,7 @@ class VisibleKPIs extends React.Component{
     render(){
         return(
                 <div style={kpisBlockStyle}>
-                  {this.loadKPIs(this.props.data, this.props.totals, this.props.filters, this.props.kpi)}
+                  {this.loadKPIs(this.props.data, this.props.totals, this.props.filters, this.props.type)}
                 </div>
               )
     }

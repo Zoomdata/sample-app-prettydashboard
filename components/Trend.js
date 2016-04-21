@@ -27,11 +27,11 @@ export default class Trend extends Component {
         //Delete the previous chart
         if(this.chart !== undefined)
             this.chart.dispose();
-        if(this.props.skin === 'dark')
-            this.chart = echarts.init(domElement,dark());
-        else{ this.chart = echarts.init(domElement) }
+        this.chart = echarts.init(domElement,this.props.theme);
         var newChartOptions = this.makeChartOptions(nextProps);
         this.chart.setOption(newChartOptions);
+        this.props.charopts[this.props.type] = this.chart;
+        this.props.charopts['theme'] = this.props.theme;
         this.chart.on('CLICK', nextProps.onClick);
     }
 
@@ -137,7 +137,7 @@ export default class Trend extends Component {
 
 	render(){
 	  	return (
-			<div style={{height: this.props.height, width: this.props.width}} />
+			<div id={this.props.type} style={{height: this.props.height, width: this.props.width}} />
     	)
 	}
 

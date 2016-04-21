@@ -1,14 +1,16 @@
 //My reducers
 import { ADD_WIDGET, CLOSE_WIDGET, RESIZE_WIDGET, SET_CHART } from '../actions';
+import { dark } from '../../utils/dark-theme';
 const initialState = {
   zoom: '',
+  theme: dark(),
   widgets:[
       { id: 0, name: 'TREND CHART', type:'TREND', drow: 2, dcol: 1, dsizex: 3, dsizey: 2 },
       { id: 1, name: 'LOANS BY GRADE', type:'DONUT', drow: 1, dcol: 4, dsizex: 3, dsizey: 2 },
-      { id: 2, name: 'PORTFOLIO', type:'KPI-PORTFOLIO', drow: 1, dcol: 1, dsizex: 1, dsizey: 1},
-      { id: 3, name: 'O/S', type:'KPI-OS', drow: 1, dcol: 2, dsizex: 1, dsizey: 1},
-      { id: 4, name: 'DELINQ. RECENCY', type:'KPI-DELINQUENCY-RECENCY', drow: 1, dcol: 3, dsizex: 1, dsizey: 1},
-      { id: 5, name: 'DEF PROPENSITY', type:'KPI-DEFAULT-PROPENSITY', drow: 3, dcol: 4, dsizex: 1, dsizey: 1}
+      { id: 2, name: 'PORTFOLIO', type:'KPIPORTFOLIO', drow: 1, dcol: 1, dsizex: 1, dsizey: 1},
+      { id: 3, name: 'O/S', type:'KPIOS', drow: 1, dcol: 2, dsizex: 1, dsizey: 1},
+      { id: 4, name: 'DELINQ. RECENCY', type:'KPIDELINQUENCYRECENCY', drow: 1, dcol: 3, dsizex: 1, dsizey: 1},
+      { id: 5, name: 'DEF PROPENSITY', type:'KPIDEFAULTPROPENSITY', drow: 3, dcol: 4, dsizex: 1, dsizey: 1}
   ]
 }
 
@@ -28,6 +30,7 @@ function getType(elems,id){
 const data = (state = initialState, action) => {
     switch (action.type) {
         case SET_CHART:
+            console.log(initialState);
             return Object.assign({}, state, {zoom: getType(state.widgets, action.id)
  })
 
@@ -44,9 +47,7 @@ const data = (state = initialState, action) => {
 
         case CLOSE_WIDGET:
             return Object.assign({}, state, {
-                widgets: state.widgets.filter((w) => {
-                    return w.id !== action.id
-                })
+                widgets: state.widgets.filter((w) => { return w.id !== action.id })
             });
 
         default:

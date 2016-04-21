@@ -33,7 +33,8 @@ const mapStateToProps = (state) => {
         data: state.chartData.trendData.data,
         grades: state.chartData.gradeData.data,
         filters: state.chartFilters,
-        zoom: state.dashboard.zoom
+        zoom: state.dashboard.zoom,
+        theme: state.dashboard.theme
     }
 };
 
@@ -42,7 +43,7 @@ var controlStyle = {
   paddingTop: '20'
 };
 
-const loadTrend = (data, width, height, skin, onClick) => {
+const loadTrend = (data, width, height, onClick, type, theme) => {
   if (!data) {
     return (
         <div className="loading">
@@ -63,9 +64,11 @@ const loadTrend = (data, width, height, skin, onClick) => {
     return (
         <Trend 
           items={data}
+          type={type}
           width={width}
           height={height}
-          skin={skin}
+          theme={theme}
+          charopts={chartOpts}
           onClick={onClick}
         />
     );
@@ -75,37 +78,20 @@ const loadTrend = (data, width, height, skin, onClick) => {
 class VisibleTrend extends React.Component{
     render(){
         var height = 350;
-        var width = 600;
-        var skin = 'dark';
+        var width = 610;
+        var theme = this.props.theme;
         if(this.props.zoom !== ''){
             height = 600;
             width = 1000;
-            skin = 'light'
+            theme = '';
         }
         return(
             //jsx code
                 <div className="trend">
-                  {loadTrend(this.props.data, width, height, skin, this.props.onClick)}
+                    {loadTrend(this.props.data, width, height, this.props.onClick, this.props.type, theme)}
                 </div>
               )
     }
 }
-
-//const VisibleTrend = ({
-      //data,
-      //zoom,
-      //grades,
-      //filters,
-      //onClick,
-      //onGradeSelected,
-      //onStatusSelected,
-      //onEmpLengthSelected
-    //}) => {
-        //return (
-            //<div className="trend">
-              //{loadTrend(data, width, height, skin, onClick)}
-            //</div>
-    //)
-//};
 
 export default connect(mapStateToProps,mapDispatchToProps)(VisibleTrend);
