@@ -10,7 +10,7 @@ import App from '../components/App'
 // )
 
 module.exports = (
-    <Route path="/" component={App}>
+    <Route path="/zd-data-app-03" component={App}>
   	  <IndexRoute component={App}/>
     </Route>
 )
