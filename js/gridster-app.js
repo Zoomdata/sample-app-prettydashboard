@@ -46,7 +46,7 @@ function resizeChart(widget){
     console.log(chart);
     options = chartOpts[chart_id].getOption();
     console.log(chartOpts.theme);
-    chartOpts[chart_id] = echartObj.init(elem[0],chartOpts.theme);
+    chartOpts[chart_id] = echartObj.init(elem[0]);
     chartOpts[chart_id].setOption(options);
 }
 
