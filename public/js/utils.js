@@ -2,12 +2,11 @@ $('ul').on('click', 'li div.card section.card-header a.fullscr', function(){
   $('#modal1').openModal();
   //Get the widget
     li = $(this).parentsUntil('ul')[2];
-    console.log(li);
-    chart_id = $(li).children('div').children('div').children('div').attr('id');
-    options = mycharts[chart_id].getOption();
-    chart = echarts.init(document.getElementById('modalchart'));
+    chart_id = $(li).attr('id');
+    options = chartOpts[chart_id].getOption();
+    console.log(options);
+    chart = echartObj.init(document.getElementById('modalchart'),'macarons');
     chart.setOption(options);
-    console.log(chartOpts);
 })
 
 $('ul').on('click', 'li div.card section.card-header a.del', function(){

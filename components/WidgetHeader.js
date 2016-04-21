@@ -1,5 +1,6 @@
 import React from 'react';
 import { closeWidget, setChart } from '../redux/actions';
+import { light } from '../utils/light-theme';
 class WidgetHeader extends React.Component{
 
     constructor(props, context){
@@ -13,7 +14,7 @@ class WidgetHeader extends React.Component{
   }
 
   setFullScreen(){
-    this.props.dispatch(setChart());
+    //this.props.dispatch(setChart());
     console.log('Setting full screen');
   }
 
@@ -38,8 +39,8 @@ class WidgetHeader extends React.Component{
                     <a href="#"
                         className="tooltipped fullscr"
                         data-position="bottom"
-                        data-delay="50"
                         onClick={this.setFullScreen.bind(this)}
+                        data-delay="50"
                         data-tooltip="Full Screen">
                         <i className="material-icons md-light">open_in_new</i>
                     </a>
