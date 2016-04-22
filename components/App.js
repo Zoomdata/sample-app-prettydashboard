@@ -32,6 +32,7 @@ class Dashboard extends React.Component{
                 <AddWidgetButton dispatch={this.props.dispatch}/>
                 <ZoomWidget
                     dispatch={this.props.dispatch}
+                    name={this.props.name}
                     zoom={this.props.zoom}/>
             </div>
               );
@@ -43,6 +44,7 @@ const mapStateToProps = (state) => {
     return {
         widgets: state.dashboard.widgets,
         zoom: state.dashboard.zoom,
+        name: state.dashboard.name,
     }
 }
 

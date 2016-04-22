@@ -34,7 +34,6 @@ const mapStateToProps = (state) => {
         grades: state.chartData.gradeData.data,
         filters: state.chartFilters,
         zoom: state.dashboard.zoom,
-        theme: state.dashboard.theme
     }
 };
 
@@ -43,7 +42,7 @@ var controlStyle = {
   paddingTop: '20'
 };
 
-const loadTrend = (data, width, height, onClick, type, theme) => {
+const loadTrend = (data, width, height, onClick, type, zoom) => {
   if (!data) {
     return (
         <div className="loading">
@@ -67,7 +66,7 @@ const loadTrend = (data, width, height, onClick, type, theme) => {
           type={type}
           width={width}
           height={height}
-          theme={theme}
+          zoom={zoom}
           charopts={chartOpts}
           onClick={onClick}
         />
@@ -79,10 +78,15 @@ class VisibleTrend extends React.Component{
     render(){
         var height = 350;
         var width = 610;
+        if(this.props.zoom == 'TREND')
+            {
+                height = 550;
+                width = 1100;
+            }
         return(
             //jsx code
                 <div className="trend">
-                    {loadTrend(this.props.data, width, height, this.props.onClick, this.props.type, this.props.theme)}
+                    {loadTrend(this.props.data, width, height, this.props.onClick, this.props.type, this.props.zoom)}
                 </div>
               )
     }

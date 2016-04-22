@@ -3,6 +3,7 @@ var path = require('path');
 
 module.exports = {
   entry: './index.js',
+  watch: true,
   resolve: {
       alias: {
         "ag-grid-root" : __dirname + "/node_modules/ag-grid/dist/styles"
@@ -22,7 +23,8 @@ module.exports = {
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.optimize.UglifyJsPlugin({
         compress: {
-            warnings: false
+            warnings: false,
+            minimize: true
         }
     })
   ] : [],

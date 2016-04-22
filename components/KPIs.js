@@ -5,6 +5,8 @@ var numeral = require('numeral');
 var ReactHighcharts = require('react-highcharts');
 import echarts from 'echarts';
 import { FilterStatuses } from '../redux/actions'
+import { dark } from '../utils/dark-theme';
+import { light } from '../utils/light-theme';
 
 export default class KPIs extends Component {
 
@@ -55,6 +57,9 @@ export default class KPIs extends Component {
     }
 
     createChart() {
+	    var domElement = ReactDOM.findDOMNode(this);
+        let theme = (this.props.type.indexOf('KPI') > -1) ? light() : dark();
+        this.chart = echarts.init(domElement,theme);
         this.updateChart(this.props);
     }
 
@@ -63,18 +68,12 @@ export default class KPIs extends Component {
         if (!nextProps) {
             return null;
         }
-        var domElement = ReactDOM.findDOMNode(this);
-        //Delete the previous chart
-        if(this.chart !== undefined)
-            this.chart.dispose();
-        if(this.props.skin === 'dark')
-            this.chart = echarts.init(domElement,dark());
-        else{ this.chart = echarts.init(domElement) }
         var newChartOptions = this.makeChartOptions(nextProps);
         this.chart.setOption(newChartOptions);
         this.props.charopts[this.props.type] = this.chart;
         this.chart.on('CLICK', nextProps.onClick);
     }
+
 
     makeChartOptions(nextProps) {
         var colors = {
@@ -83,7 +82,25 @@ export default class KPIs extends Component {
             'KPIDEFAULTPROPENSITY': '#FFFF7D', //yellow
             'KPIDELINQUENCYRECENCY': '#FF6C5E', //red
         }
-        var value = parseFloat(Math.round(this.getData() * 100) / 100).toFixed(2);
+        var radius = [50, 65];
+        var center = ['50%', '50%'];
+        var color = '#656565'
+        var fsize = 20;
+        var textColor = '#FFF'
+        var name = ' '
+        if(this.props.zoom.indexOf('KPI') > -1){
+            radius = [90, 165];
+            fsize = 27;
+            color = '#777';
+            textColor = '#777';
+            name = this.props.name;
+        }
+
+        var val = parseFloat(Math.round(this.getData() * 100) / 100).toFixed(2);
+
+        //TODO: These values must be moved from here to somewhere else any moment
+
+
         var labelTop = {
             normal : {
                 label : {
@@ -91,7 +108,6 @@ export default class KPIs extends Component {
                     position : 'center',
                     formatter : '{b}',
                     textStyle: {
-                        baseline : 'bottom'
                     }
                 },
                 labelLine : {
@@ -108,16 +124,16 @@ export default class KPIs extends Component {
                     },
                     textStyle: {
                         baseline : 'middle',
-                        fontSize: 25,
+                        fontSize: fsize,
                         fontWeight: 'bold',
-                        color: '#FFF',
+                        color: textColor,
                     }
                 }
             },
         }
         var labelBottom = {
             normal : {
-                color: '#ccc',
+                color: color,
                 label : {
                     show : true,
                     position : 'center'
@@ -127,21 +143,20 @@ export default class KPIs extends Component {
                 }
             },
             emphasis: {
-                color: 'rgba(0,0,0,0)'
+                color: '#DDD'
             }
         };
-        var radius = [50, 65];
         var option = {
             series : [
                 {
                     type : 'pie',
-                    center : ['50%', '51%'],
+                    center : center,
                     radius : radius,
-                    x: '0%', // for funnel
+                    x: '10%', // for funnel
                     itemStyle : labelFromatter,
                     data : [
-                        {name:'other', value: 100 - value, itemStyle : labelBottom},
-                        {name: '', value: value ,itemStyle : labelTop}
+                        {name:'other', value: 100 - val, itemStyle : labelBottom},
+                        {name: name, value: val ,itemStyle : labelTop}
                     ]
                 }
             ]
@@ -171,6 +186,6 @@ export default class KPIs extends Component {
 
 
     render() {
-        return(<div id={this.props.type} style={{height: 200, width: 200}} />)
+        return(<div id={this.props.type} style={{height: this.props.height, width: this.props.width}} />)
 	}
 }

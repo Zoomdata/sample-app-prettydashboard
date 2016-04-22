@@ -6,15 +6,15 @@ var ecConfig=require('echarts');
 var moment = require('moment');
 var numeral = require('numeral');
 import { dark } from '../utils/dark-theme';
+import { light } from '../utils/light-theme';
 
 export default class Trend extends Component {
 
 	createChart() {
 	    // Initialize after dom ready
-		//var domElement = ReactDOM.findDOMNode(this);
-        //if(this.props.skin === 'dark')
-            //this.chart = echarts.init(domElement,dark());
-        //else{ this.chart = echarts.init(domElement) }
+        var domElement = ReactDOM.findDOMNode(this);
+        let theme = (this.props.zoom == 'TREND') ? light() : dark();
+        this.chart = echarts.init(domElement,theme);
 	    this.updateChart(this.props);
   	}
 
@@ -23,11 +23,6 @@ export default class Trend extends Component {
         if (!nextProps) {
             return null;
         }
-        var domElement = ReactDOM.findDOMNode(this);
-        //Delete the previous chart
-        if(this.chart !== undefined)
-            this.chart.dispose();
-        this.chart = echarts.init(domElement,this.props.theme);
         var newChartOptions = this.makeChartOptions(nextProps);
         this.chart.setOption(newChartOptions);
         this.props.charopts[this.props.type] = this.chart;

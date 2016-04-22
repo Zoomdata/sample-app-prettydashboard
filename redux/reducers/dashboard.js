@@ -3,6 +3,7 @@ import { ADD_WIDGET, CLOSE_WIDGET, RESIZE_WIDGET, SET_CHART } from '../actions';
 import { dark } from '../../utils/dark-theme';
 const initialState = {
   zoom: '',
+  name:'',
   theme: dark(),
   widgets:[
       { id: 0, name: 'TREND CHART', type:'TREND', drow: 2, dcol: 1, dsizex: 3, dsizey: 2 },
@@ -21,18 +22,22 @@ function getPos(elems,id){
 }
 
 function getType(elems,id){
-    if (id == '#') return '';
+    let type = '';
+    let name = '';
     elems.forEach(function (e){
-        if (e.id == id) return e.type;
+        if (e.id == id) {
+            type = e.type;
+            name = e.name;
+        }
     })
+    return [type,name];
 }
 
 const data = (state = initialState, action) => {
     switch (action.type) {
         case SET_CHART:
-            console.log(initialState);
-            return Object.assign({}, state, {zoom: getType(state.widgets, action.id)
- })
+            var res = getType(state.widgets, action.id)
+            return Object.assign({}, state, {zoom: res[0], name:res[1]})
 
         case ADD_WIDGET:
             return {widgets:[].concat(state.widgets,action.data)}

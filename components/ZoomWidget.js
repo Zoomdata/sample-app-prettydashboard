@@ -1,37 +1,37 @@
 import React from 'react';
 import { setChart } from '../redux/actions';
 import VisibleTrend  from './VisibleTrend';
+import VisibleDonut  from './VisibleDonut';
+import VisibleKPIs  from './VisibleKPIs';
 
 class ZoomWidget extends React.Component{
 
       closeFullScreen(){
         this.props.dispatch(setChart('#'));
-        console.log('Setting full screen');
       }
 
-
-    getChart(type) {
-        type='TREND';
-        switch (type) {
-            case 'KPI':
-                return (
+    getChart(id, type) {
+        if(type.indexOf('KPI') > -1)
+            { return (
                     <div>
-                        <VisibleKPIs/>
+                        <VisibleKPIs key={id} type={type}/>
                     </div>
                 )
-            case 'DONUT':
-                return (
+            }
+        else if(type === 'DONUT')
+            { return (
                     <div>
-                        <VisibleDonut/>
+                        <VisibleDonut key={id} type={type}/>
                     </div>
                 )
-            case 'TREND':
-                return (
-                    <div>
-                        <VisibleTrend />
-                    </div>
-                )
-        };
+            }
+        else if(type === 'TREND') //Trend
+            { return ( 
+                <div>
+                    <VisibleTrend key={id} type={type}/>
+                </div>
+              )
+            }
     }
 
 
@@ -60,7 +60,8 @@ class ZoomWidget extends React.Component{
                         </div>
                       </div>
                       <div className="col s10" style={styles.cols10} >
-                            <div id="modalchart" style={{height: 550}}></div>
+                        <h5>{this.props.name}</h5>
+                        {this.getChart(this.props.id, this.props.zoom)}
                        </div>
                        <div align="right" style={styles.right}>
                            <a href="#!" 
@@ -73,5 +74,4 @@ class ZoomWidget extends React.Component{
               )
     }
 }
-//{this.getChart(this.props.zoom)}
 export default ZoomWidget

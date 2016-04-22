@@ -23,12 +23,18 @@ const mapDispatchToProps = (dispatch) => {
 const mapStateToProps = (state) => {
     return {
         data: state.chartData.gradeData.data,
+        zoom: state.dashboard.zoom,
     }
 };
 
-const loadDonut = (data, onClick,type) => {
+const loadDonut = (data, onClick, type, zoom) => {
   var height = 410;
   var width = 620;
+  if(zoom == 'DONUT')
+    {
+        height = 550;
+        width = 1100;
+     }
   if (!data) {
     return (
         <div className="loading">
@@ -53,6 +59,7 @@ const loadDonut = (data, onClick,type) => {
             height={height}
             onClick={onClick}
             type={type}
+            zoom={zoom}
             charopts={chartOpts}
           />
     );
@@ -68,7 +75,7 @@ class VisibleDonut extends React.Component{
     render(){
         return(
                 <div>
-                  {loadDonut(this.props.data, this.props.onClick, this.props.type)}
+                  {loadDonut(this.props.data, this.props.onClick, this.props.type, this.props.zoom)}
                 </div>
               )
     }

@@ -1,13 +1,16 @@
 import React, { Component } from 'react';
 var ReactDOM = require('react-dom');
 var echarts = require('echarts');
+import { dark } from '../utils/dark-theme';
+import { light } from '../utils/light-theme';
 
 export default class Donut extends Component {
 
 	createChart() {
 	    // Initialize after dom ready
 	    var domElement = ReactDOM.findDOMNode(this);
-	    this.chart = echarts.init(domElement);
+        let theme = (this.props.zoom == 'DONUT') ? light() : dark();
+        this.chart = echarts.init(domElement,theme);
 	    this.updateChart(this.props);
   	}
 

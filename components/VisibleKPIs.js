@@ -11,7 +11,7 @@ var kpisBlockStyle = {
 
 class VisibleKPIs extends React.Component{
 
-    loadKPIs(data, totals, filters, type){
+    loadKPIs(data, height, width, totals, filters, type){
       if (totals == undefined) {
         return (
             <div className="loading">
@@ -35,6 +35,9 @@ class VisibleKPIs extends React.Component{
                   totals={totals}
                   filters={filters}
                   charopts={chartOpts}
+                  width={width}
+                  height={height}
+                  zoom={this.props.zoom}
                   type={type}
                 />
         );
@@ -42,9 +45,17 @@ class VisibleKPIs extends React.Component{
     }
 
     render(){
+        var height = 200;
+        var width = 200;
+        console.log(this.props.zoom);
+        if(this.props.zoom.indexOf('KPI') > -1)
+            {
+                height = 550;
+                width = 1100;
+            }
         return(
                 <div style={kpisBlockStyle}>
-                  {this.loadKPIs(this.props.data, this.props.totals, this.props.filters, this.props.type)}
+                  {this.loadKPIs(this.props.data, height, width, this.props.totals, this.props.filters, this.props.type)}
                 </div>
               )
     }
@@ -60,7 +71,8 @@ const mapStateToProps = (state) => {
     return {
         data: state.chartData.kpiData.data,
         totals: totals,
-        filters: state.chartFilters
+        filters: state.chartFilters,
+        zoom: state.dashboard.zoom,
     }
 };
 

@@ -8,28 +8,12 @@ class WidgetHeader extends React.Component{
     }
 
   setFullScreen(){
-    //this.props.dispatch(setChart());
-    console.log('Setting full screen');
+    this.props.dispatch(setChart(this.props.id));
   }
-
 
     render(){
         return ( <section className="card-header">
             <div className="chart-name">{this.props.name}</div>
-                    <a href="#"
-                        className="tooltipped"
-                        data-position="bottom"
-                        data-delay="50"
-                        data-tooltip="Filters">
-                        <i className="material-icons md-light">filter_list</i>
-                    </a>
-                    <a href="#"
-                        className="tooltipped"
-                        data-position="bottom"
-                        data-delay="50"
-                        data-tooltip="Chart Style">
-                        <i className="material-icons md-light">assessment</i>
-                    </a>
                     <a href="#"
                         className="tooltipped fullscr"
                         data-position="bottom"
