@@ -90,7 +90,7 @@ class VisibleTrend extends React.Component{
         let width = this.props.width - 20;
         if(this.props.zoom == 'TREND')
             {
-                height = 550;
+                height = 520;
                 width = 1100
             }
         return(
