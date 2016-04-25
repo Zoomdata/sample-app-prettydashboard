@@ -13,13 +13,12 @@ export default class KPIs extends Component {
     getData(){
         var kpi = this.props.type;
         var items;
+        var value = 0;
         if (!this.props.items) {
             items = [];
         } else {
             items = this.props.items;
         }
-
-        console.log(items);
 
         var totals;
         if (!this.props.totals) {
@@ -40,22 +39,23 @@ export default class KPIs extends Component {
         if (itemGroup === 'All') {
             for (let total of totals) {
                 totalLoans = total.current.count;
-                if(kpi.indexOf('PORT') > -1) return total.current.metrics.calc_portfolio.calc;
-                if(kpi.indexOf('OS') > -1) return total.current.metrics.calc_o_s.calc;
-                if(kpi.indexOf('DELINQUENCY') > -1) return total.current.metrics.calc_default_propensity.calc;
-                if(kpi.indexOf('PROPENSITY') > -1) return total.current.metrics.calc_delinquency_recency.calc;
+                if(kpi.indexOf('PORT') > -1) value =  total.current.metrics.calc_portfolio.calc;
+                if(kpi.indexOf('OS') > -1) value =  total.current.metrics.calc_o_s.calc;
+                if(kpi.indexOf('DELINQUENCY') > -1) value =  total.current.metrics.calc_default_propensity.calc;
+                if(kpi.indexOf('PROPENSITY') > -1) value =  total.current.metrics.calc_delinquency_recency.calc;
             }
         } else {
             for (let item of items) {
                 if (item.group[0] == itemGroup) {
                    totalLoans = item.current.count;
-                    if(kpi.indexOf('PORT') > -1) return item.current.metrics.calc_portfolio.calc;
-                    if(kpi.indexOf('OS') > -1) return item.current.metrics.calc_o_s.calc;
-                    if(kpi.indexOf('DP') > -1) return item.current.metrics.calc_default_propensity.calc;
-                    if(kpi.indexOf('DR') > -1) return item.current.metrics.calc_delinquency_recency.calc;
+                    if(kpi.indexOf('PORT') > -1) value =  item.current.metrics.calc_portfolio.calc;
+                    if(kpi.indexOf('OS') > -1) value =  item.current.metrics.calc_o_s.calc;
+                    if(kpi.indexOf('DELINQUENCY') > -1) value =  item.current.metrics.calc_default_propensity.calc;
+                    if(kpi.indexOf('PROPENSITY') > -1) value =  item.current.metrics.calc_delinquency_recency.calc;
                 }
             };
         }
+        return value;
     }
 
     createChart() {
@@ -190,10 +190,6 @@ export default class KPIs extends Component {
 
     shouldComponentUpdate(nextProps, nextState) {
         return true;
-    }
-
-    componentWillReceiveProps(nextProps) {
-        this.updateChart(nextProps);
     }
 
     render() {
