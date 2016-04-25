@@ -4,29 +4,21 @@ import { connect } from 'react-redux';
 import $ from 'jquery';
 
 class AddWidgetButton extends React.Component{
-    constructor(state,context){
-        super(state,context);
-        this.state = {};
-    }
-
-    addEmptyWidget(){
-        //code
-        
-    }
 
   handleEmptyWidgetClick(){
-      //code
-        var widgetVals = {
+        let widgetVals = {
             id: 1,
             name: 'WIDGET NAME',
             type:'EMPTY',
-            drow: 3,
+            drow: 2,
             dcol: 1,
-            dsizex: 3,
-            dsizey: 2,
+            dsizex: 2,
+            dsizey: 1,
+            height: 200,
+            width: 400,
       };
+      jwidget(widgetVals)
       //this.props.dispatch(addWidget(widgetVals));
-      jwidget(widgetVals); //TODO:Change this
   }
 
     render(){
@@ -72,29 +64,6 @@ class AddWidgetButton extends React.Component{
                   </div>
               )
     }
-}
-
-const mapStateToProps = (state) => {
-    return {
-        widgets: state.dashboard.widgets,
-    }
-}
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    onClick: () => {
-            var widgetVals = {
-                id: 1,
-                name: 'WIDGET NAME',
-                type:'EMPTY',
-                drow: 3,
-                dcol: 1,
-                dsizex: 3,
-                dsizey: 2,
-          };
-        dispatch(addWidget(widgetVals)); 
-    }
-  }
 }
 
 //export default connect(mapStateToProps,mapDispatchToProps)(AddWidgetButton)

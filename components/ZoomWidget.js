@@ -38,7 +38,7 @@ class ZoomWidget extends React.Component{
     render(){
         const styles ={
             row:{marginBottom:0},
-            cols2:{backgroundColor:'#3C4049',minHeight:660},
+            cols2:{backgroundColor:'#3C4049',minHeight:700},
             input:{color:'#FFF'},
             cols10:{minHeight:'100%'},
             modalchart:{height:550},
