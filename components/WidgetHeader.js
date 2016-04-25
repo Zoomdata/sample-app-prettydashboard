@@ -14,8 +14,8 @@ class WidgetHeader extends React.Component{
     render(){
         return ( <section className="card-header">
             <div className="chart-name">{this.props.name}</div>
-                    <a href="#"
-                        className="tooltipped fullscr"
+                    <a href="#modal1"
+                        className="tooltipped fullscr modal-trigger"
                         data-position="bottom"
                         onClick={this.setFullScreen.bind(this)}
                         data-delay="50"

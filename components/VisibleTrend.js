@@ -1,4 +1,5 @@
 import React from 'react';
+var ReactDOM = require('react-dom');
 import { connect } from 'react-redux';
 import { setTrendLoanGrade, setTrendLoanStatus, setTrendEmpLength, changeTrendFilter} from '../redux/actions'
 import Trend  from './Trend';
@@ -75,13 +76,22 @@ const loadTrend = (data, width, height, onClick, type, zoom) => {
 }
 
 class VisibleTrend extends React.Component{
+
+    constructor(state,context){
+        super(state,context);
+        this.state = { 
+            heightMod: -50,
+            widthMod: 210
+        };
+    }
+
     render(){
-        var height = 350;
-        var width = 610;
+        let height = this.props.height - 50;
+        let width = this.props.width - 20;
         if(this.props.zoom == 'TREND')
             {
                 height = 550;
-                width = 1100;
+                width = 1100
             }
         return(
             //jsx code

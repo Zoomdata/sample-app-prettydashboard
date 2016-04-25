@@ -3,13 +3,14 @@ import Widgets from './Widget';
 import AddWidgetButton from './AddWidgetButton';
 import ZoomWidget from './ZoomWidget';
 import { connect } from 'react-redux';
+import $ from 'jquery';
 class Dashboard extends React.Component{
 
     render(){
         return (
             <div>
                 <div className="container" align="left">
-                    <div className="gridster" onClick={this.handleClick}>
+                    <div className="gridster">
                         <ul>
                             { this.props.widgets.map((w, i) => {
                                     return (
@@ -20,6 +21,8 @@ class Dashboard extends React.Component{
                                                 dcol={w.dcol}
                                                 dsizex={w.dsizex}
                                                 dsizey={w.dsizey}
+                                                height={w.height} 
+                                                width={w.width} 
                                                 name={w.name}
                                                 type={w.type}
                                                 dispatch={this.props.dispatch}
@@ -45,6 +48,7 @@ const mapStateToProps = (state) => {
         widgets: state.dashboard.widgets,
         zoom: state.dashboard.zoom,
         name: state.dashboard.name,
+        initial: state.dashboard.initial,
     }
 }
 

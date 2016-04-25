@@ -12,8 +12,8 @@ const mapDispatchToProps = (dispatch) => {
       var currentSelection = param.data.selected 
                               ? param.data.name[0] : 'All';
 
-    	if (currentSelection !==  prevSelection) {
-    		prevSelection = currentSelection;
+    if (currentSelection !==  prevSelection) {
+        prevSelection = currentSelection;
         dispatch(setLoanGrade(currentSelection))
       }
     }
@@ -27,9 +27,7 @@ const mapStateToProps = (state) => {
     }
 };
 
-const loadDonut = (data, onClick, type, zoom) => {
-  var height = 410;
-  var width = 620;
+const loadDonut = (data, onClick, type, zoom, height, width) => {
   if(zoom == 'DONUT')
     {
         height = 550;
@@ -73,9 +71,11 @@ var labelStyle = {
 
 class VisibleDonut extends React.Component{
     render(){
+        let height = this.props.height  //410;
+        let width = this.props.width//620;
         return(
                 <div>
-                  {loadDonut(this.props.data, this.props.onClick, this.props.type, this.props.zoom)}
+                  {loadDonut(this.props.data, this.props.onClick, this.props.type, this.props.zoom, height, width)}
                 </div>
               )
     }

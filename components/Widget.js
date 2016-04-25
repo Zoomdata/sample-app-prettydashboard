@@ -4,19 +4,19 @@ import WidgetBody from './WidgetBody';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
 import echarts from 'echarts';
+import { resizeWidget } from '../redux/actions';
 class Widgets extends React.Component{
 
-    constructor(state, context){
-        super(state, context)
-        this.state = {
-            width:400,
-            height:400
-        }
-    }
-
       componentDidMount() {
-        var elem = ReactDOM.findDOMNode(this);
-        echartObj = echarts; 
+        let elem = document.getElementById(this.props.type);
+        let id = $(elem).attr('id')
+        $(elem).on('click', function(){
+            this.props.dispatch(resizeWidget({
+                id: id,
+                width: $(elem).width(),
+                height: $(elem).height()
+            }))
+        }.bind(this));
       }
 
     componentDidUpdate(){
@@ -25,12 +25,12 @@ class Widgets extends React.Component{
                  width: elem.clientWidth,
                  height: elem.clientHeight,
         }
-        //this.props.dispatch(resizeWidget(data));
     }
 
     render(){
         return (
                   <li id={this.props.type}
+                      className="grid-li"
                       key={this.props.id}
                       data-row={this.props.drow}
                       data-col={this.props.dcol}
@@ -40,8 +40,8 @@ class Widgets extends React.Component{
                           <WidgetHeader id={this.props.id}
                                         dispatch={this.props.dispatch}
                                         name = {this.props.name}/>
-                          <WidgetBody height={this.state.height} 
-                                      width={this.state.width} 
+                          <WidgetBody height={this.props.height} 
+                                      width={this.props.width} 
                                       type={this.props.type}
                                       id={this.props.id}/>
                       </div>

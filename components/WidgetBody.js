@@ -7,6 +7,7 @@ import { resizeWidget } from '../redux/actions'
 import VisibleDonut  from './VisibleDonut';
 import VisibleTrend  from './VisibleTrend';
 import VisibleKPIs  from './VisibleKPIs';
+import EmptyWidget  from './EmptyWidget';
 import Trend  from './Trend';
 var echarts = require('echarts');
 
@@ -20,24 +21,44 @@ class WidgetBody extends React.Component{
         if(type.indexOf('KPI') > -1)
             { return (
                     <div>
-                        <VisibleKPIs key={id} type={type}/>
+                        <VisibleKPIs key={id} 
+                            type={type} 
+                            height={this.props.height} 
+                            width={this.props.width}/>
                     </div>
                 )
             }
         else if(type === 'DONUT')
             { return (
                     <div>
-                        <VisibleDonut key={id} type={type}/>
+                        <VisibleDonut key={id} 
+                            type={type} 
+                            height={this.props.height} 
+                            width={this.props.width}/>
                     </div>
                 )
             }
-            else //Trend
+         else if(type === 'TREND') //Trend
             { return ( 
                 <div>
-                    <VisibleTrend key={id} type={type}/>
+                    <VisibleTrend key={id} 
+                        type={type} 
+                        height={this.props.height} 
+                        width={this.props.width}/>
                 </div>
               )
             }
+            else{
+                return(
+                    <div>
+                        <EmptyWidget key={id} 
+                            type={type} 
+                            height={this.props.height} 
+                            width={this.props.width}/>
+                    </div>
+                )
+            }
+
     }
 
     render(){

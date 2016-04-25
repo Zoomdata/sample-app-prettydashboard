@@ -19,6 +19,8 @@ export default class KPIs extends Component {
             items = this.props.items;
         }
 
+        console.log(items);
+
         var totals;
         if (!this.props.totals) {
             totals = [];
@@ -58,7 +60,8 @@ export default class KPIs extends Component {
 
     createChart() {
 	    var domElement = ReactDOM.findDOMNode(this);
-        let theme = (this.props.type.indexOf('KPI') > -1) ? light() : dark();
+        //let theme = (this.props.type.indexOf('KPI') > -1) ? light() : dark();
+        let theme = dark();
         this.chart = echarts.init(domElement,theme);
         this.updateChart(this.props);
     }
@@ -70,7 +73,6 @@ export default class KPIs extends Component {
         }
         var newChartOptions = this.makeChartOptions(nextProps);
         this.chart.setOption(newChartOptions);
-        this.props.charopts[this.props.type] = this.chart;
         this.chart.on('CLICK', nextProps.onClick);
     }
 
@@ -82,20 +84,29 @@ export default class KPIs extends Component {
             'KPIDEFAULTPROPENSITY': '#FFFF7D', //yellow
             'KPIDELINQUENCYRECENCY': '#FF6C5E', //red
         }
-        var radius = [50, 65];
+        let smaller = this.props.width <= this.props.height ? this.props.width : this.props.height;
+        let inner = smaller / 4
+        let outter = (inner * 32) / 100 + inner
+        //Proportion will be 76%
+        //let outter = (this.props.height * 32) / 100
+        //let inner = (outter * 76 ) / 100
+        var radius = ['50%', '65%'];
         var center = ['50%', '50%'];
         var color = '#656565'
         var fsize = 20;
         var textColor = '#FFF'
         var name = ' '
         if(this.props.zoom.indexOf('KPI') > -1){
-            radius = [90, 165];
-            fsize = 27;
+            radius = [95, 165];
+            fsize = 30;
             color = '#777';
-            textColor = '#777';
+            color = '#656565'
+            textColor = '#FFF';
             name = this.props.name;
         }
 
+    
+        //console.log(this.props.type+' '+this.getData());
         var val = parseFloat(Math.round(this.getData() * 100) / 100).toFixed(2);
 
         //TODO: These values must be moved from here to somewhere else any moment
@@ -173,6 +184,7 @@ export default class KPIs extends Component {
     }
 
     componentDidUpdate() {
+        this.chart.resize()
         this.updateChart(this.props);
     }
 
@@ -183,7 +195,6 @@ export default class KPIs extends Component {
     componentWillReceiveProps(nextProps) {
         this.updateChart(nextProps);
     }
-
 
     render() {
         return(<div id={this.props.type} style={{height: this.props.height, width: this.props.width}} />)

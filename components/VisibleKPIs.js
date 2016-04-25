@@ -34,7 +34,6 @@ class VisibleKPIs extends React.Component{
                   items={data}
                   totals={totals}
                   filters={filters}
-                  charopts={chartOpts}
                   width={width}
                   height={height}
                   zoom={this.props.zoom}
@@ -45,9 +44,10 @@ class VisibleKPIs extends React.Component{
     }
 
     render(){
-        var height = 200;
-        var width = 200;
-        console.log(this.props.zoom);
+        //let height = (this.props.height * 50) / 100
+        //let width  = (this.props.width * 33) / 100
+        let height = this.props.height
+        let width  = this.props.width
         if(this.props.zoom.indexOf('KPI') > -1)
             {
                 height = 550;
@@ -73,6 +73,7 @@ const mapStateToProps = (state) => {
         totals: totals,
         filters: state.chartFilters,
         zoom: state.dashboard.zoom,
+        initial: state.dashboard.initial,
     }
 };
 
