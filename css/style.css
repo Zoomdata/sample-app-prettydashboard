@@ -1,3 +1,7 @@
+html body{
+    height: 100%;
+    min-height: 100%;
+}
 .container{
     width:100%;
     padding:0px;
@@ -31,9 +35,16 @@
     display:inline-block;
 
 }
-.modal {
-  max-height: 100%;
+.modal-content div.row{
+  height: 100%;
+}
+.modal{
+  height: 100%;
+  min-height: 100%;
   width: 100%;
+  background-color: #201F21;
+  color: #FFF;
+
 }
 
 .modal.bottom-sheet {
@@ -68,7 +79,7 @@
     position:absolute;
     margin:0;
     margin-top: 3px;
-    cursor: pointer;
+    cursor: move;
     /*background-color: rgba(0, 0, 0, 0.7);*/
     /*border-radius: 4px 4px 0px 0px;*/
 }
@@ -142,6 +153,10 @@ body{ background-color:  #333233;}
 
 .gridster{
     width: inherit;
+}
+
+.grid-li{
+    overflow: hidden;
 }
 
 .gridster .preview-holder {

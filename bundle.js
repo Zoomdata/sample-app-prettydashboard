@@ -66,15 +66,15 @@
 
 	var _reducers2 = _interopRequireDefault(_reducers);
 
-	var _reactRedux = __webpack_require__(541);
+	var _reactRedux = __webpack_require__(540);
 
-	var _sagas = __webpack_require__(549);
+	var _sagas = __webpack_require__(548);
 
 	var _sagas2 = _interopRequireDefault(_sagas);
 
-	var _reduxResponsive = __webpack_require__(540);
+	var _reduxResponsive = __webpack_require__(539);
 
-	var _routes = __webpack_require__(558);
+	var _routes = __webpack_require__(557);
 
 	var _routes2 = _interopRequireDefault(_routes);
 
@@ -35049,11 +35049,11 @@
 
 	var _dashboard2 = _interopRequireDefault(_dashboard);
 
-	var _chartFilters = __webpack_require__(539);
+	var _chartFilters = __webpack_require__(538);
 
 	var _chartFilters2 = _interopRequireDefault(_chartFilters);
 
-	var _reduxResponsive = __webpack_require__(540);
+	var _reduxResponsive = __webpack_require__(539);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -35419,17 +35419,19 @@
 
 	var _actions = __webpack_require__(536);
 
-	var _darkTheme = __webpack_require__(538);
+	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } } //My reducers
 
-	//My reducers
 
 	var initialState = {
+	    initial: false,
 	    zoom: '',
 	    name: '',
-	    theme: (0, _darkTheme.dark)(),
-	    widgets: [{ id: 0, name: 'TREND CHART', type: 'TREND', drow: 2, dcol: 1, dsizex: 3, dsizey: 2 }, { id: 1, name: 'LOANS BY GRADE', type: 'DONUT', drow: 1, dcol: 4, dsizex: 3, dsizey: 2 }, { id: 2, name: 'PORTFOLIO', type: 'KPIPORTFOLIO', drow: 1, dcol: 1, dsizex: 1, dsizey: 1 }, { id: 3, name: 'O/S', type: 'KPIOS', drow: 1, dcol: 2, dsizex: 1, dsizey: 1 }, { id: 4, name: 'DELINQ. RECENCY', type: 'KPIDELINQUENCYRECENCY', drow: 1, dcol: 3, dsizex: 1, dsizey: 1 }, { id: 5, name: 'DEF PROPENSITY', type: 'KPIDEFAULTPROPENSITY', drow: 3, dcol: 4, dsizex: 1, dsizey: 1 }]
+	    widgets: [{ id: 0, name: 'TREND CHART', type: 'TREND', drow: 2, dcol: 1, dsizex: 3, dsizey: 2, width: 600, height: 400 }, { id: 1, name: 'LOANS BY GRADE', type: 'DONUT', drow: 1, dcol: 4, dsizex: 3, dsizey: 2, width: 600, height: 400 }, { id: 2, name: 'PORTFOLIO', type: 'KPIPORTFOLIO', drow: 1, dcol: 1, dsizex: 1, dsizey: 1, width: 200, height: 200 }, { id: 3, name: 'O/S', type: 'KPIOS', drow: 1, dcol: 2, dsizex: 1, dsizey: 1, width: 200, height: 200 }, { id: 4, name: 'DELINQ. RECENCY', type: 'KPIDELINQUENCYRECENCY',
+	        drow: 1, dcol: 3, dsizex: 1, dsizey: 1, width: 200, height: 200 }, { id: 5, name: 'DEF PROPENSITY', type: 'KPIDEFAULTPROPENSITY',
+	        drow: 3, dcol: 4, dsizex: 1, dsizey: 1, width: 200, height: 200 }]
 	};
 
+	//{id: 1, name: 'WIDGET NAME', type:'EMPTY', drow: 2, dcol: 1, dsizex: 2, dsizey: 1, height: 200, width: 400 }
 	function getPos(elems, id) {
 	    elems.forEach(function (e) {
 	        if (e.id == id) return elems.indexOf(e);
@@ -35457,13 +35459,18 @@
 	            var res = getType(state.widgets, action.id);
 	            return Object.assign({}, state, { zoom: res[0], name: res[1] });
 
+	        case _actions.FIRST_RENDER:
+	            return Object.assign({}, state, { initial: true });
+
 	        case _actions.ADD_WIDGET:
-	            return { widgets: [].concat(state.widgets, action.data) };
+	            var obj = Object.assign({}, state, { widgets: [].concat(_toConsumableArray(state.widgets), [action.data]) });
+	            console.log(obj);
+	            return obj;
 
 	        case _actions.RESIZE_WIDGET:
 	            return Object.assign({}, state, {
 	                widgets: state.widgets.map(function (w) {
-	                    return w.id === action.data.id ? Object.assign({}, w, { 'width': action.data.width, 'heigth': action.data.heigth }) : w;
+	                    return w.type === action.data.id ? Object.assign({}, w, { 'width': action.data.width, 'height': action.data.height }) : w;
 	                })
 	            });
 
@@ -35483,348 +35490,6 @@
 
 /***/ },
 /* 538 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.dark = dark;
-	function dark() {
-	    var theme = {
-	        // 全图默认背景
-	        backgroundColor: '',
-
-	        // 默认色板
-	        color: ['#FE8463', '#9BCA63', '#FAD860', '#60C0DD', '#0084C6', '#D7504B', '#C6E579', '#26C0C0', '#F0805A', '#F4E001', '#B5C334'],
-
-	        // 图表标题
-	        title: {
-	            textStyle: {
-	                fontWeight: 'normal',
-	                color: '#fff' // 主标题文字颜色
-	            }
-	        },
-
-	        // 图例
-	        legend: {
-	            textStyle: {
-	                color: '#ccc' // 图例文字颜色
-	            }
-	        },
-
-	        // 值域
-	        dataRange: {
-	            itemWidth: 15,
-	            color: ['#FFF808', '#21BCF9'],
-	            textStyle: {
-	                color: '#ccc' // 值域文字颜色
-	            }
-	        },
-
-	        toolbox: {
-	            color: ['#fff', '#fff', '#fff', '#fff'],
-	            effectiveColor: '#FE8463',
-	            disableColor: '#666'
-	        },
-
-	        // 提示框
-	        tooltip: {
-	            backgroundColor: 'rgba(250,250,250,0.8)', // 提示背景颜色，默认为透明度为0.7的黑色
-	            axisPointer: { // 坐标轴指示器，坐标轴触发有效
-	                type: 'line', // 默认为直线，可选为：'line' | 'shadow'
-	                lineStyle: { // 直线指示器样式设置
-	                    color: '#aaa'
-	                },
-	                crossStyle: {
-	                    color: '#aaa'
-	                },
-	                shadowStyle: { // 阴影指示器样式设置
-	                    color: 'rgba(200,200,200,0.2)'
-	                }
-	            },
-	            textStyle: {
-	                color: '#333'
-	            }
-	        },
-
-	        // 区域缩放控制器
-	        dataZoom: {
-	            dataBackgroundColor: '#555', // 数据背景颜色
-	            fillerColor: 'rgba(200,200,200,0.2)', // 填充颜色
-	            handleColor: '#eee' // 手柄颜色
-	        },
-
-	        // 网格
-	        grid: {
-	            borderWidth: 0
-	        },
-
-	        // 类目轴
-	        categoryAxis: {
-	            axisLine: { // 坐标轴线
-	                show: false
-	            },
-	            axisTick: { // 坐标轴小标记
-	                show: false
-	            },
-	            axisLabel: { // 坐标轴文本标签，详见axis.axisLabel
-	                textStyle: { // 其余属性默认使用全局文本样式，详见TEXTSTYLE
-	                    color: '#ccc'
-	                }
-	            },
-	            splitLine: { // 分隔线
-	                show: false
-	            }
-	        },
-
-	        // 数值型坐标轴默认参数
-	        valueAxis: {
-	            axisLine: { // 坐标轴线
-	                show: false
-	            },
-	            axisTick: { // 坐标轴小标记
-	                show: false
-	            },
-	            axisLabel: { // 坐标轴文本标签，详见axis.axisLabel
-	                textStyle: { // 其余属性默认使用全局文本样式，详见TEXTSTYLE
-	                    color: '#ccc'
-	                }
-	            },
-	            splitLine: { // 分隔线
-	                lineStyle: { // 属性lineStyle（详见lineStyle）控制线条样式
-	                    color: ['#aaa'],
-	                    type: 'dashed'
-	                }
-	            },
-	            splitArea: { // 分隔区域
-	                show: false
-	            }
-	        },
-
-	        polar: {
-	            name: {
-	                textStyle: { // 其余属性默认使用全局文本样式，详见TEXTSTYLE
-	                    color: '#ccc'
-	                }
-	            },
-	            axisLine: { // 坐标轴线
-	                lineStyle: { // 属性lineStyle控制线条样式
-	                    color: '#ddd'
-	                }
-	            },
-	            splitArea: {
-	                show: true,
-	                areaStyle: {
-	                    color: ['rgba(250,250,250,0.2)', 'rgba(200,200,200,0.2)']
-	                }
-	            },
-	            splitLine: {
-	                lineStyle: {
-	                    color: '#ddd'
-	                }
-	            }
-	        },
-
-	        timeline: {
-	            label: {
-	                textStyle: {
-	                    color: '#ccc'
-	                }
-	            },
-	            lineStyle: {
-	                color: '#aaa'
-	            },
-	            controlStyle: {
-	                normal: { color: '#fff' },
-	                emphasis: { color: '#FE8463' }
-	            },
-	            symbolSize: 3
-	        },
-
-	        // 折线图默认参数
-	        line: {
-	            smooth: true
-	        },
-
-	        // K线图默认参数
-	        k: {
-	            itemStyle: {
-	                normal: {
-	                    color: '#FE8463', // 阳线填充颜色
-	                    color0: '#9BCA63', // 阴线填充颜色
-	                    lineStyle: {
-	                        width: 1,
-	                        color: '#FE8463', // 阳线边框颜色
-	                        color0: '#9BCA63' // 阴线边框颜色
-	                    }
-	                }
-	            }
-	        },
-
-	        // 雷达图默认参数
-	        radar: {
-	            symbol: 'emptyCircle', // 图形类型
-	            symbolSize: 3
-	            //symbol: null,         // 拐点图形类型
-	            //symbolRotate : null,  // 图形旋转控制
-	        },
-
-	        pie: {
-	            itemStyle: {
-	                normal: {
-	                    borderWidth: 1,
-	                    borderColor: 'rgba(255, 255, 255, 0.5)'
-	                },
-	                emphasis: {
-	                    borderWidth: 1,
-	                    borderColor: 'rgba(255, 255, 255, 1)'
-	                }
-	            }
-	        },
-
-	        map: {
-	            itemStyle: {
-	                normal: {
-	                    borderColor: 'rgba(255, 255, 255, 0.5)',
-	                    areaStyle: {
-	                        color: '#ddd'
-	                    },
-	                    label: {
-	                        textStyle: {
-	                            // color: '#ccc'
-	                        }
-	                    }
-	                },
-	                emphasis: { // 也是选中样式
-	                    areaStyle: {
-	                        color: '#FE8463'
-	                    },
-	                    label: {
-	                        textStyle: {
-	                            // color: 'ccc'
-	                        }
-	                    }
-	                }
-	            }
-	        },
-
-	        force: {
-	            itemStyle: {
-	                normal: {
-	                    linkStyle: {
-	                        color: '#fff'
-	                    }
-	                }
-	            }
-	        },
-
-	        chord: {
-	            itemStyle: {
-	                normal: {
-	                    borderWidth: 1,
-	                    borderColor: 'rgba(228, 228, 228, 0.2)',
-	                    chordStyle: {
-	                        lineStyle: {
-	                            color: 'rgba(228, 228, 228, 0.2)'
-	                        }
-	                    }
-	                },
-	                emphasis: {
-	                    borderWidth: 1,
-	                    borderColor: 'rgba(228, 228, 228, 0.9)',
-	                    chordStyle: {
-	                        lineStyle: {
-	                            color: 'rgba(228, 228, 228, 0.9)'
-	                        }
-	                    }
-	                }
-	            }
-	        },
-
-	        gauge: {
-	            axisLine: { // 坐标轴线
-	                show: true, // 默认显示，属性show控制显示与否
-	                lineStyle: { // 属性lineStyle控制线条样式
-	                    color: [[0.2, '#9BCA63'], [0.8, '#60C0DD'], [1, '#D7504B']],
-	                    width: 3,
-	                    shadowColor: '#fff', //默认透明
-	                    shadowBlur: 10
-	                }
-	            },
-	            axisTick: { // 坐标轴小标记
-	                length: 15, // 属性length控制线长
-	                lineStyle: { // 属性lineStyle控制线条样式
-	                    color: 'auto',
-	                    shadowColor: '#fff', //默认透明
-	                    shadowBlur: 10
-	                }
-	            },
-	            axisLabel: { // 坐标轴小标记
-	                textStyle: { // 属性lineStyle控制线条样式
-	                    fontWeight: 'bolder',
-	                    color: '#fff',
-	                    shadowColor: '#fff', //默认透明
-	                    shadowBlur: 10
-	                }
-	            },
-	            splitLine: { // 分隔线
-	                length: 25, // 属性length控制线长
-	                lineStyle: { // 属性lineStyle（详见lineStyle）控制线条样式
-	                    width: 3,
-	                    color: '#fff',
-	                    shadowColor: '#fff', //默认透明
-	                    shadowBlur: 10
-	                }
-	            },
-	            pointer: { // 分隔线
-	                shadowColor: '#fff', //默认透明
-	                shadowBlur: 5
-	            },
-	            title: {
-	                textStyle: { // 其余属性默认使用全局文本样式，详见TEXTSTYLE
-	                    fontWeight: 'bolder',
-	                    fontSize: 20,
-	                    fontStyle: 'italic',
-	                    color: '#fff',
-	                    shadowColor: '#fff', //默认透明
-	                    shadowBlur: 10
-	                }
-	            },
-	            detail: {
-	                shadowColor: '#fff', //默认透明
-	                shadowBlur: 5,
-	                offsetCenter: [0, '50%'], // x, y，单位px
-	                textStyle: { // 其余属性默认使用全局文本样式，详见TEXTSTYLE
-	                    fontWeight: 'bolder',
-	                    color: '#fff'
-	                }
-	            }
-	        },
-
-	        funnel: {
-	            itemStyle: {
-	                normal: {
-	                    borderColor: 'rgba(255, 255, 255, 0.5)',
-	                    borderWidth: 1
-	                },
-	                emphasis: {
-	                    borderColor: 'rgba(255, 255, 255, 1)',
-	                    borderWidth: 1
-	                }
-	            }
-	        },
-
-	        textStyle: {
-	            fontFamily: '微软雅黑, Arial, Verdana, sans-serif'
-	        }
-	    };
-	    return theme;
-	}
-
-/***/ },
-/* 539 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -35885,13 +35550,13 @@
 	exports.default = chartFilters;
 
 /***/ },
-/* 540 */
+/* 539 */
 /***/ function(module, exports) {
 
 	module.exports=function(t){function n(e){if(r[e])return r[e].exports;var o=r[e]={exports:{},id:e,loaded:!1};return t[e].call(o.exports,o,o.exports,n),o.loaded=!0,o.exports}var r={};return n.m=t,n.c=r,n.p="",n(0)}([function(t,n,r){t.exports=r(38)},function(t,n){var r=Array.isArray;t.exports=r},function(t,n){function r(t){var n=typeof t;return!!t&&("object"==n||"function"==n)}t.exports=r},function(t,n,r){var e=r(7),o=r(5),u=e(o,"Map");t.exports=u},function(t,n){function r(t){return!!t&&"object"==typeof t}t.exports=r},function(t,n,r){(function(t,e){var o=r(65),u={"function":!0,object:!0},i=u[typeof n]&&n&&!n.nodeType?n:void 0,a=u[typeof t]&&t&&!t.nodeType?t:void 0,c=o(i&&a&&"object"==typeof e&&e),f=o(u[typeof self]&&self),s=o(u[typeof window]&&window),p=o(u[typeof this]&&this),l=c||s!==(p&&p.window)&&s||f||p||Function("return this")();t.exports=l}).call(n,r(113)(t),function(){return this}())},function(t,n,r){function e(t,n){for(var r=t.length;r--;)if(o(t[r][0],n))return r;return-1}var o=r(96);t.exports=e},function(t,n,r){function e(t,n){var r=null==t?void 0:t[n];return o(r)?r:void 0}var o=r(100);t.exports=e},function(t,n){function r(t){var n=typeof t;return"number"==n||"boolean"==n||"string"==n&&"__proto__"!=t||null==t}t.exports=r},function(t,n,r){var e=r(7),o=e(Object,"create");t.exports=o},function(t,n,r){function e(t){var n=o(t)?c.call(t):"";return n==u||n==i}var o=r(2),u="[object Function]",i="[object GeneratorFunction]",a=Object.prototype,c=a.toString;t.exports=e},function(t,n){function r(t){return"number"==typeof t&&t>-1&&t%1==0&&e>=t}var e=9007199254740991;t.exports=r},function(t,n,r){function e(t,n){return"number"==typeof t?!0:!o(t)&&(i.test(t)||!u.test(t)||null!=n&&t in Object(n))}var o=r(1),u=/\.|\[(?:[^[\]]*|(["'])(?:(?!\1)[^\\]|\\.)*?\1)\]/,i=/^\w*$/;t.exports=e},function(t,n,r){function e(t){return null!=t&&!("function"==typeof t&&u(t))&&i(o(t))}var o=r(71),u=r(10),i=r(11);t.exports=e},function(t,n,r){function e(t){var n=f(t);if(!n&&!a(t))return u(t);var r=i(t),e=!!r,s=r||[],p=s.length;for(var l in t)!o(t,l)||e&&("length"==l||c(l,p))||n&&"constructor"==l||s.push(l);return s}var o=r(26),u=r(57),i=r(78),a=r(13),c=r(32),f=r(79);t.exports=e},function(t,n){"use strict";Object.defineProperty(n,"__esModule",{value:!0}),n["default"]="redux-responsive/CALCULATE_RESPONSIVE_STATE",t.exports=n["default"]},function(t,n,r){"use strict";function e(t){return t&&t.__esModule?t:{"default":t}}Object.defineProperty(n,"__esModule",{value:!0});var o=r(15),u=e(o);n["default"]={CALCULATE_RESPONSIVE_STATE:u["default"]},t.exports=n["default"]},function(t,n,r){function e(t){var n=-1,r=t?t.length:0;for(this.clear();++n<r;){var e=t[n];this.set(e[0],e[1])}}var o=r(89),u=r(90),i=r(91),a=r(92),c=r(93);e.prototype.clear=o,e.prototype["delete"]=u,e.prototype.get=i,e.prototype.has=a,e.prototype.set=c,t.exports=e},function(t,n,r){var e=r(5),o=e.Symbol;t.exports=o},function(t,n,r){function e(t,n){var r=o(t,n);if(0>r)return!1;var e=t.length-1;return r==e?t.pop():i.call(t,r,1),!0}var o=r(6),u=Array.prototype,i=u.splice;t.exports=e},function(t,n,r){function e(t,n){var r=o(t,n);return 0>r?void 0:t[r][1]}var o=r(6);t.exports=e},function(t,n,r){function e(t,n){return o(t,n)>-1}var o=r(6);t.exports=e},function(t,n,r){function e(t,n,r){var e=o(t,n);0>e?t.push([n,r]):t[e][1]=r}var o=r(6);t.exports=e},function(t,n,r){function e(t){return o(t)?t:u(t)}var o=r(1),u=r(94);t.exports=e},function(t,n,r){function e(t,n){return t&&o(t,n,u)}var o=r(53),u=r(14);t.exports=e},function(t,n,r){function e(t,n){n=u(n,t)?[n+""]:o(n);for(var r=0,e=n.length;null!=t&&e>r;)t=t[n[r++]];return r&&r==e?t:void 0}var o=r(23),u=r(12);t.exports=e},function(t,n){function r(t,n){return o.call(t,n)||"object"==typeof t&&n in t&&null===u(t)}var e=Object.prototype,o=e.hasOwnProperty,u=Object.getPrototypeOf;t.exports=r},function(t,n,r){function e(t,n,r,a,c){return t===n?!0:null==t||null==n||!u(t)&&!i(n)?t!==t&&n!==n:o(t,n,e,r,a,c)}var o=r(55),u=r(2),i=r(4);t.exports=e},function(t,n,r){function e(t){var n=typeof t;return"function"==n?t:null==t?i:"object"==n?a(t)?u(t[0],t[1]):o(t):c(t)}var o=r(58),u=r(59),i=r(98),a=r(1),c=r(104);t.exports=e},function(t,n){function r(t){return function(n){return null==n?void 0:n[t]}}t.exports=r},function(t,n,r){function e(t,n){return o?void 0!==t[n]:i.call(t,n)}var o=r(9),u=Object.prototype,i=u.hasOwnProperty;t.exports=e},function(t,n){function r(t){var n=!1;if(null!=t&&"function"!=typeof t.toString)try{n=!!(t+"")}catch(r){}return n}t.exports=r},function(t,n){function r(t,n){return t="number"==typeof t||o.test(t)?+t:-1,n=null==n?e:n,t>-1&&t%1==0&&n>t}var e=9007199254740991,o=/^(?:0|[1-9]\d*)$/;t.exports=r},function(t,n,r){function e(t,n,r){var e=null==t?void 0:o(t,n);return void 0===e?r:e}var o=r(25);t.exports=e},function(t,n,r){function e(t){return o(t)&&a.call(t,"callee")&&(!f.call(t,"callee")||c.call(t)==u)}var o=r(99),u="[object Arguments]",i=Object.prototype,a=i.hasOwnProperty,c=i.toString,f=i.propertyIsEnumerable;t.exports=e},function(t,n,r){function e(t){return"string"==typeof t||!o(t)&&u(t)&&c.call(t)==i}var o=r(1),u=r(4),i="[object String]",a=Object.prototype,c=a.toString;t.exports=e},function(t,n,r){function e(t){return u(t)&&o(t.length)&&!!P[k.call(t)]}var o=r(11),u=r(4),i="[object Arguments]",a="[object Array]",c="[object Boolean]",f="[object Date]",s="[object Error]",p="[object Function]",l="[object Map]",v="[object Number]",d="[object Object]",y="[object RegExp]",x="[object Set]",h="[object String]",b="[object WeakMap]",g="[object ArrayBuffer]",_="[object Float32Array]",j="[object Float64Array]",m="[object Int8Array]",O="[object Int16Array]",w="[object Int32Array]",A="[object Uint8Array]",S="[object Uint8ClampedArray]",E="[object Uint16Array]",T="[object Uint32Array]",P={};P[_]=P[j]=P[m]=P[O]=P[w]=P[A]=P[S]=P[E]=P[T]=!0,P[i]=P[a]=P[g]=P[c]=P[f]=P[s]=P[p]=P[l]=P[v]=P[d]=P[y]=P[x]=P[h]=P[b]=!1;var M=Object.prototype,k=M.toString;t.exports=e},function(t,n,r){"use strict";Object.defineProperty(n,"__esModule",{value:!0});var e=r(16);n["default"]=function(){var t=arguments.length<=0||void 0===arguments[0]?{}:arguments[0],n=t.innerWidth,r=t.innerHeight,o=t.matchMedia;return{type:e.CALCULATE_RESPONSIVE_STATE,innerWidth:n,innerHeight:r,matchMedia:o}},t.exports=n["default"]},function(t,n,r){"use strict";function e(t){return t&&t.__esModule?t:{"default":t}}Object.defineProperty(n,"__esModule",{value:!0});var o=r(40),u=e(o),i=r(41),a=e(i),c=r(16);n["default"]={createResponsiveStateReducer:u["default"],createResponsiveStoreEnhancer:a["default"],CALCULATE_RESPONSIVE_STATE:c.CALCULATE_RESPONSIVE_STATE,responsiveStateReducer:(0,u["default"])(),responsiveStoreEnhancer:(0,a["default"])()},t.exports=n["default"]},function(t,n,r){"use strict";function e(t){return t&&t.__esModule?t:{"default":t}}Object.defineProperty(n,"__esModule",{value:!0});var o=r(106),u=e(o),i=r(37),a=e(i);n["default"]=function(t,n){if("undefined"!=typeof window){var r=(0,u["default"])(function(){return t.dispatch((0,a["default"])(window))},n);r(),window.addEventListener("resize",r)}return t},t.exports=n["default"]},function(t,n,r){"use strict";function e(t){return t&&t.__esModule?t:{"default":t}}function o(t,n,r){return(0,p["default"])(n,function(n,e,o){"number"==typeof e?n[o]=e>t&&o!==r:n[o]=!1})}function u(t,n){return(0,p["default"])(n,function(n,r,e){"number"==typeof r?n[e]=t>r:n[e]=!1})}function i(t,n){return"undefined"==typeof t?h:(0,v["default"])(n,function(n,r,e){return t(r).matches?e:n},h)}function a(t){if("undefined"==typeof t)return b;var n={portrait:"(orientation: portrait)",landscape:"(orientation: landscape)"};return(0,v["default"])(n,function(n,r,e){return t(r).matches?e:n},b)}Object.defineProperty(n,"__esModule",{value:!0});var c=r(111),f=e(c),s=r(110),p=e(s),l=r(105),v=e(l),d=r(15),y=e(d),x={extraSmall:480,small:768,medium:992,large:1200},h="infinity",b=null;n["default"]=function(){var t=arguments.length<=0||void 0===arguments[0]?x:arguments[0];t[h]=1/0;var n=f["default"].asObject(t);return function(r,e){var c=e.type,f=e.matchMedia,s=e.innerWidth,p=e.innerHeight;if(c===y["default"]||"undefined"==typeof r){var l=i(f,n),v=a(f);return{width:s,height:p,lessThan:o(s,t,l),greaterThan:u(s,t),mediaType:l,orientation:v}}return r}},t.exports=n["default"]},function(t,n,r){"use strict";function e(t){return t&&t.__esModule?t:{"default":t}}Object.defineProperty(n,"__esModule",{value:!0});var o=r(39),u=e(o);n["default"]=function(){var t=arguments.length<=0||void 0===arguments[0]?100:arguments[0];return function(n){return function(){return(0,u["default"])(n.apply(void 0,arguments),t)}}},t.exports=n["default"]},function(t,n,r){function e(){}var o=r(9),u=Object.prototype;e.prototype=o?o(null):u,t.exports=e},function(t,n,r){function e(t){var n=-1,r=t?t.length:0;for(this.clear();++n<r;){var e=t[n];this.set(e[0],e[1])}}var o=r(81),u=r(82),i=r(83),a=r(84),c=r(85);e.prototype.clear=o,e.prototype["delete"]=u,e.prototype.get=i,e.prototype.has=a,e.prototype.set=c,t.exports=e},function(t,n,r){var e=r(7),o=r(5),u=e(o,"Set");t.exports=u},function(t,n,r){var e=r(5),o=e.Uint8Array;t.exports=o},function(t,n,r){var e=r(7),o=r(5),u=e(o,"WeakMap");t.exports=u},function(t,n){function r(t,n){for(var r=-1,e=t.length;++r<e&&n(t[r],r,t)!==!1;);return t}t.exports=r},function(t,n){function r(t,n){for(var r=-1,e=t.length,o=Array(e);++r<e;)o[r]=n(t[r],r,t);return o}t.exports=r},function(t,n){function r(t,n,r,e){var o=-1,u=t.length;for(e&&u&&(r=t[++o]);++o<u;)r=n(r,t[o],o,t);return r}t.exports=r},function(t,n){function r(t,n){for(var r=-1,e=t.length;++r<e;)if(n(t[r],r,t))return!0;return!1}t.exports=r},function(t,n,r){function e(t){return o(t)?u(t):{}}var o=r(2),u=Object.create;t.exports=e},function(t,n,r){var e=r(24),o=r(66),u=o(e);t.exports=u},function(t,n,r){var e=r(67),o=e();t.exports=o},function(t,n){function r(t,n){return n in Object(t)}t.exports=r},function(t,n,r){function e(t,n,r,e,x,b){var g=f(t),_=f(n),j=d,m=d;g||(j=c(t),j==v?j=y:j!=y&&(g=p(t))),_||(m=c(n),m==v?m=y:m!=y&&(_=p(n)));var O=j==y&&!s(t),w=m==y&&!s(n),A=j==m;if(A&&!g&&!O)return i(t,n,j,r,e,x);var S=x&l;if(!S){var E=O&&h.call(t,"__wrapped__"),T=w&&h.call(n,"__wrapped__");if(E||T)return r(E?t.value():t,T?n.value():n,e,x,b)}return A?(b||(b=new o),(g?u:a)(t,n,r,e,x,b)):!1}var o=r(17),u=r(68),i=r(69),a=r(70),c=r(73),f=r(1),s=r(31),p=r(36),l=2,v="[object Arguments]",d="[object Array]",y="[object Object]",x=Object.prototype,h=x.hasOwnProperty;t.exports=e},function(t,n,r){function e(t,n,r,e){var c=r.length,f=c,s=!e;if(null==t)return!f;for(t=Object(t);c--;){var p=r[c];if(s&&p[2]?p[1]!==t[p[0]]:!(p[0]in t))return!1}for(;++c<f;){p=r[c];var l=p[0],v=t[l],d=p[1];if(s&&p[2]){if(void 0===v&&!(l in t))return!1}else{var y=new o,x=e?e(v,d,l,t,n,y):void 0;if(!(void 0===x?u(d,v,e,i|a,y):x))return!1}}return!0}var o=r(17),u=r(27),i=1,a=2;t.exports=e},function(t,n){function r(t){return e(Object(t))}var e=Object.keys;t.exports=r},function(t,n,r){function e(t){var n=u(t);if(1==n.length&&n[0][2]){var r=n[0][0],e=n[0][1];return function(t){return null==t?!1:t[r]===e&&(void 0!==e||r in Object(t))}}return function(r){return r===t||o(r,t,n)}}var o=r(56),u=r(72);t.exports=e},function(t,n,r){function e(t,n){return function(r){var e=u(r,t);return void 0===e&&e===n?i(r,t):o(n,e,void 0,a|c)}}var o=r(27),u=r(33),i=r(97),a=1,c=2;t.exports=e},function(t,n,r){function e(t){return function(n){return o(n,t)}}var o=r(25);t.exports=e},function(t,n){function r(t,n,r,e,o){return o(t,function(t,o,u){r=e?(e=!1,t):n(r,t,o,u)}),r}t.exports=r},function(t,n){function r(t,n,r){var e=-1,o=t.length;0>n&&(n=-n>o?0:o+n),r=r>o?o:r,0>r&&(r+=o),o=n>r?0:r-n>>>0,n>>>=0;for(var u=Array(o);++e<o;)u[e]=t[e+n];return u}t.exports=r},function(t,n){function r(t,n){for(var r=-1,e=Array(t);++r<t;)e[r]=n(r);return e}t.exports=r},function(t,n,r){function e(t,n){return o(n,function(n){return[n,t[n]]})}var o=r(48);t.exports=e},function(t,n){function r(t){return t&&t.Object===Object?t:null}t.exports=r},function(t,n,r){function e(t,n){return function(r,e){if(null==r)return r;if(!o(r))return t(r,e);for(var u=r.length,i=n?u:-1,a=Object(r);(n?i--:++i<u)&&e(a[i],i,a)!==!1;);return r}}var o=r(13);t.exports=e},function(t,n){function r(t){return function(n,r,e){for(var o=-1,u=Object(n),i=e(n),a=i.length;a--;){var c=i[t?a:++o];if(r(u[c],c,u)===!1)break}return n}}t.exports=r},function(t,n,r){function e(t,n,r,e,a,c){var f=-1,s=a&i,p=a&u,l=t.length,v=n.length;if(l!=v&&!(s&&v>l))return!1;var d=c.get(t);if(d)return d==n;var y=!0;for(c.set(t,n);++f<l;){var x=t[f],h=n[f];if(e)var b=s?e(h,x,f,n,t,c):e(x,h,f,t,n,c);if(void 0!==b){if(b)continue;y=!1;break}if(p){if(!o(n,function(t){return x===t||r(x,t,e,a,c)})){y=!1;break}}else if(x!==h&&!r(x,h,e,a,c)){y=!1;break}}return c["delete"](t),y}var o=r(50),u=1,i=2;t.exports=e},function(t,n,r){function e(t,n,r,e,_,m){switch(r){case g:return t.byteLength==n.byteLength&&e(new u(t),new u(n))?!0:!1;case s:case p:return+t==+n;case l:return t.name==n.name&&t.message==n.message;case d:return t!=+t?n!=+n:t==+n;case y:case h:return t==n+"";case v:var O=i;case x:var w=m&f;return O||(O=a),(w||t.size==n.size)&&e(O(t),O(n),_,m|c);case b:return!!o&&j.call(t)==j.call(n)}return!1}var o=r(18),u=r(45),i=r(86),a=r(88),c=1,f=2,s="[object Boolean]",p="[object Date]",l="[object Error]",v="[object Map]",d="[object Number]",y="[object RegExp]",x="[object Set]",h="[object String]",b="[object Symbol]",g="[object ArrayBuffer]",_=o?o.prototype:void 0,j=o?_.valueOf:void 0;t.exports=e},function(t,n,r){function e(t,n,r,e,a,c){var f=a&i,s=u(t),p=s.length,l=u(n),v=l.length;if(p!=v&&!f)return!1;for(var d=p;d--;){var y=s[d];if(!(f?y in n:o(n,y)))return!1}var x=c.get(t);if(x)return x==n;var h=!0;c.set(t,n);for(var b=f;++d<p;){y=s[d];var g=t[y],_=n[y];if(e)var j=f?e(_,g,y,n,t,c):e(g,_,y,t,n,c);if(!(void 0===j?g===_||r(g,_,e,a,c):j)){h=!1;break}b||(b="constructor"==y)}if(h&&!b){var m=t.constructor,O=n.constructor;m!=O&&"constructor"in t&&"constructor"in n&&!("function"==typeof m&&m instanceof m&&"function"==typeof O&&O instanceof O)&&(h=!1)}return c["delete"](t),h}var o=r(26),u=r(14),i=2;t.exports=e},function(t,n,r){var e=r(29),o=e("length");t.exports=o},function(t,n,r){function e(t){for(var n=u(t),r=n.length;r--;)n[r][2]=o(n[r][1]);return n}var o=r(80),u=r(108);t.exports=e},function(t,n,r){function e(t){return v.call(t)}var o=r(3),u=r(44),i=r(46),a="[object Map]",c="[object Object]",f="[object Set]",s="[object WeakMap]",p=Object.prototype,l=Function.prototype.toString,v=p.toString,d=o?l.call(o):"",y=u?l.call(u):"",x=i?l.call(i):"";(o&&e(new o)!=a||u&&e(new u)!=f||i&&e(new i)!=s)&&(e=function(t){var n=v.call(t),r=n==c?t.constructor:null,e="function"==typeof r?l.call(r):"";if(e)switch(e){case d:return a;case y:return f;case x:return s}return n}),t.exports=e},function(t,n,r){function e(t,n,r){if(null==t)return!1;var e=r(t,n);e||c(n)||(n=o(n),t=l(t,n),null!=t&&(n=p(n),e=r(t,n)));var v=t?t.length:void 0;return e||!!v&&f(v)&&a(n,v)&&(i(t)||s(t)||u(t))}var o=r(23),u=r(34),i=r(1),a=r(32),c=r(12),f=r(11),s=r(35),p=r(102),l=r(87);t.exports=e},function(t,n,r){function e(t,n){return o(t,n)&&delete t[n]}var o=r(30);t.exports=e},function(t,n,r){function e(t,n){if(o){var r=t[n];return r===u?void 0:r}return a.call(t,n)?t[n]:void 0}var o=r(9),u="__lodash_hash_undefined__",i=Object.prototype,a=i.hasOwnProperty;t.exports=e},function(t,n,r){function e(t,n,r){t[n]=o&&void 0===r?u:r}var o=r(9),u="__lodash_hash_undefined__";t.exports=e},function(t,n,r){function e(t){var n=t?t.length:void 0;return a(n)&&(i(t)||c(t)||u(t))?o(n,String):null}var o=r(63),u=r(34),i=r(1),a=r(11),c=r(35);t.exports=e},function(t,n){function r(t){var n=t&&t.constructor,r="function"==typeof n&&n.prototype||e;return t===r}var e=Object.prototype;t.exports=r},function(t,n,r){function e(t){return t===t&&!o(t)}var o=r(2);t.exports=e},function(t,n,r){function e(){this.__data__={hash:new o,map:u?new u:[],string:new o}}var o=r(42),u=r(3);t.exports=e},function(t,n,r){function e(t){var n=this.__data__;return a(t)?i("string"==typeof t?n.string:n.hash,t):o?n.map["delete"](t):u(n.map,t)}var o=r(3),u=r(19),i=r(75),a=r(8);t.exports=e},function(t,n,r){function e(t){var n=this.__data__;return a(t)?i("string"==typeof t?n.string:n.hash,t):o?n.map.get(t):u(n.map,t)}var o=r(3),u=r(20),i=r(76),a=r(8);t.exports=e},function(t,n,r){function e(t){var n=this.__data__;return a(t)?i("string"==typeof t?n.string:n.hash,t):o?n.map.has(t):u(n.map,t)}var o=r(3),u=r(21),i=r(30),a=r(8);t.exports=e},function(t,n,r){function e(t,n){var r=this.__data__;return a(t)?i("string"==typeof t?r.string:r.hash,t,n):o?r.map.set(t,n):u(r.map,t,n),this}var o=r(3),u=r(22),i=r(77),a=r(8);t.exports=e},function(t,n){function r(t){var n=-1,r=Array(t.size);return t.forEach(function(t,e){r[++n]=[e,t]}),r}t.exports=r},function(t,n,r){function e(t,n){return 1==n.length?t:u(t,o(n,0,-1))}var o=r(62),u=r(33);t.exports=e},function(t,n){function r(t){var n=-1,r=Array(t.size);return t.forEach(function(t){r[++n]=t}),r}t.exports=r},function(t,n){function r(){this.__data__={array:[],map:null}}t.exports=r},function(t,n,r){function e(t){var n=this.__data__,r=n.array;return r?o(r,t):n.map["delete"](t)}var o=r(19);t.exports=e},function(t,n,r){function e(t){var n=this.__data__,r=n.array;return r?o(r,t):n.map.get(t)}var o=r(20);t.exports=e},function(t,n,r){function e(t){var n=this.__data__,r=n.array;return r?o(r,t):n.map.has(t)}var o=r(21);t.exports=e},function(t,n,r){function e(t,n){var r=this.__data__,e=r.array;e&&(e.length<i-1?u(e,t,n):(r.array=null,r.map=new o(e)));var a=r.map;return a&&a.set(t,n),this}var o=r(43),u=r(22),i=200;t.exports=e},function(t,n,r){function e(t){var n=[];return o(t).replace(u,function(t,r,e,o){n.push(e?o.replace(i,"$1"):r||t)}),n}var o=r(109),u=/[^.[\]]+|\[(?:(-?\d+(?:\.\d+)?)|(["'])((?:(?!\2)[^\\]|\\.)*?)\2)\]/g,i=/\\(\\)?/g;t.exports=e},function(t,n,r){function e(t,n,r){function e(){g&&clearTimeout(g),y&&clearTimeout(y),j=0,d=y=b=g=_=void 0}function f(n,r){r&&clearTimeout(r),y=g=_=void 0,n&&(j=u(),x=t.apply(b,d),g||y||(d=b=void 0))}function s(){var t=n-(u()-h);0>=t||t>n?f(_,y):g=setTimeout(s,t)}function p(){return(g&&_||y&&w)&&(x=t.apply(b,d)),e(),x}function l(){f(w,g)}function v(){if(d=arguments,h=u(),b=this,_=w&&(g||!m),O===!1)var r=m&&!g;else{j||y||m||(j=h);var e=O-(h-j),o=(0>=e||e>O)&&(m||y);o?(y&&(y=clearTimeout(y)),j=h,x=t.apply(b,d)):y||(y=setTimeout(l,e))}return o&&g?g=clearTimeout(g):g||n===O||(g=setTimeout(s,n)),r&&(o=!0,x=t.apply(b,d)),!o||g||y||(d=b=void 0),x}var d,y,x,h,b,g,_,j=0,m=!1,O=!1,w=!0;if("function"!=typeof t)throw new TypeError(a);return n=i(n)||0,o(r)&&(m=!!r.leading,O="maxWait"in r&&c(i(r.maxWait)||0,n),w="trailing"in r?!!r.trailing:w),v.cancel=e,v.flush=p,v}var o=r(2),u=r(103),i=r(107),a="Expected a function",c=Math.max;t.exports=e},function(t,n){function r(t,n){return t===n||t!==t&&n!==n}t.exports=r},function(t,n,r){function e(t,n){return u(t,n,o)}var o=r(54),u=r(74);t.exports=e},function(t,n){function r(t){return t}t.exports=r},function(t,n,r){function e(t){return u(t)&&o(t)}var o=r(13),u=r(4);t.exports=e},function(t,n,r){function e(t){return null==t?!1:o(t)?l.test(s.call(t)):i(t)&&(u(t)?l:c).test(t)}var o=r(10),u=r(31),i=r(4),a=/[\\^$.*+?()[\]{}|]/g,c=/^\[object .+?Constructor\]$/,f=Object.prototype,s=Function.prototype.toString,p=f.hasOwnProperty,l=RegExp("^"+s.call(p).replace(a,"\\$&").replace(/hasOwnProperty|(function).*?(?=\\\()| for .+?(?=\\\])/g,"$1.*?")+"$");t.exports=e},function(t,n,r){function e(t){return"symbol"==typeof t||o(t)&&a.call(t)==u}var o=r(4),u="[object Symbol]",i=Object.prototype,a=i.toString;t.exports=e},function(t,n){function r(t){var n=t?t.length:0;return n?t[n-1]:void 0}t.exports=r},function(t,n){var r=Date.now;t.exports=r},function(t,n,r){function e(t){return i(t)?o(t):u(t)}var o=r(29),u=r(60),i=r(12);t.exports=e},function(t,n,r){function e(t,n,r){var e=c(t)?o:a,f=arguments.length<3;return e(t,i(n,4),r,f,u)}var o=r(49),u=r(52),i=r(28),a=r(61),c=r(1);t.exports=e},function(t,n,r){function e(t,n,r){var e=!0,a=!0;if("function"!=typeof t)throw new TypeError(i);return u(r)&&(e="leading"in r?!!r.leading:e,a="trailing"in r?!!r.trailing:a),o(t,n,{leading:e,maxWait:n,trailing:a})}var o=r(95),u=r(2),i="Expected a function";t.exports=e},function(t,n,r){function e(t){if(u(t)){var n=o(t.valueOf)?t.valueOf():t;t=u(n)?n+"":n}if("string"!=typeof t)return 0===t?t:+t;t=t.replace(a,"");var r=f.test(t);return r||s.test(t)?p(t.slice(2),r?2:8):c.test(t)?i:+t}var o=r(10),u=r(2),i=NaN,a=/^\s+|\s+$/g,c=/^[-+]0x[0-9a-f]+$/i,f=/^0b[01]+$/i,s=/^0o[0-7]+$/i,p=parseInt;t.exports=e},function(t,n,r){function e(t){return o(t,u(t))}var o=r(64),u=r(14);t.exports=e},function(t,n,r){function e(t){if("string"==typeof t)return t;if(null==t)return"";if(u(t))return o?c.call(t):"";var n=t+"";return"0"==n&&1/t==-i?"-0":n}var o=r(18),u=r(101),i=1/0,a=o?o.prototype:void 0,c=o?a.toString:void 0;t.exports=e},function(t,n,r){function e(t,n,r){var e=c(t)||p(t);if(n=a(n,4),null==r)if(e||s(t)){var l=t.constructor;r=e?c(t)?new l:[]:u(f(l)?l.prototype:void 0)}else r={};return(e?o:i)(t,function(t,e,o){return n(r,t,e,o)}),r}var o=r(47),u=r(51),i=r(24),a=r(28),c=r(1),f=r(10),s=r(2),p=r(36);t.exports=e},function(t,n,r){t.exports=r(112)},function(t,n,r){var e,o,u={asArray:function(t){var n=this.getBreakPoints(t),r=this.getCustomQueries(t);return this._translate(this._makeSteps(this._toSortedArray(n))).concat(this._objToArr(r))},asObject:function(t){return this._arrToObj(this.asArray(t))},getBreakPoints:function(t){return Object.keys(t).reduce(function(n,r){return"number"==typeof t[r]&&(n[r]=t[r]),n},{})},getCustomQueries:function(t){return Object.keys(t).reduce(function(n,r){return"string"==typeof t[r]&&(n[r]=t[r]),n},{})},_toSortedArray:function(t){return Object.keys(t).map(function(n){return[n,t[n]]}).sort(function(t,n){return t[1]-n[1]})},_makeSteps:function(t){return t[t.length-1][1]===1/0?t:t.concat([1/0])},_translate:function(t){return t.map(function(n,r){return 0===r?[n[0],"screen and (max-width: "+n[1]+"px)"]:r===t.length-1?[n[0]||"default","screen and (min-width: "+(t[r-1][1]+1)+"px)"]:[n[0],"screen and (min-width: "+(t[r-1][1]+1)+"px) and (max-width: "+n[1]+"px)"]})},_objToArr:function(t){return Object.keys(t).map(function(n){return[n,t[n]]})},_arrToObj:function(t){return t.reduce(function(t,n){return t[n[0]]=n[1],t},{})}};"undefined"!=typeof t&&"undefined"!=typeof t.exports?t.exports=u:(e=[],o=function(){return u}.apply(n,e),!(void 0!==o&&(t.exports=o)))},function(t,n){t.exports=function(t){return t.webpackPolyfill||(t.deprecate=function(){},t.paths=[],t.children=[],t.webpackPolyfill=1),t}}]);
 
 /***/ },
-/* 541 */
+/* 540 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -35899,11 +35564,11 @@
 	exports.__esModule = true;
 	exports.connect = exports.Provider = undefined;
 
-	var _Provider = __webpack_require__(542);
+	var _Provider = __webpack_require__(541);
 
 	var _Provider2 = _interopRequireDefault(_Provider);
 
-	var _connect = __webpack_require__(545);
+	var _connect = __webpack_require__(544);
 
 	var _connect2 = _interopRequireDefault(_connect);
 
@@ -35913,7 +35578,7 @@
 	exports.connect = _connect2["default"];
 
 /***/ },
-/* 542 */
+/* 541 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -35923,11 +35588,11 @@
 
 	var _react = __webpack_require__(292);
 
-	var _storeShape = __webpack_require__(543);
+	var _storeShape = __webpack_require__(542);
 
 	var _storeShape2 = _interopRequireDefault(_storeShape);
 
-	var _warning = __webpack_require__(544);
+	var _warning = __webpack_require__(543);
 
 	var _warning2 = _interopRequireDefault(_warning);
 
@@ -35997,7 +35662,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(288)))
 
 /***/ },
-/* 543 */
+/* 542 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -36013,7 +35678,7 @@
 	});
 
 /***/ },
-/* 544 */
+/* 543 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -36042,7 +35707,7 @@
 	}
 
 /***/ },
-/* 545 */
+/* 544 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -36054,19 +35719,19 @@
 
 	var _react = __webpack_require__(292);
 
-	var _storeShape = __webpack_require__(543);
+	var _storeShape = __webpack_require__(542);
 
 	var _storeShape2 = _interopRequireDefault(_storeShape);
 
-	var _shallowEqual = __webpack_require__(546);
+	var _shallowEqual = __webpack_require__(545);
 
 	var _shallowEqual2 = _interopRequireDefault(_shallowEqual);
 
-	var _wrapActionCreators = __webpack_require__(547);
+	var _wrapActionCreators = __webpack_require__(546);
 
 	var _wrapActionCreators2 = _interopRequireDefault(_wrapActionCreators);
 
-	var _warning = __webpack_require__(544);
+	var _warning = __webpack_require__(543);
 
 	var _warning2 = _interopRequireDefault(_warning);
 
@@ -36074,7 +35739,7 @@
 
 	var _isPlainObject2 = _interopRequireDefault(_isPlainObject);
 
-	var _hoistNonReactStatics = __webpack_require__(548);
+	var _hoistNonReactStatics = __webpack_require__(547);
 
 	var _hoistNonReactStatics2 = _interopRequireDefault(_hoistNonReactStatics);
 
@@ -36441,7 +36106,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(288)))
 
 /***/ },
-/* 546 */
+/* 545 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -36472,7 +36137,7 @@
 	}
 
 /***/ },
-/* 547 */
+/* 546 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -36489,7 +36154,7 @@
 	}
 
 /***/ },
-/* 548 */
+/* 547 */
 /***/ function(module, exports) {
 
 	/**
@@ -36535,7 +36200,7 @@
 
 
 /***/ },
-/* 549 */
+/* 548 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -36546,33 +36211,33 @@
 	exports.PivotDataThread = exports.PivotDataQuery = exports.TrendDataThread = exports.TrendDataQuery = exports.KPITotalThread = exports.KPITotalQuery = exports.KPIDataThread = exports.KPIDataQuery = exports.GradeDataThread = exports.GradeDataQuery = exports.ZoomdataClient = undefined;
 	exports.default = root;
 
-	var _effects = __webpack_require__(550);
+	var _effects = __webpack_require__(549);
 
 	var _actions = __webpack_require__(536);
 
 	var actions = _interopRequireWildcard(_actions);
 
-	var _gradeData = __webpack_require__(551);
+	var _gradeData = __webpack_require__(550);
 
 	var gradeData = _interopRequireWildcard(_gradeData);
 
-	var _kpiData = __webpack_require__(552);
+	var _kpiData = __webpack_require__(551);
 
 	var kpiData = _interopRequireWildcard(_kpiData);
 
-	var _kpiTotals = __webpack_require__(553);
+	var _kpiTotals = __webpack_require__(552);
 
 	var kpiTotals = _interopRequireWildcard(_kpiTotals);
 
-	var _pivotData = __webpack_require__(554);
+	var _pivotData = __webpack_require__(553);
 
 	var pivotData = _interopRequireWildcard(_pivotData);
 
-	var _trendData = __webpack_require__(555);
+	var _trendData = __webpack_require__(554);
 
 	var trendData = _interopRequireWildcard(_trendData);
 
-	var _config = __webpack_require__(556);
+	var _config = __webpack_require__(555);
 
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -37117,13 +36782,13 @@
 	var PivotDataThread = exports.PivotDataThread = undefined;
 
 /***/ },
-/* 550 */
+/* 549 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = __webpack_require__(531)
 
 /***/ },
-/* 551 */
+/* 550 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -37153,7 +36818,7 @@
 	};
 
 /***/ },
-/* 552 */
+/* 551 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -37210,7 +36875,7 @@
 	};
 
 /***/ },
-/* 553 */
+/* 552 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -37260,7 +36925,7 @@
 	};
 
 /***/ },
-/* 554 */
+/* 553 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -37334,7 +36999,7 @@
 	};
 
 /***/ },
-/* 555 */
+/* 554 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -37368,7 +37033,7 @@
 	};
 
 /***/ },
-/* 556 */
+/* 555 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -37378,7 +37043,7 @@
 	});
 	exports.createClient = undefined;
 
-	var _ZoomdataSDK = __webpack_require__(557);
+	var _ZoomdataSDK = __webpack_require__(556);
 
 	var _ZoomdataSDK2 = _interopRequireDefault(_ZoomdataSDK);
 
@@ -37406,13 +37071,13 @@
 	var createClient = exports.createClient = initClient;
 
 /***/ },
-/* 557 */
+/* 556 */
 /***/ function(module, exports) {
 
 	module.exports = ZoomdataSDK;
 
 /***/ },
-/* 558 */
+/* 557 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -37423,7 +37088,7 @@
 
 	var _reactRouter = __webpack_require__(449);
 
-	var _App = __webpack_require__(559);
+	var _App = __webpack_require__(558);
 
 	var _App2 = _interopRequireDefault(_App);
 
@@ -37443,7 +37108,7 @@
 	// import App from './App'
 
 /***/ },
-/* 559 */
+/* 558 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -37458,19 +37123,23 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _Widget = __webpack_require__(560);
+	var _Widget = __webpack_require__(559);
 
 	var _Widget2 = _interopRequireDefault(_Widget);
 
-	var _AddWidgetButton = __webpack_require__(1027);
+	var _AddWidgetButton = __webpack_require__(1028);
 
 	var _AddWidgetButton2 = _interopRequireDefault(_AddWidgetButton);
 
-	var _ZoomWidget = __webpack_require__(1028);
+	var _ZoomWidget = __webpack_require__(1029);
 
 	var _ZoomWidget2 = _interopRequireDefault(_ZoomWidget);
 
-	var _reactRedux = __webpack_require__(541);
+	var _reactRedux = __webpack_require__(540);
+
+	var _jquery = __webpack_require__(1027);
+
+	var _jquery2 = _interopRequireDefault(_jquery);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -37502,7 +37171,7 @@
 	                    { className: 'container', align: 'left' },
 	                    _react2.default.createElement(
 	                        'div',
-	                        { className: 'gridster', onClick: this.handleClick },
+	                        { className: 'gridster' },
 	                        _react2.default.createElement(
 	                            'ul',
 	                            null,
@@ -37514,6 +37183,8 @@
 	                                    dcol: w.dcol,
 	                                    dsizex: w.dsizex,
 	                                    dsizey: w.dsizey,
+	                                    height: w.height,
+	                                    width: w.width,
 	                                    name: w.name,
 	                                    type: w.type,
 	                                    dispatch: _this2.props.dispatch
@@ -37538,11 +37209,121 @@
 	    return {
 	        widgets: state.dashboard.widgets,
 	        zoom: state.dashboard.zoom,
-	        name: state.dashboard.name
+	        name: state.dashboard.name,
+	        initial: state.dashboard.initial
 	    };
 	};
 
 	exports.default = (0, _reactRedux.connect)(mapStateToProps)(Dashboard);
+
+/***/ },
+/* 559 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(292);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _WidgetHeader = __webpack_require__(560);
+
+	var _WidgetHeader2 = _interopRequireDefault(_WidgetHeader);
+
+	var _WidgetBody = __webpack_require__(562);
+
+	var _WidgetBody2 = _interopRequireDefault(_WidgetBody);
+
+	var _reactDom = __webpack_require__(448);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	var _jquery = __webpack_require__(1027);
+
+	var _jquery2 = _interopRequireDefault(_jquery);
+
+	var _echarts = __webpack_require__(565);
+
+	var _echarts2 = _interopRequireDefault(_echarts);
+
+	var _actions = __webpack_require__(536);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Widgets = function (_React$Component) {
+	    _inherits(Widgets, _React$Component);
+
+	    function Widgets() {
+	        _classCallCheck(this, Widgets);
+
+	        return _possibleConstructorReturn(this, Object.getPrototypeOf(Widgets).apply(this, arguments));
+	    }
+
+	    _createClass(Widgets, [{
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            var elem = document.getElementById(this.props.type);
+	            var id = (0, _jquery2.default)(elem).attr('id');
+	            (0, _jquery2.default)(elem).on('click', function () {
+	                this.props.dispatch((0, _actions.resizeWidget)({
+	                    id: id,
+	                    width: (0, _jquery2.default)(elem).width(),
+	                    height: (0, _jquery2.default)(elem).height()
+	                }));
+	            }.bind(this));
+	        }
+	    }, {
+	        key: 'componentDidUpdate',
+	        value: function componentDidUpdate() {
+	            var elem = _reactDom2.default.findDOMNode(this);
+	            var data = { id: this.props.id,
+	                width: elem.clientWidth,
+	                height: elem.clientHeight
+	            };
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'li',
+	                { id: this.props.type,
+	                    className: 'grid-li',
+	                    key: this.props.id,
+	                    'data-row': this.props.drow,
+	                    'data-col': this.props.dcol,
+	                    'data-sizex': this.props.dsizex,
+	                    'data-sizey': this.props.dsizey },
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'card card-panel dark-grey' },
+	                    _react2.default.createElement(_WidgetHeader2.default, { id: this.props.id,
+	                        dispatch: this.props.dispatch,
+	                        name: this.props.name }),
+	                    _react2.default.createElement(_WidgetBody2.default, { height: this.props.height,
+	                        width: this.props.width,
+	                        type: this.props.type,
+	                        id: this.props.id })
+	                )
+	            );
+	        }
+	    }]);
+
+	    return Widgets;
+	}(_react2.default.Component);
+
+	exports.default = Widgets;
 
 /***/ },
 /* 560 */
@@ -37560,115 +37341,9 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _WidgetHeader = __webpack_require__(561);
-
-	var _WidgetHeader2 = _interopRequireDefault(_WidgetHeader);
-
-	var _WidgetBody = __webpack_require__(563);
-
-	var _WidgetBody2 = _interopRequireDefault(_WidgetBody);
-
-	var _reactDom = __webpack_require__(448);
-
-	var _reactDom2 = _interopRequireDefault(_reactDom);
-
-	var _jquery = __webpack_require__(1026);
-
-	var _jquery2 = _interopRequireDefault(_jquery);
-
-	var _echarts = __webpack_require__(565);
-
-	var _echarts2 = _interopRequireDefault(_echarts);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var Widgets = function (_React$Component) {
-	    _inherits(Widgets, _React$Component);
-
-	    function Widgets(state, context) {
-	        _classCallCheck(this, Widgets);
-
-	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Widgets).call(this, state, context));
-
-	        _this.state = {
-	            width: 400,
-	            height: 400
-	        };
-	        return _this;
-	    }
-
-	    _createClass(Widgets, [{
-	        key: 'componentDidMount',
-	        value: function componentDidMount() {
-	            var elem = _reactDom2.default.findDOMNode(this);
-	            echartObj = _echarts2.default;
-	        }
-	    }, {
-	        key: 'componentDidUpdate',
-	        value: function componentDidUpdate() {
-	            var elem = _reactDom2.default.findDOMNode(this);
-	            var data = { id: this.props.id,
-	                width: elem.clientWidth,
-	                height: elem.clientHeight
-	            };
-	            //this.props.dispatch(resizeWidget(data));
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            return _react2.default.createElement(
-	                'li',
-	                { id: this.props.type,
-	                    key: this.props.id,
-	                    'data-row': this.props.drow,
-	                    'data-col': this.props.dcol,
-	                    'data-sizex': this.props.dsizex,
-	                    'data-sizey': this.props.dsizey },
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'card card-panel dark-grey' },
-	                    _react2.default.createElement(_WidgetHeader2.default, { id: this.props.id,
-	                        dispatch: this.props.dispatch,
-	                        name: this.props.name }),
-	                    _react2.default.createElement(_WidgetBody2.default, { height: this.state.height,
-	                        width: this.state.width,
-	                        type: this.props.type,
-	                        id: this.props.id })
-	                )
-	            );
-	        }
-	    }]);
-
-	    return Widgets;
-	}(_react2.default.Component);
-
-	exports.default = Widgets;
-
-/***/ },
-/* 561 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(292);
-
-	var _react2 = _interopRequireDefault(_react);
-
 	var _actions = __webpack_require__(536);
 
-	var _lightTheme = __webpack_require__(562);
+	var _lightTheme = __webpack_require__(561);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -37705,8 +37380,8 @@
 	                ),
 	                _react2.default.createElement(
 	                    'a',
-	                    { href: '#',
-	                        className: 'tooltipped fullscr',
+	                    { href: '#modal1',
+	                        className: 'tooltipped fullscr modal-trigger',
 	                        'data-position': 'bottom',
 	                        onClick: this.setFullScreen.bind(this),
 	                        'data-delay': '50',
@@ -37740,7 +37415,7 @@
 	exports.default = WidgetHeader;
 
 /***/ },
-/* 562 */
+/* 561 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -38002,7 +37677,7 @@
 	}
 
 /***/ },
-/* 563 */
+/* 562 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -38017,11 +37692,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _Donut = __webpack_require__(564);
+	var _Donut = __webpack_require__(563);
 
 	var _Donut2 = _interopRequireDefault(_Donut);
 
-	var _darkTheme = __webpack_require__(538);
+	var _darkTheme = __webpack_require__(564);
 
 	var _reactDom = __webpack_require__(448);
 
@@ -38044,6 +37719,10 @@
 	var _VisibleKPIs = __webpack_require__(1022);
 
 	var _VisibleKPIs2 = _interopRequireDefault(_VisibleKPIs);
+
+	var _EmptyWidget = __webpack_require__(1026);
+
+	var _EmptyWidget2 = _interopRequireDefault(_EmptyWidget);
 
 	var _Trend = __webpack_require__(918);
 
@@ -38075,22 +37754,40 @@
 	                return _react2.default.createElement(
 	                    'div',
 	                    null,
-	                    _react2.default.createElement(_VisibleKPIs2.default, { key: id, type: type })
+	                    _react2.default.createElement(_VisibleKPIs2.default, { key: id,
+	                        type: type,
+	                        height: this.props.height,
+	                        width: this.props.width })
 	                );
 	            } else if (type === 'DONUT') {
 	                return _react2.default.createElement(
 	                    'div',
 	                    null,
-	                    _react2.default.createElement(_VisibleDonut2.default, { key: id, type: type })
+	                    _react2.default.createElement(_VisibleDonut2.default, { key: id,
+	                        type: type,
+	                        height: this.props.height,
+	                        width: this.props.width })
 	                );
-	            } else //Trend
+	            } else if (type === 'TREND') //Trend
 	                {
 	                    return _react2.default.createElement(
 	                        'div',
 	                        null,
-	                        _react2.default.createElement(_VisibleTrend2.default, { key: id, type: type })
+	                        _react2.default.createElement(_VisibleTrend2.default, { key: id,
+	                            type: type,
+	                            height: this.props.height,
+	                            width: this.props.width })
 	                    );
-	                }
+	                } else {
+	                return _react2.default.createElement(
+	                    'div',
+	                    null,
+	                    _react2.default.createElement(_EmptyWidget2.default, { key: id,
+	                        type: type,
+	                        height: this.props.height,
+	                        width: this.props.width })
+	                );
+	            }
 	        }
 	    }, {
 	        key: 'render',
@@ -38109,13 +37806,13 @@
 	exports.default = WidgetBody;
 
 /***/ },
-/* 564 */
+/* 563 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-		value: true
+	    value: true
 	});
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -38124,9 +37821,9 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _darkTheme = __webpack_require__(538);
+	var _darkTheme = __webpack_require__(564);
 
-	var _lightTheme = __webpack_require__(562);
+	var _lightTheme = __webpack_require__(561);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -38140,140 +37837,484 @@
 	var echarts = __webpack_require__(565);
 
 	var Donut = function (_Component) {
-		_inherits(Donut, _Component);
+	    _inherits(Donut, _Component);
 
-		function Donut() {
-			_classCallCheck(this, Donut);
+	    function Donut() {
+	        _classCallCheck(this, Donut);
 
-			return _possibleConstructorReturn(this, Object.getPrototypeOf(Donut).apply(this, arguments));
-		}
+	        return _possibleConstructorReturn(this, Object.getPrototypeOf(Donut).apply(this, arguments));
+	    }
 
-		_createClass(Donut, [{
-			key: 'createChart',
-			value: function createChart() {
-				// Initialize after dom ready
-				var domElement = ReactDOM.findDOMNode(this);
-				var theme = this.props.zoom == 'DONUT' ? (0, _lightTheme.light)() : (0, _darkTheme.dark)();
-				this.chart = echarts.init(domElement, theme);
-				this.updateChart(this.props);
-			}
-		}, {
-			key: 'updateChart',
-			value: function updateChart(props) {
-				// give up quickly if props are empty.
-				if (!props) {
-					return null;
-				}
-				var newChartOptions = this.makeChartOptions(props);
-				this.chart.setOption(newChartOptions);
-				this.props.charopts[this.props.type] = this.chart;
-				this.chart.on('CLICK', props.onClick);
-			}
-		}, {
-			key: 'makeChartOptions',
-			value: function makeChartOptions(props) {
+	    _createClass(Donut, [{
+	        key: 'createChart',
+	        value: function createChart() {
+	            // Initialize after dom ready
+	            var domElement = ReactDOM.findDOMNode(this);
+	            //let theme = (this.props.zoom == 'DONUT') ? light() : dark();
+	            var theme = (0, _darkTheme.dark)();
+	            this.chart = echarts.init(domElement, theme);
+	            this.updateChart(this.props);
+	        }
+	    }, {
+	        key: 'updateChart',
+	        value: function updateChart(props) {
+	            // give up quickly if props are empty.
+	            if (!props) {
+	                return null;
+	            }
+	            var newChartOptions = this.makeChartOptions(props);
+	            this.chart.setOption(newChartOptions);
+	            this.props.charopts[this.props.type] = this.chart;
+	            this.chart.on('CLICK', props.onClick);
+	        }
+	    }, {
+	        key: 'makeChartOptions',
+	        value: function makeChartOptions(props) {
 
-				var items;
-				if (!props.items) {
-					items = [];
-				} else {
-					items = props.items;
-				}
-				var data = items.map(function (item) {
-					var elem = {
-						name: item.group,
-						value: item.current.count
-					};
-					return elem;
-				});
-				var labels = items.map(function (item) {
-					return item.group;
-				});
+	            var items;
+	            if (!props.items) {
+	                items = [];
+	            } else {
+	                items = props.items;
+	            }
+	            var data = items.map(function (item) {
+	                var elem = {
+	                    name: item.group,
+	                    value: item.current.count
+	                };
+	                return elem;
+	            });
+	            var labels = items.map(function (item) {
+	                return item.group;
+	            });
 
-				var option = {
-					tooltip: {
-						trigger: 'item',
-						formatter: "{a} <br/>{b} : {c} ({d}%)"
-					},
-					legend: {
-						show: false,
-						orient: 'vertical',
-						x: 'left',
-						y: 'top',
-						data: labels
-					},
-					toolbox: {
-						show: false
-					},
-					calculable: false,
-					series: [{
-						name: 'Loan Grade',
-						type: 'pie',
-						selectedMode: 'single',
-						radius: ['50%', '80%'],
-						itemStyle: {
-							normal: {
-								label: {
-									show: true
-								},
-								labelLine: {
-									show: true
-								}
-							},
-							emphasis: {
-								label: {
-									show: true,
-									position: 'center',
-									textStyle: {
-										fontSize: '30',
-										fontWeight: 'bold'
-									}
-								}
-							}
-						},
-						data: data
-					}]
-				};
+	            var option = {
+	                tooltip: {
+	                    trigger: 'item',
+	                    formatter: "{a} <br/>{b} : {c} ({d}%)"
+	                },
+	                legend: {
+	                    show: false,
+	                    orient: 'vertical',
+	                    x: 'left',
+	                    y: 'top',
+	                    data: labels
+	                },
+	                toolbox: {
+	                    show: false
+	                },
+	                calculable: false,
+	                series: [{
+	                    name: 'Loan Grade',
+	                    type: 'pie',
+	                    selectedMode: 'single',
+	                    radius: ['50%', '80%'],
+	                    itemStyle: {
+	                        normal: {
+	                            label: {
+	                                show: true
+	                            },
+	                            labelLine: {
+	                                show: true
+	                            }
+	                        },
+	                        emphasis: {
+	                            label: {
+	                                show: true,
+	                                position: 'center',
+	                                textStyle: {
+	                                    fontSize: '30',
+	                                    fontWeight: 'bold'
+	                                }
+	                            }
+	                        }
+	                    },
+	                    data: data
+	                }]
+	            };
 
-				return option;
-			}
-		}, {
-			key: 'componentDidMount',
-			value: function componentDidMount() {
-				this.createChart();
-			}
-		}, {
-			key: 'componentWillUnmount',
-			value: function componentWillUnmount() {
-				this.chart.dispose();
-			}
-		}, {
-			key: 'componentDidUpdate',
-			value: function componentDidUpdate() {
-				this.updateChart(this.props);
-			}
-		}, {
-			key: 'shouldComponentUpdate',
-			value: function shouldComponentUpdate(nextProps, nextState) {
-				return true;
-			}
-		}, {
-			key: 'componentWillReceiveProps',
-			value: function componentWillReceiveProps(nextProps) {
-				this.updateChart(nextProps);
-			}
-		}, {
-			key: 'render',
-			value: function render() {
-				//console.log('in Donut render ' + Date.now());
-				return _react2.default.createElement('div', { id: this.props.type, style: { height: this.props.height, width: this.props.width } });
-			}
-		}]);
+	            return option;
+	        }
+	    }, {
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            this.createChart();
+	        }
+	    }, {
+	        key: 'componentWillUnmount',
+	        value: function componentWillUnmount() {
+	            this.chart.dispose();
+	        }
+	    }, {
+	        key: 'componentDidUpdate',
+	        value: function componentDidUpdate() {
+	            this.chart.resize();
+	            this.updateChart(this.props);
+	        }
+	    }, {
+	        key: 'shouldComponentUpdate',
+	        value: function shouldComponentUpdate(nextProps, nextState) {
+	            return true;
+	        }
+	    }, {
+	        key: 'componentWillReceiveProps',
+	        value: function componentWillReceiveProps(nextProps) {
+	            this.updateChart(nextProps);
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            //console.log('in Donut render ' + Date.now());
+	            return _react2.default.createElement('div', { id: this.props.type, style: { height: this.props.height, width: this.props.width } });
+	        }
+	    }]);
 
-		return Donut;
+	    return Donut;
 	}(_react.Component);
 
 	exports.default = Donut;
+
+/***/ },
+/* 564 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.dark = dark;
+	function dark() {
+	    var theme = {
+	        // 全图默认背景
+	        backgroundColor: '',
+
+	        // 默认色板
+	        color: ['#FE8463', '#9BCA63', '#FAD860', '#60C0DD', '#0084C6', '#D7504B', '#C6E579', '#26C0C0', '#F0805A', '#F4E001', '#B5C334'],
+
+	        // 图表标题
+	        title: {
+	            textStyle: {
+	                fontWeight: 'normal',
+	                color: '#fff' // 主标题文字颜色
+	            }
+	        },
+
+	        // 图例
+	        legend: {
+	            textStyle: {
+	                color: '#ccc' // 图例文字颜色
+	            }
+	        },
+
+	        // 值域
+	        dataRange: {
+	            itemWidth: 15,
+	            color: ['#FFF808', '#21BCF9'],
+	            textStyle: {
+	                color: '#ccc' // 值域文字颜色
+	            }
+	        },
+
+	        toolbox: {
+	            color: ['#fff', '#fff', '#fff', '#fff'],
+	            effectiveColor: '#FE8463',
+	            disableColor: '#666'
+	        },
+
+	        // 提示框
+	        tooltip: {
+	            backgroundColor: 'rgba(250,250,250,0.8)', // 提示背景颜色，默认为透明度为0.7的黑色
+	            axisPointer: { // 坐标轴指示器，坐标轴触发有效
+	                type: 'line', // 默认为直线，可选为：'line' | 'shadow'
+	                lineStyle: { // 直线指示器样式设置
+	                    color: '#aaa'
+	                },
+	                crossStyle: {
+	                    color: '#aaa'
+	                },
+	                shadowStyle: { // 阴影指示器样式设置
+	                    color: 'rgba(200,200,200,0.2)'
+	                }
+	            },
+	            textStyle: {
+	                color: '#333'
+	            }
+	        },
+
+	        // 区域缩放控制器
+	        dataZoom: {
+	            dataBackgroundColor: '#555', // 数据背景颜色
+	            fillerColor: 'rgba(200,200,200,0.2)', // 填充颜色
+	            handleColor: '#eee' // 手柄颜色
+	        },
+
+	        // 网格
+	        grid: {
+	            borderWidth: 0
+	        },
+
+	        // 类目轴
+	        categoryAxis: {
+	            axisLine: { // 坐标轴线
+	                show: false
+	            },
+	            axisTick: { // 坐标轴小标记
+	                show: false
+	            },
+	            axisLabel: { // 坐标轴文本标签，详见axis.axisLabel
+	                textStyle: { // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+	                    color: '#ccc'
+	                }
+	            },
+	            splitLine: { // 分隔线
+	                show: false
+	            }
+	        },
+
+	        // 数值型坐标轴默认参数
+	        valueAxis: {
+	            axisLine: { // 坐标轴线
+	                show: false
+	            },
+	            axisTick: { // 坐标轴小标记
+	                show: false
+	            },
+	            axisLabel: { // 坐标轴文本标签，详见axis.axisLabel
+	                textStyle: { // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+	                    color: '#ccc'
+	                }
+	            },
+	            splitLine: { // 分隔线
+	                lineStyle: { // 属性lineStyle（详见lineStyle）控制线条样式
+	                    color: ['#aaa'],
+	                    type: 'dashed'
+	                }
+	            },
+	            splitArea: { // 分隔区域
+	                show: false
+	            }
+	        },
+
+	        polar: {
+	            name: {
+	                textStyle: { // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+	                    color: '#ccc'
+	                }
+	            },
+	            axisLine: { // 坐标轴线
+	                lineStyle: { // 属性lineStyle控制线条样式
+	                    color: '#ddd'
+	                }
+	            },
+	            splitArea: {
+	                show: true,
+	                areaStyle: {
+	                    color: ['rgba(250,250,250,0.2)', 'rgba(200,200,200,0.2)']
+	                }
+	            },
+	            splitLine: {
+	                lineStyle: {
+	                    color: '#ddd'
+	                }
+	            }
+	        },
+
+	        timeline: {
+	            label: {
+	                textStyle: {
+	                    color: '#ccc'
+	                }
+	            },
+	            lineStyle: {
+	                color: '#aaa'
+	            },
+	            controlStyle: {
+	                normal: { color: '#fff' },
+	                emphasis: { color: '#FE8463' }
+	            },
+	            symbolSize: 3
+	        },
+
+	        // 折线图默认参数
+	        line: {
+	            smooth: true
+	        },
+
+	        // K线图默认参数
+	        k: {
+	            itemStyle: {
+	                normal: {
+	                    color: '#FE8463', // 阳线填充颜色
+	                    color0: '#9BCA63', // 阴线填充颜色
+	                    lineStyle: {
+	                        width: 1,
+	                        color: '#FE8463', // 阳线边框颜色
+	                        color0: '#9BCA63' // 阴线边框颜色
+	                    }
+	                }
+	            }
+	        },
+
+	        // 雷达图默认参数
+	        radar: {
+	            symbol: 'emptyCircle', // 图形类型
+	            symbolSize: 3
+	            //symbol: null,         // 拐点图形类型
+	            //symbolRotate : null,  // 图形旋转控制
+	        },
+
+	        pie: {
+	            itemStyle: {
+	                normal: {
+	                    borderWidth: 1,
+	                    borderColor: 'rgba(255, 255, 255, 0.5)'
+	                },
+	                emphasis: {
+	                    borderWidth: 1,
+	                    borderColor: 'rgba(255, 255, 255, 1)'
+	                }
+	            }
+	        },
+
+	        map: {
+	            itemStyle: {
+	                normal: {
+	                    borderColor: 'rgba(255, 255, 255, 0.5)',
+	                    areaStyle: {
+	                        color: '#ddd'
+	                    },
+	                    label: {
+	                        textStyle: {
+	                            // color: '#ccc'
+	                        }
+	                    }
+	                },
+	                emphasis: { // 也是选中样式
+	                    areaStyle: {
+	                        color: '#FE8463'
+	                    },
+	                    label: {
+	                        textStyle: {
+	                            // color: 'ccc'
+	                        }
+	                    }
+	                }
+	            }
+	        },
+
+	        force: {
+	            itemStyle: {
+	                normal: {
+	                    linkStyle: {
+	                        color: '#fff'
+	                    }
+	                }
+	            }
+	        },
+
+	        chord: {
+	            itemStyle: {
+	                normal: {
+	                    borderWidth: 1,
+	                    borderColor: 'rgba(228, 228, 228, 0.2)',
+	                    chordStyle: {
+	                        lineStyle: {
+	                            color: 'rgba(228, 228, 228, 0.2)'
+	                        }
+	                    }
+	                },
+	                emphasis: {
+	                    borderWidth: 1,
+	                    borderColor: 'rgba(228, 228, 228, 0.9)',
+	                    chordStyle: {
+	                        lineStyle: {
+	                            color: 'rgba(228, 228, 228, 0.9)'
+	                        }
+	                    }
+	                }
+	            }
+	        },
+
+	        gauge: {
+	            axisLine: { // 坐标轴线
+	                show: true, // 默认显示，属性show控制显示与否
+	                lineStyle: { // 属性lineStyle控制线条样式
+	                    color: [[0.2, '#9BCA63'], [0.8, '#60C0DD'], [1, '#D7504B']],
+	                    width: 3,
+	                    shadowColor: '#fff', //默认透明
+	                    shadowBlur: 10
+	                }
+	            },
+	            axisTick: { // 坐标轴小标记
+	                length: 15, // 属性length控制线长
+	                lineStyle: { // 属性lineStyle控制线条样式
+	                    color: 'auto',
+	                    shadowColor: '#fff', //默认透明
+	                    shadowBlur: 10
+	                }
+	            },
+	            axisLabel: { // 坐标轴小标记
+	                textStyle: { // 属性lineStyle控制线条样式
+	                    fontWeight: 'bolder',
+	                    color: '#fff',
+	                    shadowColor: '#fff', //默认透明
+	                    shadowBlur: 10
+	                }
+	            },
+	            splitLine: { // 分隔线
+	                length: 25, // 属性length控制线长
+	                lineStyle: { // 属性lineStyle（详见lineStyle）控制线条样式
+	                    width: 3,
+	                    color: '#fff',
+	                    shadowColor: '#fff', //默认透明
+	                    shadowBlur: 10
+	                }
+	            },
+	            pointer: { // 分隔线
+	                shadowColor: '#fff', //默认透明
+	                shadowBlur: 5
+	            },
+	            title: {
+	                textStyle: { // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+	                    fontWeight: 'bolder',
+	                    fontSize: 20,
+	                    fontStyle: 'italic',
+	                    color: '#fff',
+	                    shadowColor: '#fff', //默认透明
+	                    shadowBlur: 10
+	                }
+	            },
+	            detail: {
+	                shadowColor: '#fff', //默认透明
+	                shadowBlur: 5,
+	                offsetCenter: [0, '50%'], // x, y，单位px
+	                textStyle: { // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+	                    fontWeight: 'bolder',
+	                    color: '#fff'
+	                }
+	            }
+	        },
+
+	        funnel: {
+	            itemStyle: {
+	                normal: {
+	                    borderColor: 'rgba(255, 255, 255, 0.5)',
+	                    borderWidth: 1
+	                },
+	                emphasis: {
+	                    borderColor: 'rgba(255, 255, 255, 1)',
+	                    borderWidth: 1
+	                }
+	            }
+	        },
+
+	        textStyle: {
+	            fontFamily: '微软雅黑, Arial, Verdana, sans-serif'
+	        }
+	    };
+	    return theme;
+	}
 
 /***/ },
 /* 565 */
@@ -92844,7 +92885,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactRedux = __webpack_require__(541);
+	var _reactRedux = __webpack_require__(540);
 
 	var _core = __webpack_require__(915);
 
@@ -92852,7 +92893,7 @@
 
 	var _actions = __webpack_require__(536);
 
-	var _Donut = __webpack_require__(564);
+	var _Donut = __webpack_require__(563);
 
 	var _Donut2 = _interopRequireDefault(_Donut);
 
@@ -92886,9 +92927,7 @@
 	  };
 	};
 
-	var loadDonut = function loadDonut(data, onClick, type, zoom) {
-	  var height = 410;
-	  var width = 620;
+	var loadDonut = function loadDonut(data, onClick, type, zoom, height, width) {
 	  if (zoom == 'DONUT') {
 	    height = 550;
 	    width = 1100;
@@ -92951,10 +92990,12 @@
 	  _createClass(VisibleDonut, [{
 	    key: 'render',
 	    value: function render() {
+	      var height = this.props.height; //410;
+	      var width = this.props.width; //620;
 	      return _react2.default.createElement(
 	        'div',
 	        null,
-	        loadDonut(this.props.data, this.props.onClick, this.props.type, this.props.zoom)
+	        loadDonut(this.props.data, this.props.onClick, this.props.type, this.props.zoom, height, width)
 	      );
 	    }
 	  }]);
@@ -96989,7 +97030,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactRedux = __webpack_require__(541);
+	var _reactRedux = __webpack_require__(540);
 
 	var _actions = __webpack_require__(536);
 
@@ -97008,6 +97049,9 @@
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var ReactDOM = __webpack_require__(448);
+
 
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 	  return {
@@ -97092,17 +97136,23 @@
 	var VisibleTrend = function (_React$Component) {
 	  _inherits(VisibleTrend, _React$Component);
 
-	  function VisibleTrend() {
+	  function VisibleTrend(state, context) {
 	    _classCallCheck(this, VisibleTrend);
 
-	    return _possibleConstructorReturn(this, Object.getPrototypeOf(VisibleTrend).apply(this, arguments));
+	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(VisibleTrend).call(this, state, context));
+
+	    _this.state = {
+	      heightMod: -50,
+	      widthMod: 210
+	    };
+	    return _this;
 	  }
 
 	  _createClass(VisibleTrend, [{
 	    key: 'render',
 	    value: function render() {
-	      var height = 350;
-	      var width = 610;
+	      var height = this.props.height - 50;
+	      var width = this.props.width - 20;
 	      if (this.props.zoom == 'TREND') {
 	        height = 550;
 	        width = 1100;
@@ -97130,7 +97180,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-		value: true
+	    value: true
 	});
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -97139,9 +97189,9 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _darkTheme = __webpack_require__(538);
+	var _darkTheme = __webpack_require__(564);
 
-	var _lightTheme = __webpack_require__(562);
+	var _lightTheme = __webpack_require__(561);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -97159,142 +97209,149 @@
 	var numeral = __webpack_require__(1021);
 
 	var Trend = function (_Component) {
-		_inherits(Trend, _Component);
+	    _inherits(Trend, _Component);
 
-		function Trend() {
-			_classCallCheck(this, Trend);
+	    function Trend() {
+	        _classCallCheck(this, Trend);
 
-			return _possibleConstructorReturn(this, Object.getPrototypeOf(Trend).apply(this, arguments));
-		}
+	        return _possibleConstructorReturn(this, Object.getPrototypeOf(Trend).apply(this, arguments));
+	    }
 
-		_createClass(Trend, [{
-			key: 'createChart',
-			value: function createChart() {
-				// Initialize after dom ready
-				var domElement = ReactDOM.findDOMNode(this);
-				var theme = this.props.zoom == 'TREND' ? (0, _lightTheme.light)() : (0, _darkTheme.dark)();
-				this.chart = echarts.init(domElement, theme);
-				this.updateChart(this.props);
-			}
-		}, {
-			key: 'updateChart',
-			value: function updateChart(nextProps) {
-				// give up quickly if props are empty.
-				if (!nextProps) {
-					return null;
-				}
-				var newChartOptions = this.makeChartOptions(nextProps);
-				this.chart.setOption(newChartOptions);
-				this.props.charopts[this.props.type] = this.chart;
-				this.props.charopts['theme'] = this.props.theme;
-				this.chart.on('CLICK', nextProps.onClick);
-			}
-		}, {
-			key: 'makeChartOptions',
-			value: function makeChartOptions(nextProps) {
-				var items;
-				if (!this.props.items) {
-					items = [];
-				} else {
-					items = this.props.items;
-				}
+	    _createClass(Trend, [{
+	        key: 'createChart',
+	        value: function createChart() {
+	            // Initialize after dom ready
+	            var domElement = ReactDOM.findDOMNode(this);
+	            //let theme = (this.props.zoom == 'TREND') ? light() : dark();
+	            var theme = (0, _darkTheme.dark)();
+	            this.chart = echarts.init(domElement, theme);
+	            this.updateChart(this.props);
+	        }
+	    }, {
+	        key: 'updateChart',
+	        value: function updateChart(nextProps) {
+	            // give up quickly if props are empty.
+	            if (!nextProps) {
+	                return null;
+	            }
+	            var newChartOptions = this.makeChartOptions(nextProps);
+	            this.chart.setOption(newChartOptions);
+	            this.props.charopts[this.props.type] = this.chart;
+	            this.props.charopts['theme'] = this.props.theme;
+	            this.chart.on('CLICK', nextProps.onClick);
+	        }
+	    }, {
+	        key: 'makeChartOptions',
+	        value: function makeChartOptions(nextProps) {
+	            var items;
+	            if (!this.props.items) {
+	                items = [];
+	            } else {
+	                items = this.props.items;
+	            }
 
-				var xAxis = items.map(function (item) {
-					var m = moment(item.group[0], 'YYYY-MM-DD HH:mm:ss');
-					var str = m.format('MM/DD/YYYY');
-					return str;
-				});
-				var yAxis1 = items.map(function (item) {
-					return item.current.metrics.loan_amnt.sum.toFixed(0);
-				});
-				var yAxis2 = items.map(function (item) {
-					return item.current.metrics.total_pymnt.sum.toFixed(0);
-				});
+	            var xAxis = items.map(function (item) {
+	                var m = moment(item.group[0], 'YYYY-MM-DD HH:mm:ss');
+	                var str = m.format('MM/DD/YYYY');
+	                return str;
+	            });
+	            var yAxis1 = items.map(function (item) {
+	                return item.current.metrics.loan_amnt.sum.toFixed(0);
+	            });
+	            var yAxis2 = items.map(function (item) {
+	                return item.current.metrics.total_pymnt.sum.toFixed(0);
+	            });
 
-				var option = {
-					tooltip: {
-						trigger: 'axis'
-					},
-					legend: {
-						show: true,
-						data: ['Loan Amount', 'Total Payment']
-					},
-					toolbox: {
-						show: false
-					},
-					calculable: true,
-					dataZoom: {
-						show: true,
-						realtime: false,
-						start: 0,
-						end: 100
-					},
-					xAxis: [{
-						type: 'category',
-						boundaryGap: true,
-						data: xAxis
-					}],
-					yAxis: [{
-						type: 'value',
-						axisLabel: {
-							formatter: function formatter(v) {
-								var result;
-								if (v > 99999) {
-									result = '$' + numeral(v / 1000).format('0,0') + ' k';
-								} else {
-									result = '$' + numeral(v).format('0,0');
-								}
-								return result;
-							}
-						}
+	            var option = {
+	                tooltip: {
+	                    trigger: 'axis'
+	                },
+	                legend: {
+	                    show: true,
+	                    data: ['Loan Amount', 'Total Payment']
+	                },
+	                toolbox: {
+	                    show: false
+	                },
+	                calculable: true,
+	                dataZoom: {
+	                    show: true,
+	                    realtime: false,
+	                    start: 0,
+	                    end: 100,
+	                    textColor: '#FFF'
+	                },
+	                xAxis: [{
+	                    type: 'category',
+	                    boundaryGap: true,
+	                    data: xAxis
+	                }],
+	                yAxis: [{
+	                    type: 'value',
+	                    axisLabel: {
+	                        formatter: function formatter(v) {
+	                            var result;
+	                            if (v > 99999) {
+	                                result = '$' + numeral(v / 1000).format('0,0') + ' k';
+	                            } else {
+	                                result = '$' + numeral(v).format('0,0');
+	                            }
+	                            return result;
+	                        }
+	                    }
 
-					}],
-					series: [{
-						name: 'Loan Amount',
-						type: 'line',
-						data: yAxis1
-					}, {
-						name: 'Total Payment',
-						type: 'bar',
-						data: yAxis2
-					}]
-				};
+	                }],
+	                series: [{
+	                    name: 'Loan Amount',
+	                    type: 'line',
+	                    data: yAxis1
+	                }, {
+	                    name: 'Total Payment',
+	                    type: 'bar',
+	                    data: yAxis2
+	                }]
+	            };
 
-				return option;
-			}
-		}, {
-			key: 'componentDidMount',
-			value: function componentDidMount() {
-				this.createChart();
-			}
-		}, {
-			key: 'componentWillUnmount',
-			value: function componentWillUnmount() {
-				this.chart.dispose();
-			}
-		}, {
-			key: 'componentDidUpdate',
-			value: function componentDidUpdate() {
-				this.updateChart(this.props);
-			}
-		}, {
-			key: 'shouldComponentUpdate',
-			value: function shouldComponentUpdate(nextProps, nextState) {
-				return true;
-			}
-		}, {
-			key: 'componentWillReceiveProps',
-			value: function componentWillReceiveProps(nextProps) {
-				this.updateChart(nextProps);
-			}
-		}, {
-			key: 'render',
-			value: function render() {
-				return _react2.default.createElement('div', { id: this.props.type, style: { height: this.props.height, width: this.props.width } });
-			}
-		}]);
+	            return option;
+	        }
+	    }, {
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            this.createChart();
+	            var elem = ReactDOM.findDOMNode(this);
+	            var h = elem.offsetHeight;
+	            this.chart.resize();
+	        }
+	    }, {
+	        key: 'componentWillUnmount',
+	        value: function componentWillUnmount() {
+	            this.chart.dispose();
+	        }
+	    }, {
+	        key: 'componentDidUpdate',
+	        value: function componentDidUpdate() {
+	            this.chart.resize();
+	            this.updateChart(this.props);
+	        }
+	    }, {
+	        key: 'shouldComponentUpdate',
+	        value: function shouldComponentUpdate(nextProps, nextState) {
+	            return true;
+	        }
+	    }, {
+	        key: 'componentWillReceiveProps',
+	        value: function componentWillReceiveProps(nextProps) {
+	            this.updateChart(nextProps);
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement('div', { id: this.props.type,
+	                style: { height: this.props.height, width: this.props.width } });
+	        }
+	    }]);
 
-		return Trend;
+	    return Trend;
 	}(_react.Component);
 
 	exports.default = Trend;
@@ -111777,7 +111834,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactRedux = __webpack_require__(541);
+	var _reactRedux = __webpack_require__(540);
 
 	var _KPIs = __webpack_require__(1023);
 
@@ -111842,7 +111899,6 @@
 	          items: data,
 	          totals: totals,
 	          filters: filters,
-	          charopts: chartOpts,
 	          width: width,
 	          height: height,
 	          zoom: this.props.zoom,
@@ -111853,9 +111909,10 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var height = 200;
-	      var width = 200;
-	      console.log(this.props.zoom);
+	      //let height = (this.props.height * 50) / 100
+	      //let width  = (this.props.width * 33) / 100
+	      var height = this.props.height;
+	      var width = this.props.width;
 	      if (this.props.zoom.indexOf('KPI') > -1) {
 	        height = 550;
 	        width = 1100;
@@ -111882,7 +111939,8 @@
 	    data: state.chartData.kpiData.data,
 	    totals: totals,
 	    filters: state.chartFilters,
-	    zoom: state.dashboard.zoom
+	    zoom: state.dashboard.zoom,
+	    initial: state.dashboard.initial
 	  };
 	};
 
@@ -111910,9 +111968,9 @@
 
 	var _actions = __webpack_require__(536);
 
-	var _darkTheme = __webpack_require__(538);
+	var _darkTheme = __webpack_require__(564);
 
-	var _lightTheme = __webpack_require__(562);
+	var _lightTheme = __webpack_require__(561);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -111941,6 +111999,7 @@
 	        value: function getData() {
 	            var kpi = this.props.type;
 	            var items;
+	            var value = 0;
 	            if (!this.props.items) {
 	                items = [];
 	            } else {
@@ -111977,10 +112036,10 @@
 	                        var total = _step.value;
 
 	                        totalLoans = total.current.count;
-	                        if (kpi.indexOf('PORT') > -1) return total.current.metrics.calc_portfolio.calc;
-	                        if (kpi.indexOf('OS') > -1) return total.current.metrics.calc_o_s.calc;
-	                        if (kpi.indexOf('DELINQUENCY') > -1) return total.current.metrics.calc_default_propensity.calc;
-	                        if (kpi.indexOf('PROPENSITY') > -1) return total.current.metrics.calc_delinquency_recency.calc;
+	                        if (kpi.indexOf('PORT') > -1) value = total.current.metrics.calc_portfolio.calc;
+	                        if (kpi.indexOf('OS') > -1) value = total.current.metrics.calc_o_s.calc;
+	                        if (kpi.indexOf('DELINQUENCY') > -1) value = total.current.metrics.calc_default_propensity.calc;
+	                        if (kpi.indexOf('PROPENSITY') > -1) value = total.current.metrics.calc_delinquency_recency.calc;
 	                    }
 	                } catch (err) {
 	                    _didIteratorError = true;
@@ -112007,10 +112066,10 @@
 
 	                        if (item.group[0] == itemGroup) {
 	                            totalLoans = item.current.count;
-	                            if (kpi.indexOf('PORT') > -1) return item.current.metrics.calc_portfolio.calc;
-	                            if (kpi.indexOf('OS') > -1) return item.current.metrics.calc_o_s.calc;
-	                            if (kpi.indexOf('DP') > -1) return item.current.metrics.calc_default_propensity.calc;
-	                            if (kpi.indexOf('DR') > -1) return item.current.metrics.calc_delinquency_recency.calc;
+	                            if (kpi.indexOf('PORT') > -1) value = item.current.metrics.calc_portfolio.calc;
+	                            if (kpi.indexOf('OS') > -1) value = item.current.metrics.calc_o_s.calc;
+	                            if (kpi.indexOf('DELINQUENCY') > -1) value = item.current.metrics.calc_default_propensity.calc;
+	                            if (kpi.indexOf('PROPENSITY') > -1) value = item.current.metrics.calc_delinquency_recency.calc;
 	                        }
 	                    }
 	                } catch (err) {
@@ -112030,12 +112089,14 @@
 
 	                ;
 	            }
+	            return value;
 	        }
 	    }, {
 	        key: 'createChart',
 	        value: function createChart() {
 	            var domElement = ReactDOM.findDOMNode(this);
-	            var theme = this.props.type.indexOf('KPI') > -1 ? (0, _lightTheme.light)() : (0, _darkTheme.dark)();
+	            //let theme = (this.props.type.indexOf('KPI') > -1) ? light() : dark();
+	            var theme = (0, _darkTheme.dark)();
 	            this.chart = _echarts2.default.init(domElement, theme);
 	            this.updateChart(this.props);
 	        }
@@ -112048,7 +112109,6 @@
 	            }
 	            var newChartOptions = this.makeChartOptions(nextProps);
 	            this.chart.setOption(newChartOptions);
-	            this.props.charopts[this.props.type] = this.chart;
 	            this.chart.on('CLICK', nextProps.onClick);
 	        }
 	    }, {
@@ -112060,20 +112120,28 @@
 	                'KPIDEFAULTPROPENSITY': '#FFFF7D', //yellow
 	                'KPIDELINQUENCYRECENCY': '#FF6C5E' };
 	            //red
-	            var radius = [50, 65];
+	            var smaller = this.props.width <= this.props.height ? this.props.width : this.props.height;
+	            var inner = smaller / 4;
+	            var outter = inner * 32 / 100 + inner;
+	            //Proportion will be 76%
+	            //let outter = (this.props.height * 32) / 100
+	            //let inner = (outter * 76 ) / 100
+	            var radius = ['50%', '65%'];
 	            var center = ['50%', '50%'];
 	            var color = '#656565';
 	            var fsize = 20;
 	            var textColor = '#FFF';
 	            var name = ' ';
 	            if (this.props.zoom.indexOf('KPI') > -1) {
-	                radius = [90, 165];
-	                fsize = 27;
+	                radius = [95, 165];
+	                fsize = 30;
 	                color = '#777';
-	                textColor = '#777';
+	                color = '#656565';
+	                textColor = '#FFF';
 	                name = this.props.name;
 	            }
 
+	            //console.log(this.props.type+' '+this.getData());
 	            var val = parseFloat(Math.round(this.getData() * 100) / 100).toFixed(2);
 
 	            //TODO: These values must be moved from here to somewhere else any moment
@@ -112147,17 +112215,13 @@
 	    }, {
 	        key: 'componentDidUpdate',
 	        value: function componentDidUpdate() {
+	            this.chart.resize();
 	            this.updateChart(this.props);
 	        }
 	    }, {
 	        key: 'shouldComponentUpdate',
 	        value: function shouldComponentUpdate(nextProps, nextState) {
 	            return true;
-	        }
-	    }, {
-	        key: 'componentWillReceiveProps',
-	        value: function componentWillReceiveProps(nextProps) {
-	            this.updateChart(nextProps);
 	        }
 	    }, {
 	        key: 'render',
@@ -112528,6 +112592,64 @@
 
 /***/ },
 /* 1026 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(292);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var EmptyWidget = function (_React$Component) {
+	    _inherits(EmptyWidget, _React$Component);
+
+	    function EmptyWidget() {
+	        _classCallCheck(this, EmptyWidget);
+
+	        return _possibleConstructorReturn(this, Object.getPrototypeOf(EmptyWidget).apply(this, arguments));
+	    }
+
+	    _createClass(EmptyWidget, [{
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'div',
+	                null,
+	                _react2.default.createElement(
+	                    'h3',
+	                    null,
+	                    '+widget!'
+	                ),
+	                _react2.default.createElement(
+	                    'p',
+	                    null,
+	                    'A new dash generation'
+	                )
+	            );
+	        }
+	    }]);
+
+	    return EmptyWidget;
+	}(_react2.default.Component);
+
+	exports.default = EmptyWidget;
+
+/***/ },
+/* 1027 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -122375,13 +122497,13 @@
 
 
 /***/ },
-/* 1027 */
+/* 1028 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	        value: true
 	});
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -122392,9 +122514,9 @@
 
 	var _actions = __webpack_require__(536);
 
-	var _reactRedux = __webpack_require__(541);
+	var _reactRedux = __webpack_require__(540);
 
-	var _jquery = __webpack_require__(1026);
+	var _jquery = __webpack_require__(1027);
 
 	var _jquery2 = _interopRequireDefault(_jquery);
 
@@ -122407,191 +122529,162 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 	var AddWidgetButton = function (_React$Component) {
-	    _inherits(AddWidgetButton, _React$Component);
+	        _inherits(AddWidgetButton, _React$Component);
 
-	    function AddWidgetButton(state, context) {
-	        _classCallCheck(this, AddWidgetButton);
+	        function AddWidgetButton() {
+	                _classCallCheck(this, AddWidgetButton);
 
-	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(AddWidgetButton).call(this, state, context));
-
-	        _this.state = {};
-	        return _this;
-	    }
-
-	    _createClass(AddWidgetButton, [{
-	        key: 'addEmptyWidget',
-	        value: function addEmptyWidget() {
-	            //code
-
+	                return _possibleConstructorReturn(this, Object.getPrototypeOf(AddWidgetButton).apply(this, arguments));
 	        }
-	    }, {
-	        key: 'handleEmptyWidgetClick',
-	        value: function handleEmptyWidgetClick() {
-	            //code
-	            var widgetVals = {
-	                id: 1,
-	                name: 'WIDGET NAME',
-	                type: 'EMPTY',
-	                drow: 3,
-	                dcol: 1,
-	                dsizex: 3,
-	                dsizey: 2
-	            };
-	            //this.props.dispatch(addWidget(widgetVals));
-	            jwidget(widgetVals); //TODO:Change this
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            return _react2.default.createElement(
-	                'div',
-	                { className: 'fixed-action-btn', style: { bottom: '45px', right: '24px' } },
-	                _react2.default.createElement(
-	                    'a',
-	                    { className: 'btn-floating btn-large blue tooltipped', 'data-position': 'left', 'data-delay': '50', 'data-tooltip': 'Add new chart' },
-	                    _react2.default.createElement(
-	                        'i',
-	                        { className: 'large material-icons' },
-	                        'add'
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    'ul',
-	                    null,
-	                    _react2.default.createElement(
-	                        'li',
-	                        null,
-	                        _react2.default.createElement(
-	                            'a',
-	                            { className: 'btn-floating blue tooltipped',
-	                                'data-position': 'left',
-	                                'data-delay': '50',
-	                                onClick: this.handleEmptyWidgetClick.bind(this),
-	                                id: 'new',
-	                                'data-tooltip': 'Empty widget' },
-	                            _react2.default.createElement(
-	                                'i',
-	                                { className: 'material-icons' },
-	                                'crop_square'
-	                            )
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        'li',
-	                        null,
-	                        _react2.default.createElement(
-	                            'a',
-	                            { className: 'btn-floating red tooltipped',
-	                                'data-position': 'left',
-	                                'data-delay': '50',
-	                                'data-tooltip': 'Bar' },
-	                            _react2.default.createElement(
-	                                'i',
-	                                { className: 'material-icons' },
-	                                'insert_chart'
-	                            )
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        'li',
-	                        null,
-	                        _react2.default.createElement(
-	                            'a',
-	                            { className: 'btn-floating yellow darken-1 tooltipped',
-	                                'data-position': 'left',
-	                                'data-delay': '50',
-	                                'data-tooltip': 'Pie' },
-	                            _react2.default.createElement(
-	                                'i',
-	                                { className: 'material-icons' },
-	                                'pie_chart'
-	                            )
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        'li',
-	                        null,
-	                        _react2.default.createElement(
-	                            'a',
-	                            { className: 'btn-floating blue-gray tooltipped',
-	                                'data-position': 'left',
-	                                'data-delay': '50',
-	                                'data-tooltip': 'Donut' },
-	                            _react2.default.createElement(
-	                                'i',
-	                                { className: 'material-icons' },
-	                                'donut_large'
-	                            )
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        'li',
-	                        null,
-	                        _react2.default.createElement(
-	                            'a',
-	                            { className: 'btn-floating green tooltipped',
-	                                'data-position': 'left',
-	                                'data-delay': '50',
-	                                'data-tooltip': 'Bubble' },
-	                            _react2.default.createElement(
-	                                'i',
-	                                { className: 'material-icons' },
-	                                'bubble_chart'
-	                            )
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        'li',
-	                        null,
-	                        _react2.default.createElement(
-	                            'a',
-	                            { className: 'btn-floating blue tooltipped',
-	                                'data-position': 'left',
-	                                'data-delay': '50',
-	                                'data-tooltip': 'Lines' },
-	                            _react2.default.createElement(
-	                                'i',
-	                                { className: 'material-icons' },
-	                                'show_chart'
-	                            )
-	                        )
-	                    )
-	                )
-	            );
-	        }
-	    }]);
 
-	    return AddWidgetButton;
+	        _createClass(AddWidgetButton, [{
+	                key: 'handleEmptyWidgetClick',
+	                value: function handleEmptyWidgetClick() {
+	                        var widgetVals = {
+	                                id: 1,
+	                                name: 'WIDGET NAME',
+	                                type: 'EMPTY',
+	                                drow: 2,
+	                                dcol: 1,
+	                                dsizex: 2,
+	                                dsizey: 1,
+	                                height: 200,
+	                                width: 400
+	                        };
+	                        jwidget(widgetVals);
+	                        //this.props.dispatch(addWidget(widgetVals));
+	                }
+	        }, {
+	                key: 'render',
+	                value: function render() {
+	                        return _react2.default.createElement(
+	                                'div',
+	                                { className: 'fixed-action-btn', style: { bottom: '45px', right: '24px' } },
+	                                _react2.default.createElement(
+	                                        'a',
+	                                        { className: 'btn-floating btn-large blue tooltipped', 'data-position': 'left', 'data-delay': '50', 'data-tooltip': 'Add new chart' },
+	                                        _react2.default.createElement(
+	                                                'i',
+	                                                { className: 'large material-icons' },
+	                                                'add'
+	                                        )
+	                                ),
+	                                _react2.default.createElement(
+	                                        'ul',
+	                                        null,
+	                                        _react2.default.createElement(
+	                                                'li',
+	                                                null,
+	                                                _react2.default.createElement(
+	                                                        'a',
+	                                                        { className: 'btn-floating blue tooltipped',
+	                                                                'data-position': 'left',
+	                                                                'data-delay': '50',
+	                                                                onClick: this.handleEmptyWidgetClick.bind(this),
+	                                                                id: 'new',
+	                                                                'data-tooltip': 'Empty widget' },
+	                                                        _react2.default.createElement(
+	                                                                'i',
+	                                                                { className: 'material-icons' },
+	                                                                'crop_square'
+	                                                        )
+	                                                )
+	                                        ),
+	                                        _react2.default.createElement(
+	                                                'li',
+	                                                null,
+	                                                _react2.default.createElement(
+	                                                        'a',
+	                                                        { className: 'btn-floating red tooltipped',
+	                                                                'data-position': 'left',
+	                                                                'data-delay': '50',
+	                                                                'data-tooltip': 'Bar' },
+	                                                        _react2.default.createElement(
+	                                                                'i',
+	                                                                { className: 'material-icons' },
+	                                                                'insert_chart'
+	                                                        )
+	                                                )
+	                                        ),
+	                                        _react2.default.createElement(
+	                                                'li',
+	                                                null,
+	                                                _react2.default.createElement(
+	                                                        'a',
+	                                                        { className: 'btn-floating yellow darken-1 tooltipped',
+	                                                                'data-position': 'left',
+	                                                                'data-delay': '50',
+	                                                                'data-tooltip': 'Pie' },
+	                                                        _react2.default.createElement(
+	                                                                'i',
+	                                                                { className: 'material-icons' },
+	                                                                'pie_chart'
+	                                                        )
+	                                                )
+	                                        ),
+	                                        _react2.default.createElement(
+	                                                'li',
+	                                                null,
+	                                                _react2.default.createElement(
+	                                                        'a',
+	                                                        { className: 'btn-floating blue-gray tooltipped',
+	                                                                'data-position': 'left',
+	                                                                'data-delay': '50',
+	                                                                'data-tooltip': 'Donut' },
+	                                                        _react2.default.createElement(
+	                                                                'i',
+	                                                                { className: 'material-icons' },
+	                                                                'donut_large'
+	                                                        )
+	                                                )
+	                                        ),
+	                                        _react2.default.createElement(
+	                                                'li',
+	                                                null,
+	                                                _react2.default.createElement(
+	                                                        'a',
+	                                                        { className: 'btn-floating green tooltipped',
+	                                                                'data-position': 'left',
+	                                                                'data-delay': '50',
+	                                                                'data-tooltip': 'Bubble' },
+	                                                        _react2.default.createElement(
+	                                                                'i',
+	                                                                { className: 'material-icons' },
+	                                                                'bubble_chart'
+	                                                        )
+	                                                )
+	                                        ),
+	                                        _react2.default.createElement(
+	                                                'li',
+	                                                null,
+	                                                _react2.default.createElement(
+	                                                        'a',
+	                                                        { className: 'btn-floating blue tooltipped',
+	                                                                'data-position': 'left',
+	                                                                'data-delay': '50',
+	                                                                'data-tooltip': 'Lines' },
+	                                                        _react2.default.createElement(
+	                                                                'i',
+	                                                                { className: 'material-icons' },
+	                                                                'show_chart'
+	                                                        )
+	                                                )
+	                                        )
+	                                )
+	                        );
+	                }
+	        }]);
+
+	        return AddWidgetButton;
 	}(_react2.default.Component);
 
-	var mapStateToProps = function mapStateToProps(state) {
-	    return {
-	        widgets: state.dashboard.widgets
-	    };
-	};
-
-	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
-	    return {
-	        onClick: function onClick() {
-	            var widgetVals = {
-	                id: 1,
-	                name: 'WIDGET NAME',
-	                type: 'EMPTY',
-	                drow: 3,
-	                dcol: 1,
-	                dsizex: 3,
-	                dsizey: 2
-	            };
-	            dispatch((0, _actions.addWidget)(widgetVals));
-	        }
-	    };
-	};
-
 	//export default connect(mapStateToProps,mapDispatchToProps)(AddWidgetButton)
+
+
 	exports.default = AddWidgetButton;
 
 /***/ },
-/* 1028 */
+/* 1029 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -122671,7 +122764,7 @@
 	        value: function render() {
 	            var styles = {
 	                row: { marginBottom: 0 },
-	                cols2: { backgroundColor: '#3C4049', minHeight: 660 },
+	                cols2: { backgroundColor: '#3C4049', minHeight: 700 },
 	                input: { color: '#FFF' },
 	                cols10: { minHeight: '100%' },
 	                modalchart: { height: 550 },

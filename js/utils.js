@@ -1,6 +1,6 @@
-$('ul').on('click', 'li div.card section.card-header a.fullscr', function(){
-  $('#modal1').openModal();
-})
+//$('ul').on('click', 'li div.card section.card-header a.fullscr', function(){
+  //$('#modal1').openModal();
+//})
 
 $('ul').on('click', 'li div.card section.card-header a.del', function(){
     console.log('asdadas');
