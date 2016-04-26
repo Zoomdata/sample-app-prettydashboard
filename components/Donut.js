@@ -22,7 +22,6 @@ export default class Donut extends Component {
         }
         var newChartOptions = this.makeChartOptions(props);
         this.chart.setOption(newChartOptions);
-        this.props.charopts[this.props.type] = this.chart;
         this.chart.on('CLICK', props.onClick);
     }
 
@@ -121,7 +120,7 @@ export default class Donut extends Component {
     render(){
         //console.log('in Donut render ' + Date.now());
         return (
-            <div id={this.props.type} style={{height: this.props.height, width: this.props.width}} />
+            <div id={'canv-'+this.props.type} style={{height: this.props.height, width: this.props.width}} />
         )
     }
 

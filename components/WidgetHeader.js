@@ -8,19 +8,19 @@ class WidgetHeader extends React.Component{
     }
 
   setFullScreen(){
+      console.log(this.props.id);
     this.props.dispatch(setChart(this.props.id));
   }
 
   handleCloseWidget(){
-      alert('Sure?')
     this.props.dispatch(closeWidget(this.props.id));
   }
 
     render(){
         return ( <section className="card-header">
             <div className="chart-name">{this.props.name}</div>
-                    <a href="#modal1"
-                        className="tooltipped fullscr modal-trigger"
+                    <a href="#modalDetails"
+                        className="fullscr modal-trigger"
                         data-position="bottom"
                         onClick={this.setFullScreen.bind(this)}
                         data-delay="50"
@@ -28,11 +28,10 @@ class WidgetHeader extends React.Component{
                         <i className="material-icons md-light">open_in_new</i>
                     </a>
                     <a href="#"
-                        className="del tooltipped"
+                        className="del"
                         data-position="bottom"
                         onClick={this.handleCloseWidget.bind(this)}
-                        data-delay="50"
-                        data-tooltip="Delete">
+                        data-delay="10">
                             <i className="material-icons md-light">close</i></a>
                   </section>
                );

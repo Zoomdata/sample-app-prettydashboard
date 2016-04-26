@@ -84,16 +84,15 @@ export default class KPIs extends Component {
             'KPIDEFAULTPROPENSITY': '#FFFF7D', //yellow
             'KPIDELINQUENCYRECENCY': '#FF6C5E', //red
         }
-        let smaller = this.props.width <= this.props.height ? this.props.width : this.props.height;
-        let inner = smaller / 4
-        let outter = (inner * 32) / 100 + inner
-        //Proportion will be 76%
-        //let outter = (this.props.height * 32) / 100
-        //let inner = (outter * 76 ) / 100
+        //let smaller = this.props.width <= this.props.height ? this.props.width : this.props.height;
+        //let inner = smaller / 4
+        //let outter = (inner * 32) / 100 + inner
+        //var radius = [inner,outter];
+        //var fsize = ( inner * 36 ) / 100;
         var radius = ['50%', '65%'];
         var center = ['50%', '50%'];
         var color = '#656565'
-        var fsize = 20;
+        var fsize = 19;
         var textColor = '#FFF'
         var name = ' '
         if(this.props.zoom.indexOf('KPI') > -1){
@@ -193,6 +192,6 @@ export default class KPIs extends Component {
     }
 
     render() {
-        return(<div id={this.props.type} style={{height: this.props.height, width: this.props.width}} />)
+        return(<div id={'canv-'+this.props.type} style={{height: this.props.height, width: this.props.width}} />)
 	}
 }

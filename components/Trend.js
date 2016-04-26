@@ -26,8 +26,6 @@ export default class Trend extends Component {
         }
         var newChartOptions = this.makeChartOptions(nextProps);
         this.chart.setOption(newChartOptions);
-        this.props.charopts[this.props.type] = this.chart;
-        this.props.charopts['theme'] = this.props.theme;
         this.chart.on('CLICK', nextProps.onClick);
     }
 
@@ -140,7 +138,7 @@ export default class Trend extends Component {
 
 	render(){
 	  	return (
-            <div id={this.props.type} 
+            <div id={'canv-'+this.props.type} 
                 style={{height: this.props.height, width: this.props.width}} />
     	)
 	}

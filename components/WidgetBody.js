@@ -20,7 +20,7 @@ class WidgetBody extends React.Component{
     getChart(type, id) {
         if(type.indexOf('KPI') > -1)
             { return (
-                    <div>
+                    <div className="wdg-wrapper">
                         <VisibleKPIs key={id} 
                             type={type} 
                             height={this.props.height} 
@@ -30,7 +30,7 @@ class WidgetBody extends React.Component{
             }
         else if(type === 'DONUT')
             { return (
-                    <div>
+                    <div className="wdg-wrapper">
                         <VisibleDonut key={id} 
                             type={type} 
                             height={this.props.height} 
@@ -40,7 +40,7 @@ class WidgetBody extends React.Component{
             }
          else if(type === 'TREND') //Trend
             { return ( 
-                <div>
+                <div className="wdg-wrapper">
                     <VisibleTrend key={id} 
                         type={type} 
                         height={this.props.height} 
@@ -50,7 +50,7 @@ class WidgetBody extends React.Component{
             }
             else{
                 return(
-                    <div>
+                   <div className="wdg-wrapper">
                         <EmptyWidget key={id} 
                             type={type} 
                             height={this.props.height} 

@@ -6,12 +6,18 @@ const initialState = {
   name:'',
   nextid: 7,
   widgets:[
-      { i: '1', name: 'TREND CHART', type:'TREND',  x: 0, y: 5, h:10, w:6, width: 600, height: 400 },
-      { i: '2', name: 'LOANS BY GRADE', type:'DONUT', x: 6, y: 0, h:10, w:6, width: 600, height:400 },
-      { i: '3', name: 'PORTFOLIO', type:'KPIPORTFOLIO', x: 0, y: 0, h:5, w:2,  width: 200, height:200 },
-      { i: '4', name: 'O/S', type:'KPIOS', x: 2, y: 0, h:5, w:2, width: 200, height:200 },
-      { i: '5', name: 'DELINQ. RECENCY', type:'KPIDELINQUENCYRECENCY', x: 4, y: 0, h:5, w:2, width: 200, height:200 },
-      { i: '6', name: 'DEF PROPENSITY', type:'KPIDEFAULTPROPENSITY', x: 6, y: 10, h:5, w:2, width: 200, height:200 },
+      { i: '1', name: 'TREND CHART', type:'TREND',  
+          x: 0, y: 5, h:10, w:6, minW:4, minH:7,  width: 600, height: 400 },
+      { i: '2', name: 'LOANS BY GRADE', type:'DONUT', 
+          x: 6, y: 0, h:10, w:6, minW:4, minH:7, width: 600, height:380 },
+      { i: '3', name: 'PORTFOLIO', type:'KPIPORTFOLIO', 
+          x: 0, y: 0, h:5, w:2, minW:2, minH:5,  width: 200, height:170 },
+      { i: '4', name: 'O/S', type:'KPIOS', 
+          x: 2, y: 0, h:5, w:2, minW:2, minH:5, width: 200, height:170 },
+      { i: '5', name: 'DELINQ. RECENCY', type:'KPIDELINQUENCYRECENCY', 
+          x: 4, y: 0, h:5, w:2, minW:2, minH:5, width: 200, height:170 },
+      { i: '6', name: 'DEF PROPENSITY', type:'KPIDEFAULTPROPENSITY', 
+          x: 6, y: 10, h:5, w:2, minW:2, minH:5, width: 200, height:170 },
   ]
 }
 
@@ -25,7 +31,7 @@ function getType(elems,id){
     let type = '';
     let name = '';
     elems.forEach(function (e){
-        if (e.id == id) {
+        if (e.i == id) {
             type = e.type;
             name = e.name;
         }
