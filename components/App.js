@@ -1,43 +1,49 @@
 import React from 'react';
-import Widgets from './Widget';
+import Widget from './Widget';
 import AddWidgetButton from './AddWidgetButton';
 import ZoomWidget from './ZoomWidget';
+import ReactGridLayout from 'react-grid-layout';
 import { connect } from 'react-redux';
-import $ from 'jquery';
+
 class Dashboard extends React.Component{
 
+    onResize(layout, oldLayoutItem, layoutItem, placeholder, e){
+        let elem = document.getElementById(layoutItem.i)
+        console.log(elem.offsetHeight);
+        console.log(elem.offsetWidth);
+    }
+
     render(){
-        return (
-            <div>
-                <div className="container" align="left">
-                    <div className="gridster">
-                        <ul>
-                            { this.props.widgets.map((w, i) => {
-                                    return (
-                                            <Widgets 
-                                                key={i}
-                                                id={w.id}
-                                                drow={w.drow}
-                                                dcol={w.dcol}
-                                                dsizex={w.dsizex}
-                                                dsizey={w.dsizey}
-                                                height={w.height} 
-                                                width={w.width} 
-                                                name={w.name}
-                                                type={w.type}
-                                                dispatch={this.props.dispatch}
-                                            />
-                                    )})
-                            }
-                        </ul>
-                    </div>
+        return ( <div>
+                    <ReactGridLayout 
+                        className="layout" 
+                        layout={this.props.widgets} 
+                        draggableHandle={'section, section *'}
+                        cols={12} 
+                        onResize={this.onResize}
+                        rowHeight={30} 
+                        width={1200}>
+                        { this.props.widgets.map((w) => {
+                            return (
+                                <div key={w.i}>
+                                    <Widget id={w.i}
+                                       dsizex={w.x}
+                                       dsizey={w.y}
+                                       height={w.height} 
+                                       width={w.width} 
+                                       name={w.name}
+                                       type={w.type}
+                                       dispatch={this.props.dispatch}/>
+                                </div>
+                            )})
+                        }
+                    </ReactGridLayout>
+                    <AddWidgetButton dispatch={this.props.dispatch}/>
+                    <ZoomWidget
+                        dispatch={this.props.dispatch}
+                        name={this.props.name}
+                        zoom={this.props.zoom}/>
                 </div>
-                <AddWidgetButton dispatch={this.props.dispatch}/>
-                <ZoomWidget
-                    dispatch={this.props.dispatch}
-                    name={this.props.name}
-                    zoom={this.props.zoom}/>
-            </div>
               );
     }
 }

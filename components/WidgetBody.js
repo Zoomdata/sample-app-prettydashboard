@@ -7,7 +7,7 @@ import { resizeWidget } from '../redux/actions'
 import VisibleDonut  from './VisibleDonut';
 import VisibleTrend  from './VisibleTrend';
 import VisibleKPIs  from './VisibleKPIs';
-import EmptyWidget  from './EmptyWidget';
+import EmptyWidget from './EmptyWidget';
 import Trend  from './Trend';
 var echarts = require('echarts');
 

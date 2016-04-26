@@ -4,16 +4,14 @@ const initialState = {
   initial: false,
   zoom: '',
   name:'',
+  nextid: 7,
   widgets:[
-      { id: 0, name: 'TREND CHART', type:'TREND', drow: 2, dcol: 1, dsizex: 3, dsizey: 2, width: 600, height: 400 },
-      { id: 1, name: 'LOANS BY GRADE', type:'DONUT', drow: 1, dcol: 4, dsizex: 3, dsizey: 2, width: 600, height:400 },
-      { id: 2, name: 'PORTFOLIO', type:'KPIPORTFOLIO', drow: 1, dcol: 1, dsizex: 1, dsizey: 1, width: 200, height:200 },
-      { id: 3, name: 'O/S', type:'KPIOS', drow: 1, dcol: 2, dsizex: 1, dsizey: 1, width: 200, height:200 },
-      { id: 4, name: 'DELINQ. RECENCY', type:'KPIDELINQUENCYRECENCY', 
-          drow: 1, dcol: 3, dsizex: 1, dsizey: 1, width: 200, height:200 },
-      { id: 5, name: 'DEF PROPENSITY', type:'KPIDEFAULTPROPENSITY', 
-          drow: 3, dcol: 4, dsizex: 1, dsizey: 1, width: 200, height:200 },
-       //{id: 1, name: 'WIDGET NAME', type:'EMPTY', drow: 2, dcol: 1, dsizex: 2, dsizey: 1, height: 200, width: 400 }
+      { i: '1', name: 'TREND CHART', type:'TREND',  x: 0, y: 5, h:10, w:6, width: 600, height: 400 },
+      { i: '2', name: 'LOANS BY GRADE', type:'DONUT', x: 6, y: 0, h:10, w:6, width: 600, height:400 },
+      { i: '3', name: 'PORTFOLIO', type:'KPIPORTFOLIO', x: 0, y: 0, h:5, w:2,  width: 200, height:200 },
+      { i: '4', name: 'O/S', type:'KPIOS', x: 2, y: 0, h:5, w:2, width: 200, height:200 },
+      { i: '5', name: 'DELINQ. RECENCY', type:'KPIDELINQUENCYRECENCY', x: 4, y: 0, h:5, w:2, width: 200, height:200 },
+      { i: '6', name: 'DEF PROPENSITY', type:'KPIDEFAULTPROPENSITY', x: 6, y: 10, h:5, w:2, width: 200, height:200 },
   ]
 }
 
@@ -45,7 +43,8 @@ const data = (state = initialState, action) => {
             return Object.assign({}, state, {initial: true})
 
         case ADD_WIDGET:
-            let obj = Object.assign({}, state, { widgets: [...state.widgets, action.data] })
+            let newItem = Object.assign({}, action.data, {i:state.nextid+''})
+            let obj = Object.assign({}, state, { widgets: [...state.widgets, newItem], nextid: state.nextid + 1 })
             console.log(obj);
             return obj;
 
@@ -59,7 +58,7 @@ const data = (state = initialState, action) => {
 
         case CLOSE_WIDGET:
             return Object.assign({}, state, {
-                widgets: state.widgets.filter((w) => { return w.id !== action.id })
+                widgets: state.widgets.filter((w) => { return w.i !== action.id })
             });
 
         default:

@@ -11,6 +11,11 @@ class WidgetHeader extends React.Component{
     this.props.dispatch(setChart(this.props.id));
   }
 
+  handleCloseWidget(){
+      alert('Sure?')
+    this.props.dispatch(closeWidget(this.props.id));
+  }
+
     render(){
         return ( <section className="card-header">
             <div className="chart-name">{this.props.name}</div>
@@ -25,6 +30,7 @@ class WidgetHeader extends React.Component{
                     <a href="#"
                         className="del tooltipped"
                         data-position="bottom"
+                        onClick={this.handleCloseWidget.bind(this)}
                         data-delay="50"
                         data-tooltip="Delete">
                             <i className="material-icons md-light">close</i></a>
