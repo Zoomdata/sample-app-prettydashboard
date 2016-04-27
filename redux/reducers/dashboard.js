@@ -1,9 +1,11 @@
 //My reducers
-import { ADD_WIDGET, CLOSE_WIDGET, RESIZE_WIDGET, SET_CHART, FIRST_RENDER } from '../actions';
+import { ADD_WIDGET, CLOSE_WIDGET, RESIZE_WIDGET, SET_CHARTMAX, SET_CHARTUPD, FIRST_RENDER } from '../actions';
+import { getItem } from '../../utils/tools';
 const initialState = {
   initial: false,
   zoom: '',
   name:'',
+  toupd: false,
   nextid: 7,
   widgets:[
       { i: '1', name: 'TREND CHART', type:'TREND',  
@@ -21,29 +23,15 @@ const initialState = {
   ]
 }
 
-function getPos(elems,id){
-    elems.forEach(function (e){
-        if (e.id == id) return elems.indexOf(e);
-    })
-}
-
-function getType(elems,id){
-    let type = '';
-    let name = '';
-    elems.forEach(function (e){
-        if (e.i == id) {
-            type = e.type;
-            name = e.name;
-        }
-    })
-    return [type,name];
-}
-
 const data = (state = initialState, action) => {
     switch (action.type) {
-        case SET_CHART:
-            var res = getType(state.widgets, action.id)
-            return Object.assign({}, state, {zoom: res[0], name:res[1]})
+        case SET_CHARTMAX: //Widget to be maximized
+            if (!action.id) { return Object.assign({}, state, {zoom: '', name: ''}) }
+            var res = getItem(state.widgets, action.id)
+            return Object.assign({}, state, {zoom: res.type, name: res.name})
+
+        case SET_CHARTUPD: //Widget to be updated, ie: resize
+            return Object.assign({}, state, {toupd: action.id})
 
         case FIRST_RENDER:
             return Object.assign({}, state, {initial: true})
@@ -51,7 +39,6 @@ const data = (state = initialState, action) => {
         case ADD_WIDGET:
             let newItem = Object.assign({}, action.data, {i:state.nextid+''})
             let obj = Object.assign({}, state, { widgets: [...state.widgets, newItem], nextid: state.nextid + 1 })
-            console.log(obj);
             return obj;
 
         case RESIZE_WIDGET:

@@ -6,9 +6,19 @@ import $ from 'jquery';
 import { resizeWidget } from '../redux/actions';
 class Widget extends React.Component{
 
+    handleLeave(){
+        let grid = document.getElementById('grid-'+this.props.id)
+        this.props.dispatch(resizeWidget({
+               id: this.props.type,
+               width: grid.offsetWidth,
+               height: grid.offsetHeight - 20
+        }))
+    }
+
     render(){
         return ( 
-                  <div id={this.props.id} className="card card-panel dark-grey">
+            <div id={this.props.id} 
+                className="card card-panel dark-grey">
                       <WidgetHeader id={this.props.id}
                                     dispatch={this.props.dispatch}
                                     name = {this.props.name}/>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { setChart } from '../redux/actions';
+import { setChartMax } from '../redux/actions';
 import VisibleTrend  from './VisibleTrend';
 import VisibleDonut  from './VisibleDonut';
 import VisibleKPIs  from './VisibleKPIs';
@@ -7,7 +7,7 @@ import VisibleKPIs  from './VisibleKPIs';
 class DetailsView extends React.Component{
 
       closeFullScreen(){
-        this.props.dispatch(setChart('#'));
+        this.props.dispatch(setChartMax(false));
       }
 
     getChart(id, type) {

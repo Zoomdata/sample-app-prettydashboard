@@ -19,7 +19,8 @@ export const CHANGE_TREND_FILTER = 'CHANGE_TREND_FILTER';
 export const ADD_WIDGET = 'ADD_WIDGET';
 export const CLOSE_WIDGET = 'CLOSE_WIDGET';
 export const RESIZE_WIDGET = 'RESIZE_WIDGET';
-export const SET_CHART = 'SET_CHART';
+export const SET_CHARTMAX = 'SET_CHARTMAX';
+export const SET_CHARTUPD = 'SET_CHARTUPD';
 
 //My action creator
 export function addWidget(data){
@@ -36,9 +37,15 @@ export function addWidget(data){
     data
   }
 }
-export function setChart(id){
+export function setChartMax(id){
   return{
-    type: SET_CHART,
+    type: SET_CHARTMAX,
+    id
+  }
+}
+export function setChartUpd(id){
+  return{
+    type: SET_CHARTUPD,
     id
   }
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { closeWidget, setChart } from '../redux/actions';
+import { closeWidget, setChartMax } from '../redux/actions';
 import { light } from '../utils/light-theme';
 class WidgetHeader extends React.Component{
 
@@ -8,8 +8,7 @@ class WidgetHeader extends React.Component{
     }
 
   setFullScreen(){
-      console.log(this.props.id);
-    this.props.dispatch(setChart(this.props.id));
+    this.props.dispatch(setChartMax(this.props.id));
   }
 
   handleCloseWidget(){

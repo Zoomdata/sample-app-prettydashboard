@@ -63,16 +63,8 @@ const loadTrend = (data, width, height, onClick, type, zoom) => {
 
 class VisibleTrend extends React.Component{
 
-    constructor(state,context){
-        super(state,context);
-        this.state = { 
-            heightMod: -50,
-            widthMod: 210
-        };
-    }
-
     render(){
-        let height = this.props.height - 50;
+        let height = this.props.height - 20;
         let width = this.props.width - 20;
         if(this.props.zoom == 'TREND')
             {
