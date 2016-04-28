@@ -63,7 +63,7 @@ class GridTest extends React.Component{
 
     render(){
                 let styles={
-                    widget:{backgroundColor:'#FFF'},
+                    widget:{backgroundColor:'#FFF',width:'1800px'},
                     head:{
                         backgroundColor:'#DDD', 
                         cursor:'move',
@@ -76,10 +76,10 @@ class GridTest extends React.Component{
                             className="layout" 
                             layout={this.state.layout} 
                             draggableHandle={'div.header, div.header *'}
-                            cols={12} 
+                            cols={52} 
                             onResize={this.onResize}
                             rowHeight={30} 
-                            width={1200}>
+                            width={5200}>
                             { this.state.layout.map((w) => {
                                 return (
                                     <div key={w.i} style={styles.widget}>
