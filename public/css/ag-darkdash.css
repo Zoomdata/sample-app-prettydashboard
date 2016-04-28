@@ -380,15 +380,16 @@
 .ag-darkdash .ag-paging-panel {
   text-align:center;
   margin-top:8px;
-  font-size:85%;
+  font-size:90%;
   color: #DDD;
   padding: 4px;
 }
 .ag-darkdash .ag-paging-button {
   margin-left: 4px;
   margin-right: 4px;
-  background-color:#201F21;
-  border: solid 1px #777;
+  background-color:#00786D;
+  border-radius: 1px;
+  border: solid 1px #00786D;
 }
 .ag-darkdash .ag-paging-row-summary-panel {
   width: 400px;
