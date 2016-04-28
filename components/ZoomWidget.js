@@ -1,14 +1,14 @@
 import React from 'react';
-import { setChartMax } from '../redux/actions';
+import { setChart } from '../redux/actions';
 import VisibleTrend  from './VisibleTrend';
 import VisibleDonut  from './VisibleDonut';
 import VisibleKPIs  from './VisibleKPIs';
 import VisibleTable  from './VisibleTable';
 
-class DetailsView extends React.Component{
+class ZoomWidget extends React.Component{
 
       closeFullScreen(){
-        this.props.dispatch(setChartMax(false));
+        this.props.dispatch(setChart('#'));
       }
 
     getChart(id, type) {
@@ -53,7 +53,7 @@ class DetailsView extends React.Component{
             modalchart:{height:530},
             right:{paddingRight:20,textAlign:'right'}
         }
-        return( <div id="modalDetails" className="modal bottom-sheet">
+        return( <div id="modal1" className="modal bottom-sheet">
                     <div className="modal-content">
                     <div className="row" style={styles.row}>
                       <div className="col s2" style={styles.cols2}>
@@ -91,4 +91,4 @@ class DetailsView extends React.Component{
               )
     }
 }
-export default DetailsView
+export default ZoomWidget

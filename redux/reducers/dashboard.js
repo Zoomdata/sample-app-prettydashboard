@@ -1,45 +1,54 @@
 //My reducers
-import { ADD_WIDGET, CLOSE_WIDGET, RESIZE_WIDGET, SET_CHARTMAX, SET_CHARTUPD, FIRST_RENDER } from '../actions';
-import { getItem } from '../../utils/tools';
+import { ADD_WIDGET, CLOSE_WIDGET, RESIZE_WIDGET, SET_CHART, FIRST_RENDER } from '../actions';
 const initialState = {
   initial: false,
   zoom: '',
   name:'',
-  toupd: false,
-  nextid: 7,
   widgets:[
-      { i: '1', name: 'TREND CHART', type:'TREND',  
-          x: 0, y: 5, h:10, w:6, minW:4, minH:7,  width: 600, height: 400 },
-      { i: '2', name: 'LOANS BY GRADE', type:'DONUT', 
-          x: 6, y: 0, h:10, w:6, minW:4, minH:7, width: 600, height:380 },
-      { i: '3', name: 'PORTFOLIO', type:'KPIPORTFOLIO', 
-          x: 0, y: 0, h:5, w:2, minW:2, minH:5,  width: 200, height:170 },
-      { i: '4', name: 'O/S', type:'KPIOS', 
-          x: 2, y: 0, h:5, w:2, minW:2, minH:5, width: 200, height:170 },
-      { i: '5', name: 'DELINQ. RECENCY', type:'KPIDELINQUENCYRECENCY', 
-          x: 4, y: 0, h:5, w:2, minW:2, minH:5, width: 200, height:170 },
-      { i: '6', name: 'DEF PROPENSITY', type:'KPIDEFAULTPROPENSITY', 
-          x: 6, y: 10, h:5, w:2, minW:2, minH:5, width: 200, height:170 },
+      { id: 0, name: 'TREND CHART', type:'TREND', drow: 2, dcol: 1, dsizex: 3, dsizey: 2, width: 600, height: 400 },
+      { id: 1, name: 'LOANS BY GRADE', type:'DONUT', drow: 3, dcol: 4, dsizex: 3, dsizey: 2, width: 600, height:400 },
+      { id: 2, name: 'PORTFOLIO', type:'KPIPORTFOLIO', drow: 1, dcol: 1, dsizex: 1, dsizey: 1, width: 200, height:200 },
+      { id: 3, name: 'O/S', type:'KPIOS', drow: 1, dcol: 2, dsizex: 1, dsizey: 1, width: 200, height:200 },
+      { id: 4, name: 'DELINQ. RECENCY', type:'KPIDELINQUENCYRECENCY', 
+          drow: 1, dcol: 3, dsizex: 1, dsizey: 1, width: 200, height:200 },
+      { id: 5, name: 'DEF PROPENSITY', type:'KPIDEFAULTPROPENSITY', 
+          drow: 4, dcol: 3, dsizex: 1, dsizey: 1, width: 200, height:200 },
+       //{id: 1, name: 'WIDGET NAME', type:'EMPTY', drow: 2, dcol: 1, dsizex: 2, dsizey: 1, height: 200, width: 400 }
+      { id: 6, name: 'LENDS DETAILS', type:'TABLE', drow: 1, dcol: 4, dsizex: 3, dsizey: 2, width: 620, height:410 },
   ]
+}
+
+function getPos(elems,id){
+    elems.forEach(function (e){
+        if (e.id == id) return elems.indexOf(e);
+    })
+}
+
+function getType(elems,id){
+    let type = '';
+    let name = '';
+    elems.forEach(function (e){
+        if (e.id == id) {
+            type = e.type;
+            name = e.name;
+        }
+    })
+    return [type,name];
 }
 
 const data = (state = initialState, action) => {
     switch (action.type) {
-        case SET_CHARTMAX: //Widget to be maximized
-            if (!action.id) { return Object.assign({}, state, {zoom: '', name: ''}) }
-            var res = getItem(state.widgets, action.id)
-            return Object.assign({}, state, {zoom: res.type, name: res.name})
-
-        case SET_CHARTUPD: //Widget to be updated, ie: resize
-            return Object.assign({}, state, {toupd: action.id})
+        case SET_CHART:
+            var res = getType(state.widgets, action.id)
+            let obj = Object.assign({}, state, {zoom: res[0], name:res[1]})
+            console.log(obj);
+            return obj;
 
         case FIRST_RENDER:
             return Object.assign({}, state, {initial: true})
 
         case ADD_WIDGET:
-            let newItem = Object.assign({}, action.data, {i:state.nextid+''})
-            let obj = Object.assign({}, state, { widgets: [...state.widgets, newItem], nextid: state.nextid + 1 })
-            return obj;
+            return Object.assign({}, state, { widgets: [...state.widgets, action.data] })
 
         case RESIZE_WIDGET:
             return Object.assign({}, state, {
@@ -50,9 +59,11 @@ const data = (state = initialState, action) => {
             });
 
         case CLOSE_WIDGET:
-            return Object.assign({}, state, {
-                widgets: state.widgets.filter((w) => { return w.i !== action.id })
+            let obje = Object.assign({}, state, {
+                widgets: state.widgets.filter((w) => { return w.id !== action.id })
             });
+            console.log(obje);
+            return obje;
 
         default:
             return state

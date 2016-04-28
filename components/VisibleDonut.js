@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import _ from 'lodash/core';
 import { setLoanGrade } from '../redux/actions'
 import Donut  from './Donut';
-import LoadingDataDiv from './LoadingDataDiv';
 
 let prevSelection = 'All';
 
@@ -34,20 +33,34 @@ const loadDonut = (data, onClick, type, zoom, height, width) => {
         height = 550;
         width = 1100;
      }
-     if (!data) { 
-         return (<LoadingDataDiv height={height} width={width}/>)
-     } 
-     else {
-        return (
-              <Donut 
-                items={data}
-                width={width}
-                height={height}
-                onClick={onClick}
-                type={type}
-                zoom={zoom}
-              />
-        );
+  if (!data) {
+    return (
+        <div className="loading">
+          <div className="preloader-wrapper big active">
+            <div className="spinner-layer spinner-blue-only">
+              <div className="circle-clipper left">
+                <div className="circle"></div>
+              </div><div className="gap-patch">
+                <div className="circle"></div>
+              </div><div className="circle-clipper right">
+                <div className="circle"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+    );
+  } else {
+    return (
+          <Donut 
+            items={data}
+            width={width}
+            height={height}
+            onClick={onClick}
+            type={type}
+            zoom={zoom}
+            charopts={chartOpts}
+          />
+    );
   }
 }
 

@@ -1,7 +1,6 @@
 import React from 'react';
 var ReactDOM = require('react-dom');
 import { connect } from 'react-redux';
-import LoadingDataDiv from './LoadingDataDiv';
 import { setTrendLoanGrade, setTrendLoanStatus, setTrendEmpLength, changeTrendFilter} from '../redux/actions'
 import Trend  from './Trend';
 import _ from 'lodash/core';
@@ -46,7 +45,21 @@ var controlStyle = {
 
 const loadTrend = (data, width, height, onClick, type, zoom) => {
   if (!data) {
-      return (<LoadingDataDiv height={height} width={width}/>)
+    return (
+        <div className="loading">
+          <div className="preloader-wrapper big active">
+            <div className="spinner-layer spinner-blue-only">
+              <div className="circle-clipper left">
+                <div className="circle"></div>
+              </div><div className="gap-patch">
+                <div className="circle"></div>
+              </div><div className="circle-clipper right">
+                <div className="circle"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+    );
   } else {
     return (
         <Trend 
@@ -55,6 +68,7 @@ const loadTrend = (data, width, height, onClick, type, zoom) => {
           width={width}
           height={height}
           zoom={zoom}
+          charopts={chartOpts}
           onClick={onClick}
         />
     );
@@ -63,8 +77,16 @@ const loadTrend = (data, width, height, onClick, type, zoom) => {
 
 class VisibleTrend extends React.Component{
 
+    constructor(state,context){
+        super(state,context);
+        this.state = { 
+            heightMod: -50,
+            widthMod: 210
+        };
+    }
+
     render(){
-        let height = this.props.height - 20;
+        let height = this.props.height - 50;
         let width = this.props.width - 20;
         if(this.props.zoom == 'TREND')
             {

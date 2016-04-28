@@ -6,8 +6,9 @@ import Dimensions from 'react-dimensions'
 import { resizeWidget } from '../redux/actions'
 import VisibleDonut  from './VisibleDonut';
 import VisibleTrend  from './VisibleTrend';
+import VisibleTable  from './VisibleTable';
 import VisibleKPIs  from './VisibleKPIs';
-import EmptyWidget from './EmptyWidget';
+import EmptyWidget  from './EmptyWidget';
 import Trend  from './Trend';
 var echarts = require('echarts');
 
@@ -20,7 +21,7 @@ class WidgetBody extends React.Component{
     getChart(type, id) {
         if(type.indexOf('KPI') > -1)
             { return (
-                    <div className="wdg-wrapper">
+                    <div>
                         <VisibleKPIs key={id} 
                             type={type} 
                             height={this.props.height} 
@@ -30,7 +31,7 @@ class WidgetBody extends React.Component{
             }
         else if(type === 'DONUT')
             { return (
-                    <div className="wdg-wrapper">
+                    <div>
                         <VisibleDonut key={id} 
                             type={type} 
                             height={this.props.height} 
@@ -40,8 +41,18 @@ class WidgetBody extends React.Component{
             }
          else if(type === 'TREND') //Trend
             { return ( 
-                <div className="wdg-wrapper">
+                <div>
                     <VisibleTrend key={id} 
+                        type={type} 
+                        height={this.props.height} 
+                        width={this.props.width}/>
+                </div>
+              )
+            }
+         else if(type === 'TABLE') //Trend
+            { return ( 
+                <div>
+                    <VisibleTable key={id} 
                         type={type} 
                         height={this.props.height} 
                         width={this.props.width}/>
@@ -50,7 +61,7 @@ class WidgetBody extends React.Component{
             }
             else{
                 return(
-                   <div className="wdg-wrapper">
+                    <div>
                         <EmptyWidget key={id} 
                             type={type} 
                             height={this.props.height} 

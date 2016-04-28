@@ -3,7 +3,6 @@ import { setChartMax } from '../redux/actions';
 import VisibleTrend  from './VisibleTrend';
 import VisibleDonut  from './VisibleDonut';
 import VisibleKPIs  from './VisibleKPIs';
-import VisibleTable  from './VisibleTable';
 
 class DetailsView extends React.Component{
 
@@ -12,7 +11,6 @@ class DetailsView extends React.Component{
       }
 
     getChart(id, type) {
-        console.log(type);
         if(type.indexOf('KPI') > -1)
             { return (
                     <div>
@@ -31,13 +29,6 @@ class DetailsView extends React.Component{
             { return ( 
                 <div>
                     <VisibleTrend key={id} type={type}/>
-                </div>
-              )
-            }
-        else if(type === 'TABLE') //Trend
-            { return ( 
-                <div>
-                    <VisibleTable key={id} type={type}/>
                 </div>
               )
             }

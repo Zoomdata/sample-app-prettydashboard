@@ -7,9 +7,18 @@ class AddWidgetButton extends React.Component{
 
   handleEmptyWidgetClick(){
         let widgetVals = {
-            name: 'WIDGET NAME', type:'EMPTY', x: 2, y: 2, h: 5, w: 3, minW:2, minH:5, height: 200, width: 400
+            id: 1,
+            name: 'WIDGET NAME',
+            type:'EMPTY',
+            drow: 2,
+            dcol: 1,
+            dsizex: 2,
+            dsizey: 1,
+            height: 200,
+            width: 400,
       };
-      this.props.dispatch(addWidget(widgetVals));
+      jwidget(widgetVals)
+      //this.props.dispatch(addWidget(widgetVals));
   }
 
     render(){
