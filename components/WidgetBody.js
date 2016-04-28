@@ -6,6 +6,7 @@ import Dimensions from 'react-dimensions'
 import { resizeWidget } from '../redux/actions'
 import VisibleDonut  from './VisibleDonut';
 import VisibleTrend  from './VisibleTrend';
+import VisibleTable  from './VisibleTable';
 import VisibleKPIs  from './VisibleKPIs';
 import EmptyWidget  from './EmptyWidget';
 import Trend  from './Trend';
@@ -42,6 +43,16 @@ class WidgetBody extends React.Component{
             { return ( 
                 <div>
                     <VisibleTrend key={id} 
+                        type={type} 
+                        height={this.props.height} 
+                        width={this.props.width}/>
+                </div>
+              )
+            }
+         else if(type === 'TABLE') //Trend
+            { return ( 
+                <div>
+                    <VisibleTable key={id} 
                         type={type} 
                         height={this.props.height} 
                         width={this.props.width}/>
