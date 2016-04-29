@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import _ from 'lodash/core';
-import { setLoanGrade, setTrendLoanGrade, changeTrendFilter} from '../redux/actions'
+import { setLoanGrade, setTrendLoanGrade, changeTrendFilter, setTableFilter } from '../redux/actions'
 import Donut  from './Donut';
 
 let prevSelection = 'All';
@@ -18,6 +18,8 @@ const mapDispatchToProps = (dispatch) => {
         //Change Trend chart
         dispatch(setTrendLoanGrade(currentSelection));
         dispatch(changeTrendFilter());
+        //Change Table Filter
+        dispatch(setTableFilter(currentSelection))
       }
     }
   }

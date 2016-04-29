@@ -20,6 +20,7 @@ export const ADD_WIDGET = 'ADD_WIDGET';
 export const CLOSE_WIDGET = 'CLOSE_WIDGET';
 export const RESIZE_WIDGET = 'RESIZE_WIDGET';
 export const SET_CHART = 'SET_CHART';
+export const SET_TABLE_FILTER = 'SET_TABLE_FILTER';
 
 //My action creator
 export function addWidget(data){
@@ -54,8 +55,12 @@ export function closeWidget(id){
     id
   }
 }
-
-
+export function setTableFilter(filter){
+    return {
+        type: SET_TABLE_FILTER,
+        filter
+    }
+}
 export function requestGradeData(source) {
     return {
         type: REQUEST_GRADE_DATA,

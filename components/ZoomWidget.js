@@ -12,7 +12,6 @@ class ZoomWidget extends React.Component{
       }
 
     getChart(id, type) {
-        console.log(type);
         if(type.indexOf('KPI') > -1)
             { return (
                     <div>

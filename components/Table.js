@@ -14,7 +14,7 @@ export default class Pivot extends Component {
     }
 
     setupData() {
-    	if (!allOfTheData || allOfTheData.length === 0) {
+    	if (!allOfTheData || allOfTheData.length === 0 || this.props.filter !== 'All') {
         	allOfTheData = this.obtainPivotItems(this.props);       	
         }
         this.createNewDatasource();
@@ -26,23 +26,26 @@ export default class Pivot extends Component {
 		if (!props.items) {
 			items = [];
 		} else {
-			items = props.items;
+                items = props.items;
 		}
 
-		var pivotItems = items.map(function(item) {
-			return {
-				grade: item.group[0],
-				loan_status: item.group[1],
-				addr_state: item.group[2],
-				// emp_length: item.group[3],
-				// issue_d: item.group[4],
-				calc_o_s_principal: item.current.metrics.calc_o_s_principal.calc,
-				calc_o_s: item.current.metrics.calc_o_s.calc,
-				calc_portfolio: item.current.metrics.calc_portfolio.calc,
-				calc_avg_size: item.current.metrics.calc_avg_size.calc
-			};
-		});
-
+        var filter = this.props.filter
+        let pivotItems = []
+        items.forEach(function(item){
+            if (item.group[0] === filter || filter === 'All') {
+                pivotItems.push({
+                    grade: item.group[0],
+                    loan_status: item.group[1],
+                    addr_state: item.group[2],
+                    // emp_length: item.group[3],
+                    // issue_d: item.group[4],
+                    calc_o_s_principal: item.current.metrics.calc_o_s_principal.calc,
+                    calc_o_s: item.current.metrics.calc_o_s.calc,
+                    calc_portfolio: item.current.metrics.calc_portfolio.calc,
+                    calc_avg_size: item.current.metrics.calc_avg_size.calc
+                });
+            }
+        })
 		return pivotItems;
     }
 
@@ -204,6 +207,14 @@ export default class Pivot extends Component {
         return columnDefs;
     }
 
+    onMouseOver(e){
+        //document.body.style.overflowY='scroll'
+        //document.body.style.position='fixed'
+    }
+    onMouseOut(){
+        //document.body.style.overflowY='auto'
+        //document.body.style.position='static'
+    }
 
     componentWillUnmount() {
         this.api.destroy();
@@ -214,10 +225,11 @@ export default class Pivot extends Component {
 
 	render(){
 		var columnDefs = this.createColDefs();
-        console.log(this.props.height);
-
 	  	return (
-	        	<div className='ag-darkdash' style={{height: this.props.height}} >
+            <div className='ag-darkdash' 
+                onMouseOver={this.onMouseOver}
+                onMouseOut={this.onMouseOut}
+                style={{height: this.props.height}} >
 			  		<AgGridReact 
 			  			rowData={allOfTheData}
 			  			onGridReady={this.onGridReady.bind(this)}
