@@ -60,15 +60,12 @@ const data = (state = initialState, action) => {
             });
 
         case CLOSE_WIDGET:
-            let obje = Object.assign({}, state, {
+            return Object.assign({}, state, {
                 widgets: state.widgets.filter((w) => { return w.id !== action.id })
             });
-            console.log(obje);
-            return obje;
 
         case SET_TABLE_FILTER:
-            let obje = Object.assign({}, state, {tableFilter: action.filter})
-            return obje
+            return Object.assign({}, state, {tableFilter: action.filter})
 
         default:
             return state
