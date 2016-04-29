@@ -51,12 +51,12 @@ class DashboardLayout extends React.Component{
                         className="layout" 
                         layout={this.props.widgets} 
                         draggableHandle={'section, section *'}
-                        cols={12} 
+                        cols={82} 
                         verticalCompact={true}
                         onResize={this.handleResize.bind(this)}
                         onResizeStop={this.handleResize.bind(this)}
                         rowHeight={30} 
-                        width={1200}>
+                        width={8200}>
                         { this.props.widgets.map((w) => {
                             return (
                                 <div key={w.i} id={'grid-'+w.i} 

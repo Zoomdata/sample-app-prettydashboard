@@ -3,6 +3,10 @@ html body{
     min-height: 100%;
 }
 
+.wrapper{
+    overflow-x: scroll;
+}
+
 /*body{ background:  url(../images/bg_dark.png) repeat; }*/
 body{ background-color:  #333233; height: 100%; min-height: 100%; }
 .hidden{ display:none; }
