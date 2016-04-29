@@ -13,11 +13,12 @@ const mapStateToProps = (state) => {
 
     return {
         data: result,
-        zoom: state.dashboard.zoom
+        zoom: state.dashboard.zoom,
+        filter: state.dashboard.tableFilter,
     }
 };
 
-const loadTable = (data, height, width) => {
+const loadTable = (data, filter, height, width) => {
   if (!data) {
     return (
         <div className="loading">
@@ -37,6 +38,7 @@ const loadTable = (data, height, width) => {
   } else {
     return (
         <Pivot  items={data} 
+                filter={filter} 
                 height={height} 
                 width={width} />
     );
@@ -53,8 +55,8 @@ class VisibleTable extends React.Component{
                 width =  260 
             }
         return (
-                <div className='table'>
-                      {loadTable(this.props.data, height, width)}
+            <div className='table'>
+                      {loadTable(this.props.data, this.props.filter, height, width)}
                 </div>
         );
     }

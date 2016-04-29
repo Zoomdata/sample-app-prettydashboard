@@ -31,6 +31,7 @@ export default class Trend extends Component {
         this.chart.on('CLICK', nextProps.onClick);
     }
 
+    //itemGroup = this.props.filters.loanGrade;
 
     makeChartOptions(nextProps) {
         var items;
@@ -40,15 +41,15 @@ export default class Trend extends Component {
             items = this.props.items;
         }
 
-        var xAxis = items.map(function(item) {
+        var xAxis = items.map(function(item) { //Category
             var m = moment(item.group[0],'YYYY-MM-DD HH:mm:ss');
             var str = m.format('MM/DD/YYYY');
             return str;
         });
-        var yAxis1 = items.map(function(item) {
+        var yAxis1 = items.map(function(item) { //Loan amount
             return item.current.metrics.loan_amnt.sum.toFixed(0);
         });
-        var yAxis2 = items.map(function(item) {
+        var yAxis2 = items.map(function(item) { //Total Payment
             return item.current.metrics.total_pymnt.sum.toFixed(0);
         });
 
@@ -114,8 +115,6 @@ export default class Trend extends Component {
 
 	componentDidMount() {
     	this.createChart();
-        var elem = ReactDOM.findDOMNode(this);
-        let h = elem.offsetHeight;
         this.chart.resize();
   	}
 

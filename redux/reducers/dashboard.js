@@ -1,9 +1,10 @@
 //My reducers
-import { ADD_WIDGET, CLOSE_WIDGET, RESIZE_WIDGET, SET_CHART, FIRST_RENDER } from '../actions';
+import { ADD_WIDGET, CLOSE_WIDGET, RESIZE_WIDGET, SET_CHART, FIRST_RENDER, SET_TABLE_FILTER } from '../actions';
 const initialState = {
   initial: false,
   zoom: '',
   name:'',
+  tableFilter:'All', //This will have to be moved to sagas
   widgets:[
       { id: 0, name: 'TREND CHART', type:'TREND', drow: 2, dcol: 1, dsizex: 3, dsizey: 2, width: 600, height: 400 },
       { id: 1, name: 'LOANS BY GRADE', type:'DONUT', drow: 3, dcol: 4, dsizex: 3, dsizey: 2, width: 600, height:400 },
@@ -64,6 +65,10 @@ const data = (state = initialState, action) => {
             });
             console.log(obje);
             return obje;
+
+        case SET_TABLE_FILTER:
+            let obje = Object.assign({}, state, {tableFilter: action.filter})
+            return obje
 
         default:
             return state
