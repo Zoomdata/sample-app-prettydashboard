@@ -8,14 +8,19 @@ let pageSize = 100;;
 let allOfTheData;
 
 export default class Pivot extends Component {
+    constructor(state,context){
+        super(state,context);
+        this.state = {prevfilter: 'All'};
+    }
 	onGridReady(params) {
         this.api = params.api;
         this.setupData();
     }
 
     setupData() {
-    	if (!allOfTheData || allOfTheData.length === 0 || this.props.filter !== 'All') {
+    	if (!allOfTheData || allOfTheData.length === 0 || this.props.filter !== this.state.prevfilter) {
         	allOfTheData = this.obtainPivotItems(this.props);       	
+            this.setState({prevfilter:this.props.filter})
         }
         this.createNewDatasource();
         this.api.sizeColumnsToFit();
@@ -30,6 +35,7 @@ export default class Pivot extends Component {
 		}
 
         var filter = this.props.filter
+        console.log('Loan '+filter);
         let pivotItems = []
         items.forEach(function(item){
             if (item.group[0] === filter || filter === 'All') {
