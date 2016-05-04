@@ -7,15 +7,18 @@ import echarts from 'echarts';
 import { resizeWidget } from '../../redux/actions';
 class Widgets extends React.Component{
 
-      componentDidMount() {
-        let elem = document.getElementById(this.props.type);
-        let id = $(elem).attr('id')
-        $(elem).on('click', function(){
-            this.props.dispatch(resizeWidget({
-                id: id,
+     resizeWidget(elem, dispatch){
+         return dispatch(resizeWidget({
+                id: $(elem).attr('id'),
                 width: $(elem).width(),
                 height: $(elem).height()
-            }))
+             }))
+     }
+
+      componentDidMount() {
+        let elem = document.getElementById(this.props.type);
+        $(elem).on('click', function(){
+            this.resizeWidget(elem, this.props.dispatch) 
         }.bind(this));
       }
 

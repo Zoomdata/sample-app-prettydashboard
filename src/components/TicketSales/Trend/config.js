@@ -5,15 +5,13 @@ var echarts = require('echarts');
 var ecConfig=require('echarts');
 var moment = require('moment');
 var numeral = require('numeral');
-import { dark } from '../utils/dark-theme';
-import { light } from '../utils/light-theme';
+import { dark } from '../../../utils/dark-theme';
 
 export default class Trend extends Component {
 
 	createChart() {
 	    // Initialize after dom ready
         var domElement = ReactDOM.findDOMNode(this);
-        //let theme = (this.props.zoom == 'TREND') ? light() : dark();
         let theme = dark();
         this.chart = echarts.init(domElement,theme);
 	    this.updateChart(this.props);
@@ -41,22 +39,22 @@ export default class Trend extends Component {
             items = this.props.items;
         }
 
-        var xAxis = items.map(function(item) { //Category
-            var m = moment(item.group[0],'YYYY-MM-DD HH:mm:ss');
-            var str = m.format('MM/DD/YYYY');
-            return str;
+        var labels = items.map(function(item, index) {
+            var currentTime = moment(item.group[0],'YYYY-MM-DD HH:mm:ss');
+            return currentTime.format('MM/DD/YYYY');
+        }); 
+
+        var qtySold = items.map(function(item) { //Loan amount
+            return item.current.metrics.qtysold.sum.toFixed(0);
         });
-        var yAxis1 = items.map(function(item) { //Loan amount
-            return item.current.metrics.loan_amnt.sum.toFixed(0);
-        });
-        var yAxis2 = items.map(function(item) { //Total Payment
-            return item.current.metrics.total_pymnt.sum.toFixed(0);
+        var count = items.map(function(item) { //Total Payment
+            return item.current.count;
         });
 
          var numberFormatter = function(isMoney) {
            return function (v) {
              var fmtPattern = isMoney ? '$0,0' : '0,0';
-             result = numeral(v).format(fmtPattern);
+             let result = numeral(v).format(fmtPattern);
              return result;
            }   
          }
@@ -102,7 +100,7 @@ export default class Trend extends Component {
                 xAxis: [
                   {
                     type: 'category',
-                    data: []
+                    data: labels
                   }
                 ],
                 yAxis: [
@@ -120,14 +118,14 @@ export default class Trend extends Component {
                     type: 'line',
                     smooth: true,
                     itemStyle: {normal: {areaStyle: {type: 'default'}}},
-                    data: []
+                    data: qtySold,
                   },
                   {
                     name: 'Transactions',
                     type: 'line',
                     smooth: true,
                     itemStyle: {normal: {areaStyle: {type: 'default'}}},
-                    data: []
+                    data: count,
                   }
                 ]
 	};
@@ -160,9 +158,13 @@ export default class Trend extends Component {
     
 
 	render(){
+        let styles={
+            height: this.props.height,
+            width: this.props.width,
+        }
 	  	return (
             <div id={this.props.type} 
-                style={{height: this.props.height, width: this.props.width}} />
+                style={styles} />
     	)
 	}
 

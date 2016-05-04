@@ -3,10 +3,7 @@ import ReactDOM from 'react-dom';
 import Dimensions from 'react-dimensions'
 import { resizeWidget } from '../../redux/actions'
 import { dark } from '../../utils/dark-theme';
-import VisibleDonut  from '../LendClub/VisibleDonut';
-import VisibleTrend  from '../LendClub/VisibleTrend';
-import VisibleTable  from '../LendClub/VisibleTable';
-import VisibleKPIs   from '../LendClub/VisibleKPIs';
+import VisibleTrend  from '../TicketSales/Trend';
 import EmptyWidget   from '../EmptyWidget';
 var echarts = require('echarts');
 

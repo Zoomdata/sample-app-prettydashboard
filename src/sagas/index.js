@@ -1,11 +1,13 @@
 import { take, put, call, fork, select } from 'redux-saga/effects';
 import * as actions from '../redux/actions';
-import * as gradeData from '../config/queries/gradeData';
-import * as kpiData from '../config/queries/kpiData';
-import * as kpiTotals from '../config/queries/kpiTotals';
-import * as pivotData from '../config/queries/pivotData';
-//import * as trendData from '../config/queries/trendData';
-import * as trendData from '../config/queries/trendData';
+//-----Lend Club-----
+//import * as gradeData from '../config/queries/LendClub/gradeData';
+//import * as kpiData   from '../config/queries/LendClub/kpiData';
+//import * as kpiTotals from '../config/queries/LendClub/kpiTotals';
+//import * as pivotData from '../config/queries/LendClub/pivotData';
+//import * as trendData from '../config/queries/LendClub/trendData';
+//-----Ticket Sales-----
+import * as trendData from '../config/queries/TicketSales/trendData';
 import { createClient } from '../config';
 
 let queryData = [];
@@ -202,19 +204,18 @@ function* fetchGradeData(client, source, queryConfig) {
 }
 
 function* startup(client) {
-    yield fork(fetchGradeData, client, gradeData.source, gradeData.queryConfig);
-    yield fork(fetchKPITotals, client, kpiTotals.source, kpiTotals.queryConfig);
-    yield fork(fetchKPIData, client, kpiData.source, kpiData.queryConfig);
     yield fork(fetchTrendData, client, trendData.source, trendData.queryConfig);
-    yield fork(fetchPivotData, client, pivotData.source, pivotData.queryConfig);
+    //yield fork(fetchGradeData, client, gradeData.source, gradeData.queryConfig);
+    //yield fork(fetchKPITotals, client, kpiTotals.source, kpiTotals.queryConfig);
+    //yield fork(fetchKPIData, client, kpiData.source, kpiData.queryConfig);
+    //yield fork(fetchPivotData, client, pivotData.source, pivotData.queryConfig);
 }
 
 export default function* root(getState) {
     const client = yield call(createClient);
     ZoomdataClient = client;
-    yield call(client.sources.update, {name: 'Lending Club Loans Data'})
-    //yield call(client.sources.update, {name: 'Ticket Sales'})
-    console.log(ZoomdataClient);
+    //yield call(client.sources.update, {name: 'Lending Club Loans Data'})
+    yield call(client.sources.update, {name: 'Ticket Sales'})
     yield fork(startup, ZoomdataClient);
     yield fork(changeTrendQuery, getState);
 }

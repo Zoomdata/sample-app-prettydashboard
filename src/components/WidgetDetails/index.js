@@ -1,9 +1,9 @@
 import React from 'react';
 import { setChart }  from '../../redux/actions';
-import VisibleTrend  from '../LendClub/VisibleTrend';
 import VisibleDonut  from '../LendClub/VisibleDonut';
 import VisibleKPIs   from '../LendClub/VisibleKPIs';
 import VisibleTable  from '../LendClub/VisibleTable';
+import VisibleTrend  from '../TicketSales/Trend';
 
 class WidgetDetails extends React.Component{
 
