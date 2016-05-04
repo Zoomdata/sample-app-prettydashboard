@@ -1,6 +1,6 @@
 import React from 'react';
-import { closeWidget, setChart } from '../redux/actions';
-import { light } from '../utils/light-theme';
+import { closeWidget, setChart } from '../../redux/actions';
+import { light } from '../../utils/light-theme';
 class WidgetHeader extends React.Component{
 
     constructor(props, context){

@@ -4,6 +4,7 @@ import * as gradeData from '../config/queries/gradeData';
 import * as kpiData from '../config/queries/kpiData';
 import * as kpiTotals from '../config/queries/kpiTotals';
 import * as pivotData from '../config/queries/pivotData';
+//import * as trendData from '../config/queries/trendData';
 import * as trendData from '../config/queries/trendData';
 import { createClient } from '../config';
 
@@ -212,6 +213,8 @@ export default function* root(getState) {
     const client = yield call(createClient);
     ZoomdataClient = client;
     yield call(client.sources.update, {name: 'Lending Club Loans Data'})
+    //yield call(client.sources.update, {name: 'Ticket Sales'})
+    console.log(ZoomdataClient);
     yield fork(startup, ZoomdataClient);
     yield fork(changeTrendQuery, getState);
 }

@@ -1,7 +1,7 @@
 import React from 'react';
-import Widgets from './Widget';
-import AddWidgetButton from './AddWidgetButton';
-import ZoomWidget from './ZoomWidget';
+import Widgets from '../Widget';
+import AddWidgetButton from '../WidgetAddButton';
+import WidgetDetails from '../WidgetDetails';
 import { connect } from 'react-redux';
 import $ from 'jquery';
 class Dashboard extends React.Component{
@@ -32,11 +32,11 @@ class Dashboard extends React.Component{
                         </ul>
                     </div>
                 </div>
-                <AddWidgetButton dispatch={this.props.dispatch}/>
-                <ZoomWidget
+                <WidgetDetails
                     dispatch={this.props.dispatch}
                     name={this.props.name}
                     zoom={this.props.zoom}/>
+                <AddWidgetButton dispatch={this.props.dispatch}/>
             </div>
               );
     }

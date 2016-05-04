@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 var ReactDOM = require('react-dom');
 var echarts = require('echarts');
-import { dark } from '../utils/dark-theme';
-import { light } from '../utils/light-theme';
+import { dark } from '../../utils/dark-theme';
+import { light } from '../../utils/light-theme';
 
 export default class Donut extends Component {
 

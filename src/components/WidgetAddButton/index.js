@@ -1,5 +1,5 @@
 import React from 'react';
-import { addWidget } from '../redux/actions'
+import { addWidget } from '../../redux/actions'
 import { connect } from 'react-redux';
 import $ from 'jquery';
 

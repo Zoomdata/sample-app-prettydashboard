@@ -1,4 +1,4 @@
-import ZoomdataSDK from 'ZoomdataSDK';
+import ZoomdataSDK from 'zoomdata-client';
 
 var applicationConfig = {
 	secure: true,   
@@ -9,7 +9,8 @@ var applicationConfig = {
 
 // Security parameters
 var credentialsConfig = {
-  	key: "56ec8877e4b0c1680babc247"
+      key: "56ec8877e4b0c1680babc247"
+      //key: "572a14a5e4b0ad64f3a2d0ab"
 };
 
 function initClient() {

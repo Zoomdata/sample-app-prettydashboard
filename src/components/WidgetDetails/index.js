@@ -1,11 +1,11 @@
 import React from 'react';
-import { setChart } from '../redux/actions';
-import VisibleTrend  from './VisibleTrend';
-import VisibleDonut  from './VisibleDonut';
-import VisibleKPIs  from './VisibleKPIs';
-import VisibleTable  from './VisibleTable';
+import { setChart }  from '../../redux/actions';
+import VisibleTrend  from '../LendClub/VisibleTrend';
+import VisibleDonut  from '../LendClub/VisibleDonut';
+import VisibleKPIs   from '../LendClub/VisibleKPIs';
+import VisibleTable  from '../LendClub/VisibleTable';
 
-class ZoomWidget extends React.Component{
+class WidgetDetails extends React.Component{
 
       closeFullScreen(){
         this.props.dispatch(setChart('#'));
@@ -90,4 +90,4 @@ class ZoomWidget extends React.Component{
               )
     }
 }
-export default ZoomWidget
+export default WidgetDetails

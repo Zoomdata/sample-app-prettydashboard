@@ -1,7 +1,7 @@
 import React from 'react';
 var ReactDOM = require('react-dom');
 import { connect } from 'react-redux';
-import { setTrendLoanGrade, setTrendLoanStatus, setTrendEmpLength, changeTrendFilter} from '../redux/actions'
+import { setTrendLoanGrade, setTrendLoanStatus, setTrendEmpLength, changeTrendFilter} from '../../redux/actions'
 import Trend  from './Trend';
 import _ from 'lodash/core';
 

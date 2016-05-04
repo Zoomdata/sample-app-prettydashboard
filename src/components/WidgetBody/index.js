@@ -1,15 +1,13 @@
 import React from 'react';
-import Donut  from './Donut';
-import { dark } from '../utils/dark-theme';
 import ReactDOM from 'react-dom';
 import Dimensions from 'react-dimensions'
-import { resizeWidget } from '../redux/actions'
-import VisibleDonut  from './VisibleDonut';
-import VisibleTrend  from './VisibleTrend';
-import VisibleTable  from './VisibleTable';
-import VisibleKPIs  from './VisibleKPIs';
-import EmptyWidget  from './EmptyWidget';
-import Trend  from './Trend';
+import { resizeWidget } from '../../redux/actions'
+import { dark } from '../../utils/dark-theme';
+import VisibleDonut  from '../LendClub/VisibleDonut';
+import VisibleTrend  from '../LendClub/VisibleTrend';
+import VisibleTable  from '../LendClub/VisibleTable';
+import VisibleKPIs   from '../LendClub/VisibleKPIs';
+import EmptyWidget   from '../EmptyWidget';
 var echarts = require('echarts');
 
 class WidgetBody extends React.Component{

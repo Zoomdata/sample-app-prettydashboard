@@ -1,10 +1,10 @@
 import React from 'react';
-import WidgetHeader from './WidgetHeader';
-import WidgetBody from './WidgetBody';
+import WidgetHeader from '../WidgetHeader';
+import WidgetBody from '../WidgetBody';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
 import echarts from 'echarts';
-import { resizeWidget } from '../redux/actions';
+import { resizeWidget } from '../../redux/actions';
 class Widgets extends React.Component{
 
       componentDidMount() {

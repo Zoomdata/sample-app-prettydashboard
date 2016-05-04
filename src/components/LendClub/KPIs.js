@@ -4,9 +4,8 @@ var moment = require('moment');
 var numeral = require('numeral');
 var ReactHighcharts = require('react-highcharts');
 import echarts from 'echarts';
-import { FilterStatuses } from '../redux/actions'
-import { dark } from '../utils/dark-theme';
-import { light } from '../utils/light-theme';
+import { FilterStatuses } from '../../redux/actions'
+import { dark } from '../../utils/dark-theme';
 
 export default class KPIs extends Component {
 

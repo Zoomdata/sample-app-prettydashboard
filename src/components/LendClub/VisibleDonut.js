@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import _ from 'lodash/core';
-import { setLoanGrade, setTrendLoanGrade, changeTrendFilter, setTableFilter } from '../redux/actions'
+import { setLoanGrade, setTrendLoanGrade, changeTrendFilter, setTableFilter } from '../../redux/actions'
 import Donut  from './Donut';
 
 let prevSelection = 'All';

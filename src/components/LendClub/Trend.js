@@ -5,8 +5,7 @@ var echarts = require('echarts');
 var ecConfig=require('echarts');
 var moment = require('moment');
 var numeral = require('numeral');
-import { dark } from '../utils/dark-theme';
-import { light } from '../utils/light-theme';
+import { dark } from '../../utils/dark-theme';
 
 export default class Trend extends Component {
 
