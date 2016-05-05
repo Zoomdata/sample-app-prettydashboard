@@ -6,6 +6,8 @@ export const REQUEST_KPI_TOTALS = 'REQUEST_KPI_TOTALS';
 export const RECEIVE_KPI_TOTALS = 'RECEIVE_KPI_TOTALS';
 export const REQUEST_PIVOT_DATA = 'REQUEST_PIVOT_DATA';
 export const RECEIVE_PIVOT_DATA = 'RECEIVE_PIVOT_DATA';
+export const REQUEST_TMAP_EVENT_DATA = 'REQUEST_TMAP_EVENT_DATA';
+export const RECEIVE_TMAP_EVENT_DATA = 'RECEIVE_TMAP_EVENT_DATA';
 
 export const SET_LOAN_GRADE = 'SET_LOAN_GRADE';
 export const REQUEST_TREND_DATA = 'REQUEST_TREND_DATA';
@@ -61,6 +63,43 @@ export function setTableFilter(filter){
         filter
     }
 }
+
+export function requestTrendData(source) {
+	return {
+        type: REQUEST_TREND_DATA,
+        source
+    }
+}
+
+export function receiveTrendData(data) {
+    return {
+        type: RECEIVE_TREND_DATA,
+        data
+    }
+}
+
+export function requestTMapEventData(source) {
+	return {
+        type: REQUEST_TMAP_EVENT_DATA,
+        source
+    }
+}
+
+export function receiveTMapEventData(data) {
+    return {
+        type: RECEIVE_TMAP_EVENT_DATA,
+        data
+    }
+}
+
+
+
+
+
+
+
+
+/*TODO: remove these*/
 export function requestGradeData(source) {
     return {
         type: REQUEST_GRADE_DATA,
@@ -99,20 +138,6 @@ export function requestKPITotals(source) {
 export function receiveKPITotals(data) {
     return {
         type: RECEIVE_KPI_TOTALS,
-        data
-    }
-}
-
-export function requestTrendData(source) {
-	return {
-        type: REQUEST_TREND_DATA,
-        source
-    }
-}
-
-export function receiveTrendData(data) {
-    return {
-        type: RECEIVE_TREND_DATA,
         data
     }
 }

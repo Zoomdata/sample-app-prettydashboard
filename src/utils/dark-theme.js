@@ -42,7 +42,9 @@ export function dark(){
 
       // 提示框
       tooltip: {
-          backgroundColor: 'rgba(250,250,250,0.8)',     // 提示背景颜色，默认为透明度为0.7的黑色
+          backgroundColor: 'rgba(250,250,250,0.9)',     // 提示背景颜色，默认为透明度为0.7的黑色
+          borderColor: '#FDC086',
+          borderWidth: 2,
           axisPointer : {            // 坐标轴指示器，坐标轴触发有效
               type : 'line',         // 默认为直线，可选为：'line' | 'shadow'
               lineStyle : {          // 直线指示器样式设置

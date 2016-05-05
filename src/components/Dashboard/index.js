@@ -36,7 +36,6 @@ class Dashboard extends React.Component{
                     dispatch={this.props.dispatch}
                     name={this.props.name}
                     zoom={this.props.zoom}/>
-                <AddWidgetButton dispatch={this.props.dispatch}/>
             </div>
               );
     }

@@ -8,10 +8,11 @@ import * as actions from '../redux/actions';
 //import * as trendData from '../config/queries/LendClub/trendData';
 //-----Ticket Sales-----
 import * as trendData from '../config/queries/TicketSales/trendData';
+import * as tmapEventData from '../config/queries/TicketSales/tmapEventData';
 import { createClient } from '../config';
 
 let queryData = [];
-let gradeQueryRunning, kpiQueryRunning, kpiTotalQueryRunning, trendQueryRunning, pivotQueryRunning;
+let gradeQueryRunning, kpiQueryRunning, kpiTotalQueryRunning, trendQueryRunning, pivotQueryRunning, tMapEventQueryRunning;
 
 function fetchDataApi(thread, group) {
     var queryGroup = group;
@@ -29,6 +30,8 @@ function fetchDataApi(thread, group) {
                 kpiTotalQueryRunning = false;
             } else if (queryGroup === 'trend') {
                 trendQueryRunning = false;
+            } else if (queryGroup === 'treeMapEvent') {
+                tMapEventQueryRunning = false;
             } else if (queryGroup === 'pivot') {
                 pivotQueryRunning = false;
             }
@@ -127,6 +130,27 @@ function* fetchTrendData(client, source, queryConfig) {
     }
 }
 
+function* fetchTreeMapEvent(client, source, queryConfig) {
+    tMapEventQueryRunning = true;
+
+    const query = yield call(getQuery, client, source, queryConfig);
+    TMapEventDataQuery = query;
+
+    yield put(actions.requestTMapEventData(tmapEventData.source));
+
+    const thread = yield call(getThread, client, TMapEventDataQuery);
+    TMapEventDataThread = thread;
+
+    while (trendQueryRunning) {
+        const data = yield call(fetchDataApi, TMapEventDataThread, 'treeMapEvent');
+
+        if (tMapEventQueryRunning) {
+            yield put(actions.receiveTMapEventData(data));
+        }
+    }
+}
+
+
 function* fetchKPIData(client, source, queryConfig) {
     kpiQueryRunning = true;
     if (!KPIDataQuery) {
@@ -205,6 +229,7 @@ function* fetchGradeData(client, source, queryConfig) {
 
 function* startup(client) {
     yield fork(fetchTrendData, client, trendData.source, trendData.queryConfig);
+    yield fork(fetchTreeMapEvent, client, tmapEventData.source, tmapEventData.queryConfig);
     //yield fork(fetchGradeData, client, gradeData.source, gradeData.queryConfig);
     //yield fork(fetchKPITotals, client, kpiTotals.source, kpiTotals.queryConfig);
     //yield fork(fetchKPIData, client, kpiData.source, kpiData.queryConfig);
@@ -229,5 +254,7 @@ export let KPITotalQuery = undefined;
 export let KPITotalThread = undefined;
 export let TrendDataQuery = undefined;
 export let TrendDataThread = undefined;
+export let TMapEventDataQuery = undefined;
+export let TMapEventDataThread = undefined;
 export let PivotDataQuery = undefined;
 export let PivotDataThread = undefined;

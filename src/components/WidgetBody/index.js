@@ -4,6 +4,7 @@ import Dimensions from 'react-dimensions'
 import { resizeWidget } from '../../redux/actions'
 import { dark } from '../../utils/dark-theme';
 import VisibleTrend  from '../TicketSales/Trend';
+import TreeMapEvent  from '../TicketSales/TreeMap';
 import EmptyWidget   from '../EmptyWidget';
 var echarts = require('echarts');
 
@@ -18,6 +19,16 @@ class WidgetBody extends React.Component{
             { return (
                     <div>
                         <VisibleKPIs key={id} 
+                            type={type} 
+                            height={this.props.height} 
+                            width={this.props.width}/>
+                    </div>
+                )
+            }
+        else if(type === 'TREEMAPEVENT')
+            { return (
+                    <div>
+                        <TreeMapEvent key={id} 
                             type={type} 
                             height={this.props.height} 
                             width={this.props.width}/>

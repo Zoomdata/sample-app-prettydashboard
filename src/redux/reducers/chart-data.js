@@ -13,13 +13,60 @@ const initialState = {
     trendData: {
         isFetching: false
     },
-    pivotData: {
-        isFetching: false        
-    }
+    tmapEventData: {
+        isFetching: false
+    },
 }
 
 const data = (state = initialState, action) => {
     switch (action.type) {
+        //=========== Trend Data ================
+        case actions.REQUEST_TREND_DATA:
+            return Object.assign({}, state, { 
+                trendData: {
+                    source: action.source,
+                    isFetching: true
+                }
+            });
+
+        case actions.RECEIVE_TREND_DATA:
+            return Object.assign({}, state, {
+                trendData: {
+                    source: state.trendData.source,
+                    isFetching: false,
+                    data: action.data
+                }
+            });
+
+        //=========== Tree Map Event Data ============
+        case actions.REQUEST_TMAP_EVENT_DATA:
+            return Object.assign({}, state, { 
+                tmapEventData: {
+                    source: action.source,
+                    isFetching: true
+                }
+            });
+
+        case actions.RECEIVE_TMAP_EVENT_DATA:
+            return Object.assign({}, state, { 
+                tmapEventData: {
+                    source: state.tmapEventData.source,
+                    isFetching: false,
+                    data: action.data
+                }
+            });
+
+
+
+
+
+
+
+
+
+
+
+
         case actions.REQUEST_GRADE_DATA:
 
             var obj = Object.assign({}, state, { 
@@ -78,6 +125,7 @@ const data = (state = initialState, action) => {
                 }
             });
             return obj;
+        //=========== Trend Data ================
         case actions.REQUEST_TREND_DATA:
 
             var obj = Object.assign({}, state, { 
@@ -99,6 +147,25 @@ const data = (state = initialState, action) => {
             });
 
             return obj;
+
+        //=========== Tree Map Event Data ============
+        case actions.REQUEST_TMAP_EVENT_DATA:
+            var obj = Object.assign({}, state, { 
+                tmapEventData: {
+                    source: action.source,
+                    isFetching: true
+                }
+            });
+            return obj;
+
+
+
+
+
+
+
+
+
         case actions.REQUEST_PIVOT_DATA:
 
             var obj = Object.assign({}, state, { 

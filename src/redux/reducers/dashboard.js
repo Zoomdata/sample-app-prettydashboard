@@ -6,7 +6,8 @@ const initialState = {
   name:'',
   tableFilter:'All', //This will have to be moved to sagas
   widgets:[
-      { id: 0, name: 'TICKET SOLDS & TRANSACTIONS', type:'TREND', drow: 2, dcol: 1, dsizex: 3, dsizey: 2, width: 618, height: 408 },
+      { id: 1, name: 'EVENTS', type:'TREEMAPEVENT', drow: 2, dcol: 1, dsizex: 3, dsizey: 2, width: 618, height: 408 },
+      { id: 2, name: 'TICKET SOLDS & TRANSACTIONS', type:'TREND', drow: 2, dcol: 1, dsizex: 3, dsizey: 2, width: 618, height: 408 },
       //{ id: 1, name: 'LOANS BY GRADE', type:'DONUT', drow: 3, dcol: 4, dsizex: 3, dsizey: 2, width: 600, height:400 },
       //{ id: 2, name: 'PORTFOLIO', type:'KPIPORTFOLIO', drow: 1, dcol: 1, dsizex: 1, dsizey: 1, width: 200, height:200 },
       //{ id: 3, name: 'O/S', type:'KPIOS', drow: 1, dcol: 2, dsizex: 1, dsizey: 1, width: 200, height:200 },
