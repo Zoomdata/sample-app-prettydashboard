@@ -1,0 +1,160 @@
+html body{
+    height: 100%;
+    min-height: 100%;
+}
+/*body{ background:  url(../images/bg_dark.png) repeat; }*/
+body{ background-color:  #333233;}
+.hidden{ display:none; }
+.material-icons{
+      font-size: 15px;  /* Preferred icon size */
+      font-weight: bold;
+  }
+.container{
+    width:100%;
+    padding:0px;
+    padding-top:10px;
+}
+
+/*--- Gridster -----*/
+.grid-li{
+    overflow: hidden;
+    border:#5a5a5a 0.2px solid;
+}
+.gridster .preview-holder {
+    border: none!important;
+    background: #777!important;
+}
+
+/*--  Materialize Card Styles  ----*/
+.card-panel{
+    transition: box-shadow .25s;
+    padding: 0px;
+    margin: 0;
+    /*border-radius: 4px;*/
+    /*border:#363636 0.7px solid;*/
+    width: inherit;
+    height: inherit;
+    text-align:center;
+    overflow:none;
+    color: rgba(255, 255, 255, 0.7);
+    display:inline-block;
+}
+.card-header{
+    min-height:25px;
+    text-align:right;
+    padding-left:12px;
+    z-index:10;
+    width:100%;
+    position:absolute;
+    margin:0;
+    margin-top: 3px;
+    cursor: move;
+    /*background-color: rgba(0, 0, 0, 0.7);*/
+    /*border-radius: 4px 4px 0px 0px;*/
+}
+.card-header a{ margin-right:8px; }
+.card-body{
+    margin-top: 30px;
+    box-sizing:border-box;
+}
+.card-panel p{
+    font-weight: bold;
+    display:inline-block;
+    margin-bottom:0.11em;
+}
+.card-footer{
+    color: rgba(10, 10, 10, 0.7);
+    font-size:10px;
+    margin-top:30%;
+    text-align:center;
+}
+.dark-grey{
+    background-color: #201F21;
+    color: rgba(255, 255, 255, 0.7);
+}
+.cblue{ background-color:#DDE9FF; }
+.corange{ background-color:#FFF5E5; }
+.cgreen{ background-color:#E6FFE5; }
+.cpink{ background-color:#FFE5F2; }
+.cyellow{background-color:#FDFFE5}
+.chart-name{
+  float: left;
+  font-size: 15px;
+  font-weight:bold;
+  color: rgba(255, 255, 255, 0.7);
+}
+.card h3{
+    color: #F1F1F1;
+    margin-top:0.91em;
+    color: rgba(255, 255, 255, 0.7)
+}
+.card h1{
+    color: #F1F1F1;
+    margin-top:0.91em;
+    font-size:600%;
+    font-weight:bold;
+    color: rgba(255, 255, 255, 0.7)
+}
+
+/*--  Materialize Modal  ----*/
+.modal-content div.row{
+  height: 100%;
+}
+.modal{
+  height: 100%;
+  min-height: 100%;
+  width: 100%;
+  background-color: #201F21;
+  color: #FFF;
+}
+.modal.bottom-sheet {
+  top: auto;
+  bottom: -100%;
+  margin: 0;
+  width: 100%;
+  min-height: 100%;
+  border-radius: 0;
+  will-change: bottom, opacity;
+}
+.modal .modal-content {
+  padding: 0px;
+}
+.modal .modal-footer {
+  border-radius: 0 0 2px 2px;
+  background-color: #777;
+  padding: 4px 6px;
+  height: 56px;
+  width: 100%;
+}
+
+/*-- Google Material Icons --*/
+.material-icons{
+      font-size: 15px;  /* Preferred icon size */
+      font-weight: bold }
+.material-icons.md-dark { color: rgba(0, 0, 0, 0.54); }
+.material-icons.md-dark.md-inactive { color: rgba(0, 0, 0, 0.26); }
+.material-icons.md-light { color: rgba(255, 255, 255, 0.7); }
+.material-icons.md-light.md-inactive { color: rgba(255, 255, 255, 0.3); }
+
+
+.KPI{
+    padding-left:30px;
+}
+.table{
+    margin:15px;
+    margin-top:45px;
+}
+
+/*--Loading data animation--*/
+.loading{ margin-top:30%; }
+
+/*--  Specific Chart Styles --*/
+.KPIobj{
+    text-align: center;
+    margin-top:30px;
+}
+.KPIobj p{
+    font-size: 1.015em;
+    margin-top:
+}
+.KPI{ padding-left:30px; }

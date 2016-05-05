@@ -2,10 +2,10 @@
   "name": "zd-data-app-03",
   "version": "1.0.0",
   "description": "Zoomdata sample data app",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
     "start": "if-env NODE_ENV=production && npm run start:prod || npm run start:dev",
-    "start:dev": "webpack-dev-server --inline --content-base public/ --history-api-fallback  --port 8090",
+    "start:dev": "webpack-dev-server --inline --content-base dist/ --history-api-fallback  --port 8090",
     "start:prod": "npm run build && node server.bundle.js",
     "build:client": "webpack --watch",
     "build:server": "webpack --config webpack.server.config.js --port 8090",
@@ -37,7 +37,8 @@
     "react-router": "^2.0.0",
     "redux": "^3.3.1",
     "redux-responsive": "^1.1.0",
-    "redux-saga": "^0.9.4"
+    "redux-saga": "^0.9.4",
+    "zoomdata-client": "^2.0.5"
   },
   "devDependencies": {
     "babel-core": "^6.7.2",

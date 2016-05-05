@@ -2,7 +2,7 @@ var webpack = require('webpack');
 var path = require('path');
 
 module.exports = {
-  entry: './index.js',
+  entry: './src/index.js',
   watch: true,
   resolve: {
       alias: {
@@ -11,7 +11,7 @@ module.exports = {
       extensions: ['', '.js', '.jsx']
   },
   output: {
-    path: 'public',
+    path: 'dist',
     filename: 'bundle.js',
     publicPath: ''
   },
@@ -58,6 +58,9 @@ module.exports = {
         loader: 'url-loader?limit=10000&name=images/[name]-[hash].[ext]',
         exclude: /node_modules/
       }
+    ],
+    noParse: [
+        /[\/\\]node_modules[\/\\]zoomdata-client[\/\\]distribute[\/\\]sdk[\/\\]2\.0[\/\\]zoomdata-client\.js$/
     ]
   }
 }
