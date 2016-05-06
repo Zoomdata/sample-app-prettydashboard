@@ -7,11 +7,11 @@ export const queryConfig = {
       //timeField: "saletime"
     //},
     groups: [{
-        name: 'eventname',
+        name: 'venuecity',
         limit: 100,
         sort: {
             dir: 'desc',
-            name: 'event'
+            name: 'venuecity'
           }
       }
     ],

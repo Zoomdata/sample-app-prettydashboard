@@ -5,6 +5,7 @@ import VisibleKPIs   from '../LendClub/VisibleKPIs';
 import VisibleTable  from '../LendClub/VisibleTable';
 import VisibleTrend  from '../TicketSales/Trend';
 import TreeMapEvent  from '../TicketSales/TreeMap';
+import VisiblePivot  from '../TicketSales/Pivot';
 
 class WidgetDetails extends React.Component{
 
@@ -13,8 +14,6 @@ class WidgetDetails extends React.Component{
       }
 
     getChart(id, type) {
-        console.log(id);
-        console.log(type);
         if(type.indexOf('KPI') > -1)
             { return (
                     <div>
@@ -43,10 +42,10 @@ class WidgetDetails extends React.Component{
                     </div>
               )
             }
-        else if(type === 'TABLE') //Trend
+        else if(type === 'PIVOT') //Trend
             { return ( 
                 <div>
-                    <VisibleTable key={id} type={type}/>
+                    <VisiblePivot key={id} type={type}/>
                 </div>
               )
             }

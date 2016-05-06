@@ -8,6 +8,7 @@ const initialState = {
   widgets:[
       { id: 1, name: 'EVENTS', type:'TREEMAPEVENT', drow: 2, dcol: 1, dsizex: 3, dsizey: 2, width: 618, height: 408 },
       { id: 2, name: 'TICKET SOLDS & TRANSACTIONS', type:'TREND', drow: 2, dcol: 1, dsizex: 3, dsizey: 2, width: 618, height: 408 },
+      { id: 3, name: 'TICKET SALES', type:'PIVOT', drow: 1, dcol: 4, dsizex: 3, dsizey: 2, width: 620, height:410 },
       //{ id: 1, name: 'LOANS BY GRADE', type:'DONUT', drow: 3, dcol: 4, dsizex: 3, dsizey: 2, width: 600, height:400 },
       //{ id: 2, name: 'PORTFOLIO', type:'KPIPORTFOLIO', drow: 1, dcol: 1, dsizex: 1, dsizey: 1, width: 200, height:200 },
       //{ id: 3, name: 'O/S', type:'KPIOS', drow: 1, dcol: 2, dsizex: 1, dsizey: 1, width: 200, height:200 },
@@ -66,8 +67,7 @@ const data = (state = initialState, action) => {
             });
 
         case SET_TABLE_FILTER:
-            let obje = Object.assign({}, state, {tableFilter: action.filter})
-            return obje
+            return Object.assign({}, state, {tableFilter: action.filter})
 
         default:
             return state

@@ -1,38 +1,17 @@
-export const REQUEST_GRADE_DATA = 'REQUEST_GRADE_DATA';
-export const RECEIVE_GRADE_DATA = 'RECEIVE_GRADE_DATA';
-export const REQUEST_KPI_DATA = 'REQUEST_KPI_DATA';
-export const RECEIVE_KPI_DATA = 'RECEIVE_KPI_DATA';
-export const REQUEST_KPI_TOTALS = 'REQUEST_KPI_TOTALS';
-export const RECEIVE_KPI_TOTALS = 'RECEIVE_KPI_TOTALS';
-export const REQUEST_PIVOT_DATA = 'REQUEST_PIVOT_DATA';
-export const RECEIVE_PIVOT_DATA = 'RECEIVE_PIVOT_DATA';
-export const REQUEST_TMAP_EVENT_DATA = 'REQUEST_TMAP_EVENT_DATA';
-export const RECEIVE_TMAP_EVENT_DATA = 'RECEIVE_TMAP_EVENT_DATA';
-
-export const SET_LOAN_GRADE = 'SET_LOAN_GRADE';
+//Query actions
 export const REQUEST_TREND_DATA = 'REQUEST_TREND_DATA';
 export const RECEIVE_TREND_DATA = 'RECEIVE_TREND_DATA';
-export const SET_TREND_LOAN_GRADE = 'SET_TREND_LOAN_GRADE';
-export const SET_TREND_LOAN_STATUS = 'SET_TREND_LOAN_STATUS';
-export const SET_TREND_EMP_LENGTH = 'SET_TREND_EMP_LENGTH';
-export const CHANGE_TREND_FILTER = 'CHANGE_TREND_FILTER';
-
-//My actions
+export const REQUEST_TMAP_EVENT_DATA = 'REQUEST_TMAP_EVENT_DATA';
+export const RECEIVE_TMAP_EVENT_DATA = 'RECEIVE_TMAP_EVENT_DATA';
+export const REQUEST_PIVOT_DATA = 'REQUEST_PIVOT_DATA';
+export const RECEIVE_PIVOT_DATA = 'RECEIVE_PIVOT_DATA';
+//App behaviour actions
 export const ADD_WIDGET = 'ADD_WIDGET';
 export const CLOSE_WIDGET = 'CLOSE_WIDGET';
 export const RESIZE_WIDGET = 'RESIZE_WIDGET';
 export const SET_CHART = 'SET_CHART';
 export const SET_TABLE_FILTER = 'SET_TABLE_FILTER';
 
-//My action creator
-export function addWidget(data){
-  return{
-    type: ADD_WIDGET,
-    data
-  }
-}
-
-//My action creator
 export function addWidget(data){
   return{
     type: ADD_WIDGET,

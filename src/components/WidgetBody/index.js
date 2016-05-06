@@ -4,6 +4,7 @@ import Dimensions from 'react-dimensions'
 import { resizeWidget } from '../../redux/actions'
 import { dark } from '../../utils/dark-theme';
 import VisibleTrend  from '../TicketSales/Trend';
+import VisiblePivot  from '../TicketSales/Pivot';
 import TreeMapEvent  from '../TicketSales/TreeMap';
 import EmptyWidget   from '../EmptyWidget';
 var echarts = require('echarts');
@@ -35,16 +36,6 @@ class WidgetBody extends React.Component{
                     </div>
                 )
             }
-        else if(type === 'DONUT')
-            { return (
-                    <div>
-                        <VisibleDonut key={id} 
-                            type={type} 
-                            height={this.props.height} 
-                            width={this.props.width}/>
-                    </div>
-                )
-            }
          else if(type === 'TREND') //Trend
             { return ( 
                 <div>
@@ -55,10 +46,10 @@ class WidgetBody extends React.Component{
                 </div>
               )
             }
-         else if(type === 'TABLE') //Trend
+         else if(type === 'PIVOT') //Table
             { return ( 
                 <div>
-                    <VisibleTable key={id} 
+                    <VisiblePivot key={id} 
                         type={type} 
                         height={this.props.height} 
                         width={this.props.width}/>
