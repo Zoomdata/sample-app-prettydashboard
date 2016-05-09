@@ -1,0 +1,28 @@
+.sidebar{
+    position:relative;
+    height: 200%;
+    display: none;
+    width: 20%;
+    color: #DDD;
+    border-right: solid 0.5px #5A5A5A;
+    background-color: rgba(33, 31, 33, 0.9);
+    z-index: 20;
+    -webkit-box-shadow: inset 0 0 100px rgba(0,0,0,0.4); 
+}
+.logo{
+    margin-top:20px;
+    text-align:center;
+}
+.logo img{
+    width:75%;
+    height:55%;
+}
+.options{ margin-top:20px; }
+.options label{ color:#DDD; }
+.select{
+    height:30px;
+    background-color:#171717;
+    border: solid 0.5px #5A5A5A;
+    color:#DDD;
+}
+.select:focus{ border: solid 1px #5A5A5A;}
