@@ -55,7 +55,7 @@ module.exports = {
       },   
       {
         test: /\.(svg|gif|png|jpg)$/,
-        loader: 'url-loader?limit=10000&name=images/[name]-[hash].[ext]',
+        loader: 'url-loader?limit=20000&name=images/[name]-[hash].[ext]',
         exclude: /node_modules/
       }
     ],
