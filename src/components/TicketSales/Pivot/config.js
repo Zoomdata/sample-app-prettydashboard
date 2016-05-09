@@ -19,10 +19,19 @@ export default class Pivot extends Component {
     setupData() {
     	if (!allOfTheData || allOfTheData.length === 0 || this.props.filter !== this.state.prevfilter) {
         	allOfTheData = this.obtainPivotItems(this.props);       	
-            this.setState({prevfilter:this.props.filter})
         }
         this.createNewDatasource();
         this.api.sizeColumnsToFit();
+    }
+
+    isChecked(catname, categories){
+        let checked = false;
+        categories.forEach(function(item){
+            if(item.val === catname){
+                checked = item.checked;
+            }
+        })
+        return checked
     }
 
     obtainPivotItems(props) {
@@ -32,13 +41,10 @@ export default class Pivot extends Component {
 		} else {
                 items = props.items;
 		}
-
-        console.log(items);
-        var filter = this.props.filter
-        console.log('Loan '+filter);
         let pivotItems = []
+        let filter = 'All'
         items.forEach(function(item){
-            if (item.group[0] === filter || filter === 'All') {
+            if (this.isChecked(item.group[0], props.filter)) {
                 pivotItems.push({
                     catname: item.group[0],
                     eventname: item.group[1],
@@ -48,7 +54,10 @@ export default class Pivot extends Component {
                     avgcommission: item.current.metrics.commission.sum /  item.current.metrics.qtysold.sum 
                 });
             }
-        })
+        }.bind(this))
+        if(pivotItems.length == 0){
+            console.log('No data');
+        }
 		return pivotItems;
     }
 

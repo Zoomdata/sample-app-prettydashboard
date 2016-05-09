@@ -14,6 +14,7 @@ const mapStateToProps = (state) => {
         data: result,
         zoom: state.dashboard.zoom,
         filter: state.dashboard.tableFilter,
+        categories: state.chartFilters.categories,
     }
 };
 
@@ -55,7 +56,7 @@ class VisiblePivot extends React.Component{
             }
         return (
             <div className='table'>
-                      {loadTable(this.props.data, this.props.filter, height, width)}
+                      {loadTable(this.props.data, this.props.categories, height, width)}
                 </div>
         );
     }

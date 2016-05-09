@@ -5,6 +5,8 @@ export const REQUEST_TMAP_EVENT_DATA = 'REQUEST_TMAP_EVENT_DATA';
 export const RECEIVE_TMAP_EVENT_DATA = 'RECEIVE_TMAP_EVENT_DATA';
 export const REQUEST_PIVOT_DATA = 'REQUEST_PIVOT_DATA';
 export const RECEIVE_PIVOT_DATA = 'RECEIVE_PIVOT_DATA';
+//Filters
+export const CHANGE_PIVOT_FILTER = 'SET_PIVOT_FILTER';
 //App behaviour actions
 export const ADD_WIDGET = 'ADD_WIDGET';
 export const CLOSE_WIDGET = 'CLOSE_WIDGET';
@@ -171,5 +173,12 @@ export function setTrendEmpLength(param) {
 export function changeTrendFilter() {
     return {
         type: CHANGE_TREND_FILTER
+    }
+}
+
+export function changeCategoriesFilter(cat) {
+    return {
+        type: CHANGE_PIVOT_FILTER,
+        cat
     }
 }
