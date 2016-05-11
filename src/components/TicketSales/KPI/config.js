@@ -1,12 +1,15 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import './style.css';
 var numeral = require('numeral');
+import $ from 'jquery';
 class KPI extends React.Component{
 
     constructor(state,context){
         super(state,context);
-        this.state = {icon: 'trending_down', 
-            classes: 'tdown material-icons',
+        this.state = {
+            icon: 'trending_down', 
+            iconclass: 'tdown material-icons',
             values: { nov:0, dec: 0}
         };
     }
@@ -29,21 +32,41 @@ class KPI extends React.Component{
                 values.dec =  item.current.metrics.calc_likes_sports_december.calc * 100;
             }
         });
-
-        values.dec = numeral(values.dec).format('0.00');
-        values.nov = numeral(values.nov).format('0.00');
+        values.nov = numeral(values.nov).format('0.00')
         return values;
     }
 
-    render() {
+    componentWillMount() {
         let values = this.createKpi()
         let icon = (values.dec > values.nov) ? 'trending_up' : 'trending_down'
         let iconClass = (values.dec > values.nov) ? 'tup material-icons' : 'tdown material-icons'
+        this.setState({
+            icon: icon,
+            iconclass: iconClass,
+            values: values,
+        })
+    }
+
+    componentDidMount() {
+          let kpi = $(ReactDOM.findDOMNode(this)).find('h2');
+          let value = this.state.values.dec
+          console.log(value);
+          let span = '<span class="percent">%</span>'
+          $({counter: 0}).animate({counter: value}, {
+              duration: 900,
+              easing:'swing', // can be anything
+              step: function() { // called on every step
+                  kpi.html(numeral(this.counter).format('0.00')+span);
+              }
+          });
+    }
+
+    render() {
         return (
                 <div className="kpi">
-                    <i className={iconClass}>{icon}</i>
-                    <h2>{values.dec}<span className="percent">%</span></h2>
-                    <div className="bottom">Last month:{values.nov}%</div>
+                    <i className={this.state.iconclass}>{this.state.icon}</i>
+                    <h2 id={this.props.kpi}>{this.state.values.dec}<span className="percent">%</span></h2>
+                    <div className="bottom">Last month: {this.state.values.nov}%</div>
                 </div>
         );
     }
