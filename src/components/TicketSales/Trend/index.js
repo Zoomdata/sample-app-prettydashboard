@@ -32,7 +32,6 @@ const mapDispatchToProps = (dispatch) => {
 const mapStateToProps = (state) => {
     return {
         data: state.chartData.trendData.data,
-        grades: state.chartData.gradeData.data,
         filters: state.chartFilters,
         zoom: state.dashboard.zoom,
     }
