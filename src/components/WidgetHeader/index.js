@@ -20,18 +20,11 @@ class WidgetHeader extends React.Component{
         return ( <section className="card-header">
             <div className="chart-name">{this.props.name}</div>
                     <a href="#modal1"
-                        className="tooltipped fullscr modal-trigger"
-                        data-position="bottom"
-                        onClick={this.setFullScreen.bind(this)}
-                        data-delay="50"
-                        data-tooltip="Full Screen">
+                        className="fullscr modal-trigger"
+                        onClick={this.setFullScreen.bind(this)}>
                         <i className="material-icons md-light">open_in_new</i>
                     </a>
-                    <a href="#"
-                        className="del tooltipped"
-                        data-position="bottom"
-                        data-delay="50"
-                        data-tooltip="Delete">
+                    <a href="#" className="del">
                             <i className="material-icons md-light">close</i></a>
                   </section>
                );
