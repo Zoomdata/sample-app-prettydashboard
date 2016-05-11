@@ -2,18 +2,19 @@ import { take, put, call, fork, select } from 'redux-saga/effects';
 import * as actions from '../redux/actions';
 //-----Lend Club-----
 //import * as gradeData from '../config/queries/LendClub/gradeData';
-//import * as kpiData   from '../config/queries/LendClub/kpiData';
+//import * as kpiTotalData   from '../config/queries/LendClub/kpiTotalData';
 //import * as kpiTotals from '../config/queries/LendClub/kpiTotals';
 //import * as pivotData from '../config/queries/LendClub/pivotData';
 //import * as trendData from '../config/queries/LendClub/trendData';
 //-----Ticket Sales-----
-import * as trendData from '../config/queries/TicketSales/trendData';
+import * as trendData     from '../config/queries/TicketSales/trendData';
 import * as tmapEventData from '../config/queries/TicketSales/tmapEventData';
-import * as pivotData from '../config/queries/TicketSales/pivotData';
-import { createClient } from '../config';
+import * as pivotData     from '../config/queries/TicketSales/pivotData';
+import * as kpiTotalData       from '../config/queries/TicketSales/kpiTotalData';
+import { createClient }   from '../config';
 
 let queryData = [];
-let trendQueryRunning, pivotQueryRunning, tMapEventQueryRunning;
+let trendQueryRunning, pivotQueryRunning, tMapEventQueryRunning, kpiTotalQueryRunning
 
 function fetchDataApi(thread, group) {
     var queryGroup = group;
@@ -29,7 +30,9 @@ function fetchDataApi(thread, group) {
                 tMapEventQueryRunning = false;
             } else if (queryGroup === 'pivot') {
                 pivotQueryRunning = false;
-            }
+            } else if (queryGroup === 'kpiTotal') {
+                kpiTotalQueryRunning = false;
+            } 
             resolve(queryData);
         });
         thread.on('thread:exeption', function(error) {
@@ -81,17 +84,51 @@ var makeMultiSelectFilter = function(path) {
     };
 }
 
+var categoryFilter = makeMultiSelectFilter('catname');
+
+function* changeKpiQuery(getState) {
+    while(true) {
+        yield take(actions.CHANGE_KPI_FILTER);
+        var state = getState();
+        var categories = []
+        state.chartFilters.categories.map(function(c) {
+            if(c.checked){categories.push(c.val)}
+        });
+        var filters = categoryFilter(categories);
+        KpiTotalDataQuery.filters.remove('catname');
+        KpiTotalDataQuery.filters.add(filters);
+        yield fork(fetchKpiTotalData, KpiTotalDataThread);
+    }
+}
+function* changeTrendQuery(getState) {
+    while(true) {
+        yield take(actions.CHANGE_TREND_FILTER);
+        var state = getState();
+        var categories = []
+        state.chartFilters.categories.map(function(c) {
+            if(c.checked){categories.push(c.val)}
+        });
+        var filters = categoryFilter(categories);
+        //var filteredQueryConfig = Object.assign({}, trendData.queryConfig, 
+            //{ filters: filters});
+
+        TrendDataQuery.filters.remove('catname');
+        TrendDataQuery.filters.add(filters);
+        yield fork(fetchTrendData, TrendDataThread);
+    }
+}
+
 function* fetchTrendData(client, source, queryConfig) {
     trendQueryRunning = true;
-
-    const query = yield call(getQuery, client, source, queryConfig);
-    TrendDataQuery = query;
-
+    if (!TrendDataQuery) {
+        const query = yield call(getQuery, client, source, queryConfig);
+        TrendDataQuery = query;
+    }
     yield put(actions.requestTrendData(trendData.source));
-
-    const thread = yield call(getThread, client, TrendDataQuery);
-    TrendDataThread = thread;
-
+    if(!TrendDataThread){
+        const thread = yield call(getThread, client, TrendDataQuery);
+        TrendDataThread = thread;
+    }
     while (trendQueryRunning) {
         const data = yield call(fetchDataApi, TrendDataThread, 'trend');
         if (trendQueryRunning) {
@@ -99,18 +136,32 @@ function* fetchTrendData(client, source, queryConfig) {
         }
     }
 }
+function* changeTreeMapQuery(getState) {
+    while(true) {
+        yield take(actions.CHANGE_TREEMAP_FILTER);
+        var state = getState();
+        var categories = []
+        state.chartFilters.categories.map(function(c) {
+            if(c.checked){categories.push(c.val)}
+        });
+        var filters = categoryFilter(categories);
+        TMapEventDataQuery.filters.remove('catname');
+        TMapEventDataQuery.filters.add(filters);
+        yield fork(fetchTreeMapEvent, TMapEventDataThread);
+    }
+}
 
 function* fetchTreeMapEvent(client, source, queryConfig) {
     tMapEventQueryRunning = true;
-
-    const query = yield call(getQuery, client, source, queryConfig);
-    TMapEventDataQuery = query;
-
+    if (!TMapEventDataQuery) {
+        const query = yield call(getQuery, client, source, queryConfig);
+        TMapEventDataQuery = query;
+    }
     yield put(actions.requestTMapEventData(tmapEventData.source));
-
-    const thread = yield call(getThread, client, TMapEventDataQuery);
-    TMapEventDataThread = thread;
-
+    if(!TMapEventDataThread){
+        const thread = yield call(getThread, client, TMapEventDataQuery);
+        TMapEventDataThread = thread;
+    }
     while (tMapEventQueryRunning) {
         const data = yield call(fetchDataApi, TMapEventDataThread, 'treeMapEvent');
         if (tMapEventQueryRunning) {
@@ -119,6 +170,20 @@ function* fetchTreeMapEvent(client, source, queryConfig) {
     }
 }
 
+function* changePivotQuery(getState) {
+    while(true) {
+        yield take(actions.CHANGE_PIVOT_FILTER);
+        var state = getState();
+        var categories = []
+        state.chartFilters.categories.map(function(c) {
+            if(c.checked){categories.push(c.val)}
+        });
+        var filters = categoryFilter(categories);
+        PivotDataQuery.filters.remove('catname');
+        PivotDataQuery.filters.add(filters);
+        yield fork(fetchPivotData, PivotDataThread);
+    }
+}
 function* fetchPivotData(client, source, queryConfig) {
     pivotQueryRunning = true;
     if (!PivotDataQuery) {
@@ -138,11 +203,30 @@ function* fetchPivotData(client, source, queryConfig) {
     }
 }
 
+function* fetchKpiTotalData(client, source, queryConfig) {
+    kpiTotalQueryRunning = true;
+    if (!KpiTotalDataQuery) {
+        const query = yield call(getQuery, client, source, queryConfig);
+        KpiTotalDataQuery = query;
+    }
+    yield put(actions.requestKpiTotalData(kpiTotalData.source));
+    if (!KpiTotalDataThread) {
+        const thread = yield call(getThread, client, KpiTotalDataQuery);
+        KpiTotalDataThread = thread;
+    }
+    while (kpiTotalQueryRunning) {
+        const data = yield call(fetchDataApi, KpiTotalDataThread, 'kpiTotal');
+        if (kpiTotalQueryRunning) {
+            yield put(actions.receiveKpiTotalData(data));
+        }
+    }
+}
 
 function* startup(client) {
     yield fork(fetchTrendData, client, trendData.source, trendData.queryConfig);
     yield fork(fetchTreeMapEvent, client, tmapEventData.source, tmapEventData.queryConfig);
     yield fork(fetchPivotData, client, pivotData.source, pivotData.queryConfig);
+    yield fork(fetchKpiTotalData, client, kpiTotalData.source, kpiTotalData.queryConfig);
 }
 
 export default function* root(getState) {
@@ -150,7 +234,11 @@ export default function* root(getState) {
     ZoomdataClient = client;
     yield call(client.sources.update, {name: 'Ticket Sales'});
     yield fork(startup, ZoomdataClient);
-    //yield fork(changeTrendQuery, getState);
+    //Filters change listeners
+    yield fork(changeKpiQuery, getState);
+    yield fork(changeTrendQuery, getState);
+    yield fork(changeTreeMapQuery, getState);
+    yield fork(changePivotQuery, getState);
 }
 
 export let ZoomdataClient = undefined;
@@ -159,4 +247,6 @@ export let TrendDataThread = undefined;
 export let TMapEventDataQuery = undefined;
 export let TMapEventDataThread = undefined;
 export let PivotDataQuery = undefined;
+export let KpiTotalDataThread = undefined;
+export let KpiTotalDataQuery = undefined;
 export let PivotDataThread = undefined;

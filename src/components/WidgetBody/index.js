@@ -6,7 +6,7 @@ import { dark } from '../../utils/dark-theme';
 import VisibleTrend  from '../TicketSales/Trend';
 import VisiblePivot  from '../TicketSales/Pivot';
 import TreeMapEvent  from '../TicketSales/TreeMap';
-import EmptyWidget   from '../EmptyWidget';
+import VisibleKPI   from '../TicketSales/KPI';
 var echarts = require('echarts');
 
 class WidgetBody extends React.Component{
@@ -19,8 +19,9 @@ class WidgetBody extends React.Component{
         if(type.indexOf('KPI') > -1)
             { return (
                     <div>
-                        <VisibleKPIs key={id} 
+                        <VisibleKPI key={id} 
                             type={type} 
+                            data={this.props.data}
                             height={this.props.height} 
                             width={this.props.width}/>
                     </div>

@@ -24,16 +24,6 @@ export default class Pivot extends Component {
         this.api.sizeColumnsToFit();
     }
 
-    isChecked(catname, categories){
-        let checked = false;
-        categories.forEach(function(item){
-            if(item.val === catname){
-                checked = item.checked;
-            }
-        })
-        return checked
-    }
-
     obtainPivotItems(props) {
     	var items;
 		if (!props.items) {
@@ -42,19 +32,16 @@ export default class Pivot extends Component {
                 items = props.items;
 		}
         let pivotItems = []
-        let filter = 'All'
         items.forEach(function(item){
-            if (this.isChecked(item.group[0], props.filter)) {
-                pivotItems.push({
-                    catname: item.group[0],
-                    eventname: item.group[1],
-                    pricepaid: item.current.metrics.pricepaid.sum,
-                    commission: item.current.metrics.commission.sum,
-                    avgsaleprice: item.current.metrics.pricepaid.sum /  item.current.metrics.qtysold.sum,
-                    avgcommission: item.current.metrics.commission.sum /  item.current.metrics.qtysold.sum 
-                });
-            }
-        }.bind(this))
+            pivotItems.push({
+                catname: item.group[0],
+                eventname: item.group[1],
+                pricepaid: item.current.metrics.pricepaid.sum,
+                commission: item.current.metrics.commission.sum,
+                avgsaleprice: item.current.metrics.pricepaid.sum /  item.current.metrics.qtysold.sum,
+                avgcommission: item.current.metrics.commission.sum /  item.current.metrics.qtysold.sum 
+            });
+        })
         if(pivotItems.length == 0){
             console.log('No data');
         }

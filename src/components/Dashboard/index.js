@@ -29,6 +29,7 @@ class Dashboard extends React.Component{
                                                     width={w.width} 
                                                     name={w.name}
                                                     type={w.type}
+                                                    data={w.data}
                                                     dispatch={this.props.dispatch}
                                                 />
                                         )})

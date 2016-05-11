@@ -10,6 +10,12 @@ const initialState = {
     pivotData: {
         isFetching: false
     },
+    kpiTotalData: {
+        isFetching: false
+    },
+    kpiData: {
+        isFetching: false
+    },
 }
 
 const data = (state = initialState, action) => {
@@ -66,6 +72,43 @@ const data = (state = initialState, action) => {
                     data: action.data
                 }
             });
+
+        //=========== Kpi TOtal Data============
+        case actions.REQUEST_KPI_TOTAL_DATA:
+            return Object.assign({}, state, { 
+                kpiTotalData: {
+                    source: action.source,
+                    isFetching: true
+                }
+            });
+        //=========== Kpi TOtal Data============
+        case actions.RECEIVE_KPI_TOTAL_DATA:
+            return Object.assign({}, state, {
+                kpiTotalData: {
+                    source: state.kpiTotalData.source,
+                    isFetching: false,
+                    data: action.data
+                }
+            });
+
+        //=========== Kpi Data============
+        case actions.REQUEST_KPI_DATA:
+            return Object.assign({}, state, { 
+                kpiData: {
+                    source: action.source,
+                    isFetching: true
+                }
+            });
+        case actions.RECEIVE_KPI_DATA:
+            return Object.assign({}, state, {
+                kpiData: {
+                    source: state.kpiData.source,
+                    isFetching: false,
+                    data: action.data
+                }
+            });
+
+
 
         default:
             return state

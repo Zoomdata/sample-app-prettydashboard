@@ -1,12 +1,20 @@
 import React from 'react';
 import './style.css';
 import { connect } from 'react-redux';
-import { changeCategoriesFilter } from '../../redux/actions';
+import { setCategoriesFilter, 
+         changeKpiFilter, 
+         changeTrendFilter, 
+         changeTreeMapFilter,
+         changePivotFilter } from '../../redux/actions';
 
 class CategoriesCheck extends React.Component{
 
   onChange(e){
-        this.props.dispatch(changeCategoriesFilter(e.target.id))
+        this.props.dispatch(setCategoriesFilter(e.target.id));
+        this.props.dispatch(changeKpiFilter());
+        this.props.dispatch(changeTrendFilter());
+        this.props.dispatch(changeTreeMapFilter());
+        this.props.dispatch(changePivotFilter());
       }
 
     render() {
@@ -28,7 +36,6 @@ class CategoriesCheck extends React.Component{
                 </div>
         );
     }
-
 }
 
 const mapStateToProps = (state) => {
