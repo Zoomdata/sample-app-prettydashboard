@@ -1,0 +1,6 @@
+.widget-options{
+    width:100%;
+    height:100%;
+    z-index:-12;
+    background-color: rgba(33, 31, 33, 0.1);
+}

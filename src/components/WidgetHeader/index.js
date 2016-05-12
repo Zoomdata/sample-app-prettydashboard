@@ -16,17 +16,38 @@ class WidgetHeader extends React.Component{
     this.props.dispatch(closeWidget(this.props.id));
   }
 
-    render(){
-        return ( <section className="card-header">
-            <div className="chart-name">{this.props.name}</div>
-                    <a href="#modal1"
+  setBtnConfig(options){
+      if(options.config){
+          return ( <a href="#" className="dropdown-button" data-activates='dropconfig'>
+                        <i className="material-icons md-light">settings</i>
+                    </a>);
+      }
+  }
+  setBtnFullScreen(options){
+      if(options.zoom){
+          return ( <a href="#modal1"
                         className="fullscr modal-trigger"
                         onClick={this.setFullScreen.bind(this)}>
                         <i className="material-icons md-light">open_in_new</i>
                     </a>
-                    <a href="#" className="del">
-                            <i className="material-icons md-light">close</i></a>
-                  </section>
+                 )
+      }
+  }
+  setBtnDelete(options){
+      if(options.delete){
+          return ( <a href="#" className="del">
+                        <i className="material-icons md-light">close</i></a>
+                 )
+      }
+  }
+
+    render(){
+        return ( <section className="card-header">
+                    <div className="chart-name">{this.props.name}</div>
+                    {this.setBtnConfig(this.props.data.options)}
+                    {this.setBtnFullScreen(this.props.data.options)}
+                    {this.setBtnDelete(this.props.data.options)}
+                </section>
                );
     }
 }

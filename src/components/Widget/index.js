@@ -3,11 +3,35 @@ import WidgetHeader from '../WidgetHeader';
 import WidgetBody from '../WidgetBody';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
+import './style.css';
 import echarts from 'echarts';
 import { resizeWidget } from '../../redux/actions';
 class Widgets extends React.Component{
 
+    handleDrag(elem){
+         let grid = $('#gridcontainer')
+         let nw = $(elem).width();
+         let offs = $(elem).offset().left;
+         var gwidth = grid.width();
+         let totalWidth = (nw + offs)
+         if (totalWidth > gwidth){
+             let scroll = totalWidth - gwidth
+             grid.scrollLeft(scroll+10);
+             console.log('Scroll left '+scroll);
+         }
+    }
+
      resizeWidget(elem, dispatch){
+         let grid = $('#gridcontainer')
+         let nw = $(elem).width();
+         let offs = $(elem).offset().left;
+         var gwidth = grid.width();
+         let totalWidth = (nw + offs)
+         if (totalWidth > gwidth){
+             let scroll = totalWidth - gwidth
+             grid.scrollLeft(scroll+10);
+             console.log('Scroll left '+scroll);
+         }
          return dispatch(resizeWidget({
                 id: $(elem).attr('id'),
                 width: $(elem).width(),
@@ -19,6 +43,9 @@ class Widgets extends React.Component{
         let elem = document.getElementById(this.props.type);
         $(elem).on('click', function(){
             this.resizeWidget(elem, this.props.dispatch) 
+        }.bind(this));
+        $(elem).on('mousedown', function(){
+            this.handleDrag(elem)
         }.bind(this));
       }
 
@@ -42,9 +69,11 @@ class Widgets extends React.Component{
                       <div className="card card-panel dark-grey">
                           <WidgetHeader id={this.props.id}
                                         dispatch={this.props.dispatch}
+                                        data={this.props.data}
                                         name = {this.props.name}/>
                           <WidgetBody height={this.props.height} 
                                       width={this.props.width} 
+                                      data={this.props.data}
                                       type={this.props.type}
                                       id={this.props.id}/>
                       </div>
