@@ -1,5 +1,4 @@
 import React from 'react';
-import Counter from 'react-counter';
 import './style.css';
 import KPI from './config';
 import {connect} from 'react-redux';

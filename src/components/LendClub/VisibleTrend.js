@@ -68,7 +68,6 @@ const loadTrend = (data, width, height, onClick, type, zoom) => {
           width={width}
           height={height}
           zoom={zoom}
-          charopts={chartOpts}
           onClick={onClick}
         />
     );
