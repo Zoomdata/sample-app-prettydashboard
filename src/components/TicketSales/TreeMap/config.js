@@ -63,6 +63,7 @@ export default class Tree extends Component {
 
       var data = []
       _(items).forEach(function(item){
+          if(item.group[0] != null || item.group[0] != undefined){
             let cityObj = _.find(data, function(o) { return o.name == item.group[0];});
             let value = item.current.metrics.pricepaid.sum
             if(cityObj === undefined){
@@ -77,7 +78,7 @@ export default class Tree extends Component {
                     _.set(cityObj,['children',pos,'name'], item.group[1])
                     _.set(cityObj,['children',pos,'value'], value)
                 }
-            })
+          }})
         var option = {
             tz: 'EST',
             filters: [],
@@ -90,8 +91,8 @@ export default class Tree extends Component {
                 {
                     name:'Venue City',
                     type:'treemap',
-                    size: ['95%', '89%'],
-                    center: ['50%', '45%'],
+                    size: ['90%', '90%'], //[width, height]
+                    center: ['52%', '47%'],//[x,y] 
                     itemStyle: {
                         normal: {
                             breadcrumb:{

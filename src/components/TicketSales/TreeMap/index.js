@@ -44,8 +44,8 @@ const loadTreeMap = (data, echartobj, width, height, type, zoom) => {
 class TreeMapEvent extends React.Component{
 
     render(){
-        let height = this.props.height - 30;
-        let width = this.props.width ;
+        let height = this.props.height - 40;
+        let width = this.props.width - 30 ;
         if(this.props.zoom == 'TREEMAPEVENT')
             {
                 height = 550;
