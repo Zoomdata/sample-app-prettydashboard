@@ -2,7 +2,6 @@ import React from 'react';
 var ReactDOM = require('react-dom');
 import { connect } from 'react-redux';
 import Tree  from './config';
-import _ from 'lodash/core';
 
 const mapStateToProps = (state) => {
     return {
@@ -11,7 +10,7 @@ const mapStateToProps = (state) => {
     }
 };
 
-const loadTreeMap = (data, width, height, type, zoom) => {
+const loadTreeMap = (data, echartobj, width, height, type, zoom) => {
   if (!data) {
     return (
         <div className="loading">
@@ -32,6 +31,7 @@ const loadTreeMap = (data, width, height, type, zoom) => {
     return (
         <Tree 
           items={data}
+          echartobj={echartobj}
           type={type}
           width={width}
           height={height}
@@ -44,8 +44,8 @@ const loadTreeMap = (data, width, height, type, zoom) => {
 class TreeMapEvent extends React.Component{
 
     render(){
-        let height = this.props.height - 40;
-        let width = this.props.width  - 10;
+        let height = this.props.height - 30;
+        let width = this.props.width ;
         if(this.props.zoom == 'TREEMAPEVENT')
             {
                 height = 550;
@@ -55,6 +55,7 @@ class TreeMapEvent extends React.Component{
             //jsx code
                 <div className="treemapevent">
                     {loadTreeMap(this.props.data, 
+                               this.props.echartobj,
                                width, 
                                height, 
                                this.props.type, 

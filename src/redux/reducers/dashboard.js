@@ -7,47 +7,65 @@ const initialState = {
   tableFilter:'All', //This will have to be moved to sagas
   widgets:[
       { id: 1, 
-          name: 'EVENTS', 
+          name: 'CITIES - VENUES', 
           type:'TREEMAPEVENT', 
           drow: 1, dcol: 1, dsizex: 3, 
           dsizey: 2, width: 618, height: 408, 
-          data:{} },
+          data:{
+              options: {delete:true, zoom:true, config: true},
+              optconfig: {}
+          }
+      },
       { id: 2, 
           name: 'TICKET SOLDS & TRANSACTIONS', 
           type:'TREND', 
           drow: 2, dcol: 4, dsizex: 3, 
           dsizey: 2, width: 618, height: 408,
-          data:{} },   
+          data:{
+              options: {delete:true, zoom:true, config: false},
+              optconfig: {}
+          } 
+      },   
       { id: 3, 
           name: 'TICKET SALES', 
           type:'PIVOT', 
           drow: 3, dcol: 1, dsizex: 3, dsizey: 2, 
           width: 620, height:410 ,
-          data:{} },   
+          data:{
+              options: {delete:true, zoom:true, config: false},
+              optconfig: {}
+          } 
+      },   
       { id: 4, 
           name: 'LIKES JAZZ', 
           type:'KPI-JAZZ', 
           drow: 1, dcol: 5, dsizex: 1, dsizey: 1, 
           width: 200, height:200, 
           data:{
-              value:24.2
-          }},
+              options: {delete:true, zoom:false, config: false},
+              optconfig: {}
+          } 
+      },   
       { id: 5, 
           name: 'LIKES ROCK', 
           type:'KPI-ROCK', 
           drow: 1, dcol: 5, dsizex: 1, dsizey: 1, 
           width: 200, height:200, 
           data:{
-              value:14.8
-          }},
-      { id: 6, 
+              options: {delete:true, zoom:false, config: false},
+              optconfig: {}
+          } 
+      },   
+     { id: 6, 
           name: 'LIKES SPORTS', 
           type:'KPI-SPORTS', 
           drow: 1, dcol: 6, dsizex: 1, dsizey: 1, 
           width: 200, height:200, 
           data:{
-              value:17.0
-          }},
+              options: {delete:true, zoom:false, config: false},
+              optconfig: {}
+          } 
+      },   
 
   ]
 }

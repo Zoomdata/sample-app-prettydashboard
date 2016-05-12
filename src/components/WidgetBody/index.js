@@ -33,6 +33,7 @@ class WidgetBody extends React.Component{
                         <TreeMapEvent key={id} 
                             type={type} 
                             height={this.props.height} 
+                            echartobj={echartObj}
                             width={this.props.width}/>
                     </div>
                 )

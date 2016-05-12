@@ -38,14 +38,17 @@ class WidgetDetails extends React.Component{
         else if(type === 'TREEMAPEVENT') 
             { return ( 
                     <div>
-                        <TreeMapEvent key={id} type={type} />
+                        <TreeMapEvent key={id} 
+                            echartobj={echartObj}
+                            type={type} />
                     </div>
               )
             }
         else if(type === 'PIVOT') //Trend
             { return ( 
                 <div>
-                    <VisiblePivot key={id} type={type}/>
+                    <VisiblePivot key={id} 
+                                  type={type}/>
                 </div>
               )
             }
