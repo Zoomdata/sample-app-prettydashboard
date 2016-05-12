@@ -24,8 +24,6 @@ export default class Trend extends Component {
         }
         var newChartOptions = this.makeChartOptions(nextProps);
         this.chart.setOption(newChartOptions);
-        this.props.charopts[this.props.type] = this.chart;
-        this.props.charopts['theme'] = this.props.theme;
         this.chart.on('CLICK', nextProps.onClick);
     }
 
@@ -72,11 +70,64 @@ export default class Trend extends Component {
         var multiSeriesTooltipMoneyFormatter = genericMultiSeriesTooltipFormatter(true);
         var multiSeriesTooltipQtyFormatter = genericMultiSeriesTooltipFormatter(false);
 
+        let zoomposition = this.props.height - 10
+        var option1 = {
+            color: ['#fdc086','#386cb0'], 
+            tooltip: {
+                trigger: 'axis',
+                formatter: multiSeriesTooltipQtyFormatter
+            },
+            legend: {
+              data: ['Ticket Solds', 'Transactions'],
+            },
+                dataZoom : {
+                    show : true,
+                    realtime : false,
+                    start : 0,
+                    end : 100,
+                },
+            calculable : true,
+            grid: {
+                x: 50,
+                y: 25,
+                x2: 28,
+                y2: 63
+            },
+            xAxis : [
+                {
+                    type: 'category',
+                    boundaryGap : false,
+                    data: labels
+                }
+            ],
+            yAxis : [
+                {
+                    type: 'value',
+                    splitArea: {show: true},
+                    axisLabel: {
+                        formatter: qtyFormatter,
+                    }
+                }
+            ],
+            series : [
+                  {
+                    name: 'Ticket Solds',
+                    type: 'line',
+                    smooth: true,
+                    itemStyle: {normal: {areaStyle: {type: 'default'}}},
+                    data: qtySold,
+                  },
+                  {
+                    name: 'Transactions',
+                    type: 'line',
+                    smooth: true,
+                    itemStyle: {normal: {areaStyle: {type: 'default'}}},
+                    data: count,
+                  }
+            ]
+        };
+
 	    var option = {
-                zd_data_status: 'not_ready',
-                zd_height: null,
-                zd_width: null,
-                version: 1,
                 color: ['#fdc086','#386cb0'], 
                 tooltip: {
                     trigger: 'axis',
@@ -84,7 +135,7 @@ export default class Trend extends Component {
                 },
                 legend: {
                   data: ['Ticket Solds', 'Transactions'],
-                  y: 'top'
+                  y: 'bottom'
                 },
                 toolbox: {
                   show: false
@@ -130,7 +181,7 @@ export default class Trend extends Component {
                 ]
 	};
         
-        return option;
+        return option1;
     }
 
 	componentDidMount() {
