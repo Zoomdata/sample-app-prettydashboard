@@ -1,11 +1,5 @@
 import { take, put, call, fork, select } from 'redux-saga/effects';
 import * as actions from '../redux/actions';
-//-----Lend Club-----
-//import * as gradeData from '../config/queries/LendClub/gradeData';
-//import * as kpiTotalData   from '../config/queries/LendClub/kpiTotalData';
-//import * as kpiTotals from '../config/queries/LendClub/kpiTotals';
-//import * as pivotData from '../config/queries/LendClub/pivotData';
-//import * as trendData from '../config/queries/LendClub/trendData';
 //-----Ticket Sales-----
 import * as trendData     from '../config/queries/TicketSales/trendData';
 import * as tmapEventData from '../config/queries/TicketSales/tmapEventData';

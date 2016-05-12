@@ -63,7 +63,6 @@ const loadDonut = (data, onClick, type, zoom, height, width) => {
             onClick={onClick}
             type={type}
             zoom={zoom}
-            charopts={chartOpts}
           />
     );
   }

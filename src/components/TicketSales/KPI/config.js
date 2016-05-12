@@ -50,7 +50,6 @@ class KPI extends React.Component{
     componentDidMount() {
           let kpi = $(ReactDOM.findDOMNode(this)).find('h2');
           let value = this.state.values.dec
-          console.log(value);
           let span = '<span class="percent">%</span>'
           $({counter: 0}).animate({counter: value}, {
               duration: 900,
