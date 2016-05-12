@@ -196,9 +196,9 @@
   /*border-right: 1px solid #808080;*/
 }
 .ag-darkdash .ag-header-cell-moving .ag-header-cell-label {
-  opacity: 0;
-  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
-  filter: alpha(opacity=0);
+  /*opacity: 0;*/
+  /*-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";*/
+  /*filter: alpha(opacity=0);*/
 }
 .ag-darkdash .ag-header-cell-moving-clone {
   /*border-right: 1px solid #808080;*/
@@ -206,7 +206,11 @@
   background-color: rgba(43,0,0,0.8);
 }
 .ag-darkdash .ag-header-cell-moving {
-  background-color: #808080;
+  color:#FFF;
+  font-weight:bold;
+  cursor: move;
+  border-radius:3px;
+  background-color: #3C3A3D;
 }
 .ag-darkdash .ag-pinned-right-header {
   /*border-left: 1px solid #808080;*/
