@@ -14,8 +14,6 @@ class DashboardSideBar extends React.Component{
                     <div className="logo">
                         <img src={logo}/>
                     </div>
-                    <ViewSelect/>
-                    <MonthSelect/>
                     <CategoriesCheck/>
                 </div>
             </div>
