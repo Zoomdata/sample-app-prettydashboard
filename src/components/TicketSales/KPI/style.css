@@ -1,9 +1,9 @@
 .kpi{
-    margin-top:17%;
+    margin-top:10%;
     color: #FFF;
     text-align:center;
 }
-.kpi h2{
+.kpidata{
     font-weight: bold;
     font-size: 50px;
     margin:0px;
@@ -27,9 +27,13 @@ div.bottom{
     font-size: 270%;
     font-weight: bold;
     color:red;
+    padding:0px;
+    margin:0px
 }
 .tup{
     font-size: 270%;
     font-weight: bold;
     color:green;
+    padding:0px;
+    margin:0px
 }
