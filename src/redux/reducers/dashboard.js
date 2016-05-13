@@ -12,6 +12,7 @@ const initialState = {
           drow: 1, dcol: 1, dsizex: 3, 
           dsizey: 2, width: 618, height: 408, 
           data:{
+              querydata: 'tmapEventData',
               options: {delete:true, zoom:true, config: true},
               optconfig: {}
           }
@@ -22,6 +23,7 @@ const initialState = {
           drow: 2, dcol: 4, dsizex: 3, 
           dsizey: 2, width: 618, height: 408,
           data:{
+              querydata: 'trendData',
               options: {delete:true, zoom:true, config: false},
               optconfig: {}
           } 
@@ -32,6 +34,7 @@ const initialState = {
           drow: 3, dcol: 1, dsizex: 3, dsizey: 2, 
           width: 620, height:410 ,
           data:{
+              querydata: 'pivotData',
               options: {delete:true, zoom:true, config: false},
               optconfig: {}
           } 
@@ -39,9 +42,10 @@ const initialState = {
       { id: 4, 
           name: 'LIKES JAZZ', 
           type:'KPI-JAZZ', 
-          drow: 1, dcol: 5, dsizex: 1, dsizey: 1, 
+          drow: 1, dcol: 4, dsizex: 1, dsizey: 1, 
           width: 200, height:200, 
           data:{
+              querydata: 'kpiTotalData',
               options: {delete:true, zoom:false, config: false},
               optconfig: {}
           } 
@@ -52,6 +56,7 @@ const initialState = {
           drow: 1, dcol: 5, dsizex: 1, dsizey: 1, 
           width: 200, height:200, 
           data:{
+              querydata: 'kpiTotalData',
               options: {delete:true, zoom:false, config: false},
               optconfig: {}
           } 
@@ -62,6 +67,7 @@ const initialState = {
           drow: 1, dcol: 6, dsizex: 1, dsizey: 1, 
           width: 200, height:200, 
           data:{
+              querydata: 'kpiTotalData',
               options: {delete:true, zoom:false, config: false},
               optconfig: {}
           } 
