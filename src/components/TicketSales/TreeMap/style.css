@@ -1,0 +1,11 @@
+.options{ margin-top:20px; }
+.options label{ color:#DDD; }
+.select{
+    display:inline;
+    height:30px;
+    width:80%;
+    background-color:#171717;
+    border: solid 0.5px #5A5A5A;
+    color:#DDD;
+}
+.select:focus{ border: solid 1px #5A5A5A;}

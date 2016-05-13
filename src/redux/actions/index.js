@@ -8,6 +8,7 @@ export const RECEIVE_PIVOT_DATA = 'RECEIVE_PIVOT_DATA';
 export const REQUEST_KPI_TOTAL_DATA = 'REQUEST_KPI_TOTAL_DATA';
 export const RECEIVE_KPI_TOTAL_DATA = 'RECEIVE_KPI_TOTAL_DATA';
 //Filters
+export const SET_TREEMAP_FILTER = 'SET_TREEMAP_FILTER';
 export const SET_CATEGORIES_FILTER = 'SET_CATEGORIES_FILTER';
 export const CHANGE_PIVOT_FILTER = 'CHANGE_PIVOT_FILTER';
 export const CHANGE_KPI_FILTER = 'CHANGE_KPI_FILTER';
@@ -101,6 +102,12 @@ export function setCategoriesFilter(cat) {
     return {
         type: SET_CATEGORIES_FILTER,
         cat
+    }
+}
+export function setTreeMapFilter(metric) {
+    return {
+        type: SET_TREEMAP_FILTER,
+        metric
     }
 }
 export function changeKpiFilter() {

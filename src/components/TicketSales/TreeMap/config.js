@@ -37,9 +37,10 @@ export default class Tree extends Component {
         }
 
 
-      var genericTooltipFormatter = function(isMoney) {
+      var genericTooltipFormatter = function(metric) {
         return function(params) {
-          var fmtPattern = isMoney ? '$0,000.' : '0,000.';
+          //let value = (metric == 'count') ? item.current.count : item.current.metrics[metric][func]
+          let fmtPattern = (metric.value == 'count' || metric.value == 'qtysold') ? '0,000.' : '$0,000.'
           let children = '';
           let count = 0
           _(params.data.children).forEach(function(child){
@@ -53,19 +54,20 @@ export default class Tree extends Component {
                   <b>'+params.name + '</b> \
                       <ul style="font-size:90%">'+children+'</ul>\
                   </div>'
-                  + '<span style="font-weight:bold;font-size:90%">Price paid (sum): </span> ' 
+                  + '<span style="font-weight:bold;font-size:90%">'+metric.name+': </span> ' 
                   + numeral(params.value).format(fmtPattern) + '<br/>';
           return tooltip
         }
       }
-      var tooltipCountFormatter = genericTooltipFormatter(false);
-      var tooltipMoneyFormatter = genericTooltipFormatter(true);
+      var tooltipFormatter = genericTooltipFormatter(this.props.metric);
+      let metric = this.props.metric.value;
+      let func = this.props.metric.type;
 
       var data = []
       _(items).forEach(function(item){
           if(item.group[0] != null || item.group[0] != undefined){
             let cityObj = _.find(data, function(o) { return o.name == item.group[0];});
-            let value = item.current.metrics.pricepaid.sum
+            let value = (metric == 'count') ? item.current.count : item.current.metrics[metric][func]
             if(cityObj === undefined){
                 data.push({
                     name: item.group[0],
@@ -79,20 +81,31 @@ export default class Tree extends Component {
                     _.set(cityObj,['children',pos,'value'], value)
                 }
           }})
+
+        var width = this.props.width
+        var height = this.props.height
+
         var option = {
             tz: 'EST',
             filters: [],
             player: null,
             tooltip : {
                 trigger: 'item',
-                formatter: tooltipMoneyFormatter 
+                formatter: tooltipFormatter,
+                hideDelay: 50,
+                //position: function([x, y]) {return [newX,newY]}
+                position: function([x,y]){ 
+                    let wmiddle = width / 2;
+                    if(x > wmiddle) {x = (x - wmiddle)}
+                    return [x,y]
+                }
             },
             series : [
                 {
                     name:'Venue City',
                     type:'treemap',
-                    size: ['90%', '90%'], //[width, height]
-                    center: ['52%', '47%'],//[x,y] 
+                    size: ['98%', '90%'], //[width, height]
+                    center: ['50%', '47%'],//[x,y] 
                     itemStyle: {
                         normal: {
                             breadcrumb:{

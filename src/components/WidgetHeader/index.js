@@ -1,10 +1,14 @@
 import React from 'react';
+import './style.css';
+import MetricSelect  from '../TicketSales/TreeMap/metricSelect';
 import { closeWidget, setChart } from '../../redux/actions';
+import { connect } from 'react-redux';
 import { light } from '../../utils/light-theme';
 class WidgetHeader extends React.Component{
 
     constructor(props, context){
         super(props, context)
+        this.state = {display: false};
     }
 
   setFullScreen(){
@@ -12,13 +16,48 @@ class WidgetHeader extends React.Component{
     this.props.dispatch(setChart(this.props.id));
   }
 
+  setOptions(){
+    let current = this.state.display;
+    this.setState({display: !current})
+  }
+
+  displaySettings(){
+      if(this.state.display){
+      return( 
+              <div className="widget-options" align="center">
+                  <MetricSelect
+                      dispatch={this.props.dispatch}
+                  />
+              </div>
+            )
+      }
+  }
+
   deleteWidget(){
     this.props.dispatch(closeWidget(this.props.id));
   }
 
+  showLoader(querydata, qd){
+      if(querydata[qd].isFetching && querydata[qd].data != undefined){
+          return( <div className="preloader-wrapper smaller active">
+                      <div className="spinner-layer spinner-grey">
+                        <div className="circle-clipper left">
+                          <div className="circle"></div>
+                        </div><div className="gap-patch">
+                          <div className="circle"></div>
+                        </div><div className="circle-clipper right">
+                          <div className="circle"></div>
+                        </div>
+                      </div>
+                  </div>
+                )
+      }
+  }
+
   setBtnConfig(options){
       if(options.config){
-          return ( <a href="#" className="dropdown-button" data-activates='dropconfig'>
+          return ( <a href="#" 
+                        onClick={this.setOptions.bind(this)}>
                         <i className="material-icons md-light">settings</i>
                     </a>);
       }
@@ -42,14 +81,24 @@ class WidgetHeader extends React.Component{
   }
 
     render(){
-        return ( <section className="card-header">
-                    <div className="chart-name">{this.props.name}</div>
-                    {this.setBtnConfig(this.props.data.options)}
-                    {this.setBtnFullScreen(this.props.data.options)}
-                    {this.setBtnDelete(this.props.data.options)}
-                </section>
+        return ( <div>
+                      <section className="card-header">
+                         <div className="chart-name">{this.props.name}</div>
+                         {this.showLoader(this.props.querydata, this.props.data.querydata)}
+                         {this.setBtnConfig(this.props.data.options)}
+                         {this.setBtnFullScreen(this.props.data.options)}
+                         {this.setBtnDelete(this.props.data.options)}
+                        </section>
+                        <div style={{float:'none'}}>
+                            {this.displaySettings()}
+                        </div>
+                </div>
+            
                );
     }
 }
 
-export default WidgetHeader
+const mapStateToProps = (state) => {
+    return { querydata: state.chartData }
+}
+export default connect(mapStateToProps)(WidgetHeader)
