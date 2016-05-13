@@ -20,12 +20,15 @@ const initialState = {
 
 const data = (state = initialState, action) => {
     switch (action.type) {
+
         //=========== Trend Data ================
         case actions.REQUEST_TREND_DATA:
+            var data = state.trendData.data;
             return Object.assign({}, state, { 
                 trendData: {
                     source: action.source,
-                    isFetching: true
+                    isFetching: true,
+                    data: data
                 }
             });
 
@@ -40,10 +43,12 @@ const data = (state = initialState, action) => {
 
         //=========== Tree Map Event Data ============
         case actions.REQUEST_TMAP_EVENT_DATA:
+            var data = state.tmapEventData.data;
             return Object.assign({}, state, { 
                 tmapEventData: {
                     source: action.source,
-                    isFetching: true
+                    isFetching: true,
+                    data: data
                 }
             });
 
@@ -58,10 +63,12 @@ const data = (state = initialState, action) => {
 
         //=========== Pivot Data============
         case actions.REQUEST_PIVOT_DATA:
+            var data = state.pivotData.data;
             return Object.assign({}, state, { 
                 pivotData: {
                     source: action.source,
-                    isFetching: true
+                    isFetching: true,
+                    data: data
                 }
             });
         case actions.RECEIVE_PIVOT_DATA:
@@ -75,10 +82,12 @@ const data = (state = initialState, action) => {
 
         //=========== Kpi TOtal Data============
         case actions.REQUEST_KPI_TOTAL_DATA:
+            var data = state.kpiTotalData.data;
             return Object.assign({}, state, { 
                 kpiTotalData: {
                     source: action.source,
-                    isFetching: true
+                    isFetching: true,
+                    data: data,
                 }
             });
         //=========== Kpi TOtal Data============
@@ -96,7 +105,8 @@ const data = (state = initialState, action) => {
             return Object.assign({}, state, { 
                 kpiData: {
                     source: action.source,
-                    isFetching: true
+                    isFetching: true,
+                    data: action.data
                 }
             });
         case actions.RECEIVE_KPI_DATA:

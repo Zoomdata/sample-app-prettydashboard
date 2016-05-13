@@ -1,0 +1,14 @@
+.widget-options{
+    padding-top: 30px;
+    width:100%;
+    height:60px;
+    background-color: rgba(33, 31, 33, 0.1);
+}
+.preloader-wrapper.smaller{
+    height: 16px;
+    width: 16px;
+    margin-right:6px;
+}
+.spinner-grey{
+    border-color:#DDD;
+}

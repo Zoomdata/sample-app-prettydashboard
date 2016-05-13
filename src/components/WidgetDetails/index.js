@@ -1,8 +1,5 @@
 import React from 'react';
 import { setChart }  from '../../redux/actions';
-import VisibleDonut  from '../LendClub/VisibleDonut';
-import VisibleKPIs   from '../LendClub/VisibleKPIs';
-import VisibleTable  from '../LendClub/VisibleTable';
 import VisibleTrend  from '../TicketSales/Trend';
 import TreeMapEvent  from '../TicketSales/TreeMap';
 import VisiblePivot  from '../TicketSales/Pivot';
