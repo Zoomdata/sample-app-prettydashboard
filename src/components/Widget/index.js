@@ -3,7 +3,6 @@ import WidgetHeader from '../WidgetHeader';
 import WidgetBody from '../WidgetBody';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
-import './style.css';
 import echarts from 'echarts';
 import { resizeWidget } from '../../redux/actions';
 class Widgets extends React.Component{
