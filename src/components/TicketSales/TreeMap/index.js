@@ -6,13 +6,14 @@ import Tree  from './config';
 const mapStateToProps = (state) => {
     return {
         data: state.chartData.tmapEventData.data,
+        tmap: state.chartData.tmapEventData,
         metric: state.chartFilters.mapmetric,
         zoom: state.dashboard.zoom,
     }
 };
 
-const loadTreeMap = (data, echartobj, width, height, type, zoom, metric) => {
-  if (!data) {
+const loadTreeMap = (tmap, echartobj, width, height, type, zoom, metric) => {
+  if (!tmap.data) {
     return (
         <div className="loading">
           <div className="preloader-wrapper big active">
@@ -31,7 +32,8 @@ const loadTreeMap = (data, echartobj, width, height, type, zoom, metric) => {
   } else {
     return (
         <Tree 
-          items={data}
+          items={tmap.data}
+          fetching={tmap.isFetching}
           echartobj={echartobj}
           type={type}
           width={width}
@@ -56,7 +58,7 @@ class TreeMapEvent extends React.Component{
         return(
             //jsx code
                 <div className="treemapevent">
-                    {loadTreeMap(this.props.data, 
+                    {loadTreeMap(this.props.tmap, 
                                this.props.echartobj,
                                width, 
                                height, 

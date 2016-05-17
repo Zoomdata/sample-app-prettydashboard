@@ -9,6 +9,11 @@ import { dark } from '../../../utils/dark-theme';
 
 export default class Tree extends Component {
 
+    constructor(state,context){
+        super(state,context);
+        this.state = {fetching:false};
+    }
+
 	createChart() {
 	    // Initialize after dom ready
         var domElement = ReactDOM.findDOMNode(this);
@@ -62,8 +67,7 @@ export default class Tree extends Component {
       var tooltipFormatter = genericTooltipFormatter(this.props.metric);
       let metric = this.props.metric.value;
       let func = this.props.metric.type;
-
-      var data = []
+      let data = [];
       _(items).forEach(function(item){
           if(item.group[0] != null || item.group[0] != undefined){
             let cityObj = _.find(data, function(o) { return o.name == item.group[0];});
@@ -81,11 +85,10 @@ export default class Tree extends Component {
                     _.set(cityObj,['children',pos,'value'], value)
                 }
           }})
-
+        
         var width = this.props.width
         var height = this.props.height
-
-        var option = {
+        return {
             tz: 'EST',
             filters: [],
             player: null,
@@ -130,9 +133,7 @@ export default class Tree extends Component {
                     data: data,
                 }
             ]
-        };
-        
-        return option;
+        }
     }
 
 	componentDidMount() {
@@ -145,6 +146,13 @@ export default class Tree extends Component {
 	}
 
 	componentDidUpdate() {
+        //When the current prop 'fetch' is false and the old one (in state)
+        //is true, it means that a filter was changed so the chart must be entirely
+        //deleted and re-created.
+        if(!this.props.fetching && this.state.fetching){
+            this.chart.dispose();
+            this.createChart();
+        }
         this.chart.resize()
 		this.updateChart(this.props);
 	}
@@ -154,6 +162,7 @@ export default class Tree extends Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
+        this.setState({fetching: this.props.fetching})
 		this.updateChart(nextProps);
 	}
 
