@@ -11,7 +11,7 @@ class KPI extends React.Component{
             icon: 'trending_down', 
             iconclass: 'tdown material-icons',
             values: { nov:0, dec: 0},
-            updnumber: true
+            fetching: false,
         };
     }
 
@@ -34,6 +34,7 @@ class KPI extends React.Component{
             }
         });
         vals.nov = numeral(vals.nov).format('0.00')
+        vals.dec = numeral(vals.dec).format('0.00')
         return vals;
     }
 
@@ -41,15 +42,11 @@ class KPI extends React.Component{
         let values = this.createKpi(props)
         let icon = (values.dec > values.nov) ? 'trending_up' : 'trending_down'
         let iconClass = (values.dec > values.nov) ? 'tup material-icons' : 'tdown material-icons'
-        if(values.dec != this.state.values.dec && values.nov != this.state.values.nov){
-            this.setState({
-                icon: icon,
-                iconclass: iconClass,
-                values: values,
-                updnumber: upd,
-            })
-        }
-        else{ this.setState({updnumber:false}) }
+        this.setState({
+            icon: icon,
+            iconclass: iconClass,
+            values: values,
+        })
     }
 
     startKpiAnimation(){
@@ -65,16 +62,22 @@ class KPI extends React.Component{
     }
     
     componentWillReceiveProps(nextProps) {
-        this.prepareRender(this.props, true);
+        this.setState({fetching: this.props.fetching})
+        this.prepareRender(nextProps, true);
     }
     componentWillMount() {
         this.prepareRender(this.props, false);
     }
     componentDidMount() {
-        this.startKpiAnimation()
+            this.startKpiAnimation()
     }
     componentDidUpdate(prevProps, prevState) {
-        this.startKpiAnimation()
+        //When the current prop 'fetch' is false and the old one (in state)
+        //is true, it means that a filter was changed so the kpi must be entirely
+        //deleted and re-created.
+        if(!this.props.fetching && this.state.fetching){
+            this.startKpiAnimation()
+        }
     }
 
     render() {

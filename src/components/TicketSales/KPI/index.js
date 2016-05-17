@@ -5,8 +5,8 @@ import {connect} from 'react-redux';
 
 class VisibleKPI extends React.Component{
 
-    loadKPIs(totals, type, categories ){
-      if (totals == undefined) {
+    loadKPIs(kpidata, type, categories ){
+      if (kpidata.data == undefined) {
         return (
             <div className="loading">
               <div className="preloader-wrapper big active">
@@ -25,7 +25,8 @@ class VisibleKPI extends React.Component{
       } else {
         return (
                 <KPI
-                    totals={totals}
+                    totals={kpidata.data}
+                    fetching={kpidata.isFetching}
                     kpi={type}
                     categories={categories}
                 />
@@ -33,23 +34,18 @@ class VisibleKPI extends React.Component{
       }
     }
 
-
-
-
-
     render() {
         return (
                 <div>
-                  {this.loadKPIs(this.props.totals, this.props.type, this.props.categories)}
+                  {this.loadKPIs(this.props.kpidata, this.props.type, this.props.categories)}
                 </div>
         );
     }
-
 }
 
 const mapStateToProps = (state) => {
     let props = {
-        totals: state.chartData.kpiTotalData.data,
+        kpidata: state.chartData.kpiTotalData,
         zoom: state.dashboard.zoom,
         categories: state.chartFilters.categories,
     }
