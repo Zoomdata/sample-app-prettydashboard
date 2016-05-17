@@ -210,7 +210,7 @@ export default class Pivot extends Component {
     }
 
     componentWillUnmount() {
-        this.api.destroy();
+        //this.api.destroy();
     }
     componentWillMount() {
         this.columnDefs = this.createColDefs();
