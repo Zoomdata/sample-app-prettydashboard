@@ -25,7 +25,7 @@ var gridster;
 
 $(function(){
      gridster = $(".gridster ul").gridster({
-     widget_base_dimensions: [200, 200],
+     widget_base_dimensions: [60, 60],
      widget_margins: [5, 5],
      autogrow_cols: true,
      draggable: {

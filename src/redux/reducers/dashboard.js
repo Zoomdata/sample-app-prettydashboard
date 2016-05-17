@@ -6,11 +6,23 @@ const initialState = {
   name:'',
   tableFilter:'All', //This will have to be moved to sagas
   widgets:[
+     { id: 0, 
+          name: '', 
+          type:'MENU', 
+          drow: 1, dcol: 1, dsizex: 18, dsizey: 1, 
+          width: 1250, height:60, 
+          data:{
+              querydata: false,
+              options: {delete:false, zoom:false, config: false},
+              optconfig: {}
+          } 
+      },   
       { id: 1, 
           name: 'CITIES - VENUES', 
           type:'TREEMAPEVENT', 
-          drow: 1, dcol: 1, dsizex: 3, 
-          dsizey: 2, width: 618, height: 408, 
+          drow: 2, dcol: 1, 
+          dsizex: 9, dsizey: 6, 
+          width: 620, height: 410, 
           data:{
               querydata: 'tmapEventData',
               options: {delete:true, zoom:true, config: true},
@@ -20,8 +32,9 @@ const initialState = {
       { id: 2, 
           name: 'TICKET SOLDS & TRANSACTIONS', 
           type:'TREND', 
-          drow: 2, dcol: 4, dsizex: 3, 
-          dsizey: 2, width: 618, height: 408,
+          drow: 5, dcol: 10, 
+          dsizex: 9, dsizey: 6, 
+          width: 620, height: 410,
           data:{
               querydata: 'trendData',
               options: {delete:true, zoom:true, config: false},
@@ -31,8 +44,9 @@ const initialState = {
       { id: 3, 
           name: 'TICKET SALES', 
           type:'PIVOT', 
-          drow: 3, dcol: 1, dsizex: 3, dsizey: 2, 
-          width: 620, height:410 ,
+          drow: 8, dcol: 1, 
+          dsizex: 9, dsizey: 6, 
+          width: 620, height: 410 ,
           data:{
               querydata: 'pivotData',
               options: {delete:true, zoom:true, config: false},
@@ -42,8 +56,9 @@ const initialState = {
       { id: 4, 
           name: 'LIKES JAZZ', 
           type:'KPI-JAZZ', 
-          drow: 1, dcol: 4, dsizex: 1, dsizey: 1, 
-          width: 200, height:200, 
+          drow: 2, dcol: 10, 
+          dsizex: 3, dsizey: 3, 
+          width: 200, height: 200, 
           data:{
               querydata: 'kpiTotalData',
               options: {delete:true, zoom:false, config: false},
@@ -53,8 +68,9 @@ const initialState = {
       { id: 5, 
           name: 'LIKES ROCK', 
           type:'KPI-ROCK', 
-          drow: 1, dcol: 5, dsizex: 1, dsizey: 1, 
-          width: 200, height:200, 
+          drow: 2, dcol: 13, 
+          dsizex: 3, dsizey: 3, 
+          width: 200, height: 200, 
           data:{
               querydata: 'kpiTotalData',
               options: {delete:true, zoom:false, config: false},
@@ -64,8 +80,9 @@ const initialState = {
      { id: 6, 
           name: 'LIKES SPORTS', 
           type:'KPI-SPORTS', 
-          drow: 1, dcol: 6, dsizex: 1, dsizey: 1, 
-          width: 200, height:200, 
+          drow: 2, dcol: 16, 
+          dsizex: 3, dsizey: 3, 
+          width: 200, height: 200, 
           data:{
               querydata: 'kpiTotalData',
               options: {delete:true, zoom:false, config: false},
