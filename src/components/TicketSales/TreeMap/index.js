@@ -1,6 +1,8 @@
 import React from 'react';
 var ReactDOM = require('react-dom');
 import { connect } from 'react-redux';
+import NoData from '../NoData';
+import LoaderData from '../LoaderData';
 import Tree  from './config';
 
 const mapStateToProps = (state) => {
@@ -14,22 +16,12 @@ const mapStateToProps = (state) => {
 
 const loadTreeMap = (tmap, echartobj, width, height, type, zoom, metric) => {
   if (!tmap.data) {
-    return (
-        <div className="loading">
-          <div className="preloader-wrapper big active">
-            <div className="spinner-layer spinner-blue-only">
-              <div className="circle-clipper left">
-                <div className="circle"></div>
-              </div><div className="gap-patch">
-                <div className="circle"></div>
-              </div><div className="circle-clipper right">
-                <div className="circle"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-    );
-  } else {
+        return (<LoaderData />);
+  }
+  else if(tmap.data.length == 0){
+        return(<NoData height={height}/>) ;
+  }
+  else {
     return (
         <Tree 
           items={tmap.data}
@@ -57,7 +49,7 @@ class TreeMapEvent extends React.Component{
             }
         return(
             //jsx code
-                <div className="treemapevent">
+            <div className="treemapevent">
                     {loadTreeMap(this.props.tmap, 
                                this.props.echartobj,
                                width, 

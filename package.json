@@ -34,7 +34,6 @@
     "react-dom": "^0.14.7",
     "react-highcharts": "^8.0.3",
     "react-redux": "^4.4.1",
-    "react-router": "^2.0.0",
     "redux": "^3.3.1",
     "redux-responsive": "^1.1.0",
     "redux-saga": "^0.9.4",

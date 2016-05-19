@@ -16,7 +16,6 @@ class Widgets extends React.Component{
          if (totalWidth > gwidth){
              let scroll = totalWidth - gwidth
              grid.scrollLeft(scroll+10);
-             console.log('Scroll left '+scroll);
          }
     }
 
@@ -29,7 +28,6 @@ class Widgets extends React.Component{
          if (totalWidth > gwidth){
              let scroll = totalWidth - gwidth
              grid.scrollLeft(scroll+10);
-             console.log('Scroll left '+scroll);
          }
          return dispatch(resizeWidget({
                 id: $(elem).attr('id'),

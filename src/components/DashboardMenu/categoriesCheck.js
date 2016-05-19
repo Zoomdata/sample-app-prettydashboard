@@ -19,13 +19,11 @@ class CategoriesCheck extends React.Component{
 
     render() {
         return (  
-            <div>
-              <div className="options">
-                  <b>Choose Category</b>
-              </div>
+              <div className="category">
                 {this.props.categories.map((c, i) => {
-                    return( <div className="options" key={i}>
+                    return( <div key={i} className="option">
                               <input type="checkbox" 
+                                  key={i}
                                   onChange={this.onChange.bind(this)}
                                   checked={c.checked}
                                   id={c.val}
@@ -33,7 +31,7 @@ class CategoriesCheck extends React.Component{
                               <label htmlFor={c.val}>{c.val}</label>
                             </div>
                     )})}
-                </div>
+            </div>
         );
     }
 }

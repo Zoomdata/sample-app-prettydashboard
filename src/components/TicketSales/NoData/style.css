@@ -1,0 +1,10 @@
+/*----When filter don't return any data ------*/
+.no-data{
+    width:100%;
+    color:#A5A5A5;
+    animation-duration:3s;
+    display: -webkit-flex;
+    -webkit-justify-content: center;
+    -webkit-align-items:center;
+}
+

@@ -38,7 +38,7 @@ class WidgetHeader extends React.Component{
   }
 
   showLoader(querydata, qd){
-      if(querydata[qd].isFetching && querydata[qd].data != undefined){
+      if(qd && querydata[qd].isFetching && querydata[qd].data != undefined){
           return( <div className="preloader-wrapper smaller active">
                       <div className="spinner-layer spinner-grey">
                         <div className="circle-clipper left">

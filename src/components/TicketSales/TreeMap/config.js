@@ -1,7 +1,7 @@
 // modules/Trend.js
 import React, { Component } from 'react';
-import _ from 'lodash';
 var ReactDOM = require('react-dom');
+import _ from 'lodash';
 var echarts = require('echarts');
 var moment = require('moment');
 var numeral = require('numeral');
@@ -137,7 +137,7 @@ export default class Tree extends Component {
     }
 
 	componentDidMount() {
-    	this.createChart();
+        this.createChart();
         this.chart.resize();
   	}
 
@@ -149,12 +149,12 @@ export default class Tree extends Component {
         //When the current prop 'fetch' is false and the old one (in state)
         //is true, it means that a filter was changed so the chart must be entirely
         //deleted and re-created.
-        if(!this.props.fetching && this.state.fetching){
-            this.chart.dispose();
-            this.createChart();
-        }
-        this.chart.resize()
-		this.updateChart(this.props);
+            if(!this.props.fetching && this.state.fetching){
+                this.chart.dispose();
+                this.createChart();
+            }
+            this.chart.resize()
+            this.updateChart(this.props);
 	}
 
 	shouldComponentUpdate(nextProps, nextState) {
@@ -166,14 +166,17 @@ export default class Tree extends Component {
 		this.updateChart(nextProps);
 	}
 
+    loadChart(){
+
+    }
+
 	render(){
         let styles={
             height: this.props.height,
             width: this.props.width,
         }
 	  	return (
-            <div id={this.props.type} 
-                style={styles} />
+            <div id={this.props.type} style={styles} />
     	)
 	}
 
