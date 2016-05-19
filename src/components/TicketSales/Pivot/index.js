@@ -25,7 +25,6 @@ const loadTable = (data, filter, height, width) => {
         return (<LoaderData />) ;
   } 
   else if(data.length == 0){
-      console.log(data);
         return(<NoData height={height}/>) ;
   }
   else {

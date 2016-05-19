@@ -15,7 +15,6 @@ class VisibleKPI extends React.Component{
             return(<NoData height={height}/>) ;
         } 
         else {
-            console.log(kpidata.data[0]);
             return (
                     <KPI
                         totals={kpidata.data}

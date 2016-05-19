@@ -105,7 +105,6 @@ const data = (state = initialState, action) => {
         case SET_CHART:
             var res = getType(state.widgets, action.id)
             let obj = Object.assign({}, state, {zoom: res[0], name:res[1]})
-            console.log(obj);
             return obj;
 
         case FIRST_RENDER:
