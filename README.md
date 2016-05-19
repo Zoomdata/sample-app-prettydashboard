@@ -16,5 +16,5 @@ npm install
 npm start
 
 #In the browser:
-http://localhost:8090/zd-data-app-03
+http://localhost:8090
 ```
