@@ -42,9 +42,6 @@ export default class Pivot extends Component {
                 avgcommission: item.current.metrics.commission.sum /  item.current.metrics.qtysold.sum 
             });
         })
-        if(pivotItems.length == 0){
-            console.log('No data');
-        }
 		return pivotItems;
     }
 

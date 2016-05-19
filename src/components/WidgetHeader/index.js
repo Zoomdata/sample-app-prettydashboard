@@ -12,7 +12,6 @@ class WidgetHeader extends React.Component{
     }
 
   setFullScreen(){
-    console.log('Fullscreen to '+this.props.id);
     this.props.dispatch(setChart(this.props.id));
   }
 
