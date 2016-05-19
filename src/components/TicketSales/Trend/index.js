@@ -1,5 +1,7 @@
 import React from 'react';
 var ReactDOM = require('react-dom');
+import NoData from '../NoData';
+import LoaderData from '../LoaderData';
 import { connect } from 'react-redux';
 import { setTrendLoanGrade, setTrendLoanStatus, setTrendEmpLength, changeTrendFilter} from '../../../redux/actions'
 import Trend  from './config';
@@ -43,33 +45,23 @@ var controlStyle = {
 };
 
 const loadTrend = (data, width, height, onClick, type, zoom) => {
-  if (!data) {
-    return (
-        <div className="loading">
-          <div className="preloader-wrapper big active">
-            <div className="spinner-layer spinner-blue-only">
-              <div className="circle-clipper left">
-                <div className="circle"></div>
-              </div><div className="gap-patch">
-                <div className="circle"></div>
-              </div><div className="circle-clipper right">
-                <div className="circle"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-    );
-  } else {
-    return (
-        <Trend 
-          items={data}
-          type={type}
-          width={width}
-          height={height}
-          zoom={zoom}
-          onClick={onClick}
-        />
-    );
+    if (!data){ 
+        return (<LoaderData />);
+    }
+    else if(data.length == 0){
+        return ( <NoData height={height}/> );
+    } 
+    else {
+        return (
+            <Trend 
+              items={data}
+              type={type}
+              width={width}
+              height={height}
+              zoom={zoom}
+              onClick={onClick}
+            />
+        );
   }
 }
 

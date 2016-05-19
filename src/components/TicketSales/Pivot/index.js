@@ -1,5 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import NoData from '../NoData';
+import LoaderData from '../LoaderData';
 import Pivot from './config';
 
 const mapStateToProps = (state) => {
@@ -20,22 +22,13 @@ const mapStateToProps = (state) => {
 
 const loadTable = (data, filter, height, width) => {
   if (!data) {
-    return (
-        <div className="loading">
-          <div className="preloader-wrapper big active">
-            <div className="spinner-layer spinner-blue-only">
-              <div className="circle-clipper left">
-                <div className="circle"></div>
-              </div><div className="gap-patch">
-                <div className="circle"></div>
-              </div><div className="circle-clipper right">
-                <div className="circle"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-    );
-  } else {
+        return (<LoaderData />) ;
+  } 
+  else if(data.length == 0){
+      console.log(data);
+        return(<NoData height={height}/>) ;
+  }
+  else {
     return (
         <Pivot  items={data} 
                 filter={filter} 

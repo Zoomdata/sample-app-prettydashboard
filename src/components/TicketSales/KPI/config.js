@@ -81,11 +81,18 @@ class KPI extends React.Component{
     }
 
     render() {
+        let width = this.props.width;
+        let height = this.props.height;
         return (
-                <div className="kpi">
-                    <i className={this.state.iconclass}>{this.state.icon}</i>
+                <div className="kpi" style={{width:width, height:height}} >
+                    <i className={this.state.iconclass} 
+                        style={{fontSize: 20 * width / 100 }}>
+                        {this.state.icon}
+                    </i>
                     <div style={{marginTop:0, padding:0}}>
-                        <span className="kpidata">{this.state.values.dec}</span>
+                        <span className="kpidata" style={{fontSize:25 * width /100}}>
+                            {this.state.values.dec}
+                        </span>
                         <span className="percent">%</span>
                     </div>
                     <div className="bottom">Last month: {this.state.values.nov}%</div>

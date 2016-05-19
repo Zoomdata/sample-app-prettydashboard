@@ -1,43 +1,42 @@
 import React from 'react';
 import './style.css';
+import NoData from '../NoData';
+import LoaderData from '../LoaderData';
 import KPI from './config';
 import {connect} from 'react-redux';
 
 class VisibleKPI extends React.Component{
 
-    loadKPIs(kpidata, type, categories ){
-      if (kpidata.data == undefined) {
-        return (
-            <div className="loading">
-              <div className="preloader-wrapper big active">
-                <div className="spinner-layer spinner-blue-only">
-                  <div className="circle-clipper left">
-                    <div className="circle"></div>
-                  </div><div className="gap-patch">
-                    <div className="circle"></div>
-                  </div><div className="circle-clipper right">
-                    <div className="circle"></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-        );
-      } else {
-        return (
-                <KPI
-                    totals={kpidata.data}
-                    fetching={kpidata.isFetching}
-                    kpi={type}
-                    categories={categories}
-                />
-        );
+    loadKPIs(kpidata, type, width, height, categories ){
+        if (kpidata.data == undefined){ 
+            return (<LoaderData />) ;
+        }
+        else if(kpidata.data[0].current.count == 0) { 
+            return(<NoData height={height}/>) ;
+        } 
+        else {
+            console.log(kpidata.data[0]);
+            return (
+                    <KPI
+                        totals={kpidata.data}
+                        fetching={kpidata.isFetching}
+                        width={width}
+                        height={height - 50}
+                        kpi={type}
+                        categories={categories}
+                    />
+            );
       }
     }
 
     render() {
         return (
                 <div>
-                  {this.loadKPIs(this.props.kpidata, this.props.type, this.props.categories)}
+                    {this.loadKPIs(this.props.kpidata, 
+                                   this.props.type, 
+                                   this.props.width,
+                                   this.props.height,
+                                   this.props.categories)}
                 </div>
         );
     }
