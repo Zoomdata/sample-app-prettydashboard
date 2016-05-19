@@ -2,8 +2,7 @@ import React from 'react';
 import './style.css';
 import Widgets from '../Widget';
 import WidgetDetails from '../WidgetDetails';
-import DashboardSideBar from '../DashboardSideBar';
-import DashboardNav from '../DashboardNav';
+import DashboardMenu from '../DashboardMenu';
 import { connect } from 'react-redux';
 import $ from 'jquery';
 class Dashboard extends React.Component{
@@ -11,11 +10,10 @@ class Dashboard extends React.Component{
     render(){
         return (
                     <div className="row row-container">
-                        <DashboardSideBar/>
-                        <DashboardNav/>
                         <div align="left" id="col s10">
                             <div className="gridster" id="gridcontainer" >
                                 <ul>
+                                    <DashboardMenu/>
                                     {this.props.widgets.map((w, i) => {
                                         return (
                                                 <Widgets 
