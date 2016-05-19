@@ -7,6 +7,8 @@ export const REQUEST_PIVOT_DATA = 'REQUEST_PIVOT_DATA';
 export const RECEIVE_PIVOT_DATA = 'RECEIVE_PIVOT_DATA';
 export const REQUEST_KPI_TOTAL_DATA = 'REQUEST_KPI_TOTAL_DATA';
 export const RECEIVE_KPI_TOTAL_DATA = 'RECEIVE_KPI_TOTAL_DATA';
+export const REQUEST_STATE_DATA = 'REQUEST_STATE_DATA';
+export const RECEIVE_STATE_DATA = 'RECEIVE_STATE_DATA';
 //Filters
 export const SET_TREEMAP_FILTER = 'SET_TREEMAP_FILTER';
 export const SET_CATEGORIES_FILTER = 'SET_CATEGORIES_FILTER';
@@ -15,6 +17,8 @@ export const CHANGE_KPI_FILTER = 'CHANGE_KPI_FILTER';
 export const CHANGE_TREND_FILTER = 'CHANGE_TREND_FILTER';
 export const CHANGE_TREEMAP_FILTER = 'CHANGE_TREEMAP_FILTER';
 export const SET_TABLE_FILTER = 'SET_TABLE_FILTER';
+export const SET_STATE_FILTER = 'SET_STATE_FILTER';
+export const SET_CITY_FILTER = 'SET_CITY_FILTER';
 //App behaviour actions
 export const ADD_WIDGET = 'ADD_WIDGET';
 export const CLOSE_WIDGET = 'CLOSE_WIDGET';
@@ -47,6 +51,18 @@ export function closeWidget(id){
 }
 
 /*========= INITIAL REQUEST ACTIONS ==========*/
+export function requestStateData(source) {
+	return {
+        type: REQUEST_STATE_DATA,
+        source
+    }
+}
+export function receiveStateData(data) {
+    return {
+        type: RECEIVE_STATE_DATA,
+        data
+    }
+}
 export function requestTrendData(source) {
 	return {
         type: REQUEST_TREND_DATA,
@@ -98,6 +114,18 @@ export function receiveKpiTotalData(data) {
     }
 }
 /*===== FILTER ACTIONS ========*/
+export function setStateFilter(state) {
+    return {
+        type: SET_STATE_FILTER,
+        state
+    }
+}
+export function setCityFilter(city) {
+    return {
+        type: SET_CITY_FILTER,
+        city
+    }
+}
 export function setCategoriesFilter(cat) {
     return {
         type: SET_CATEGORIES_FILTER,

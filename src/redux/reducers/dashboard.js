@@ -6,17 +6,6 @@ const initialState = {
   name:'',
   tableFilter:'All', //This will have to be moved to sagas
   widgets:[
-     { id: 0, 
-          name: '', 
-          type:'MENU', 
-          drow: 1, dcol: 1, dsizex: 18, dsizey: 1, 
-          width: 1250, height:60, 
-          data:{
-              querydata: false,
-              options: {delete:false, zoom:false, config: false},
-              optconfig: {}
-          } 
-      },   
       { id: 1, 
           name: 'CITIES - VENUES', 
           type:'TREEMAPEVENT', 

@@ -1,25 +1,36 @@
 import * as actions from '../actions';
 
 const initialState = {
-    trendData: {
-        isFetching: false
-    },
-    tmapEventData: {
-        isFetching: false
-    },
-    pivotData: {
-        isFetching: false
-    },
-    kpiTotalData: {
-        isFetching: false
-    },
-    kpiData: {
-        isFetching: false
-    },
+    stateData:      { isFetching: false },
+    trendData:      { isFetching: false },
+    tmapEventData:  { isFetching: false },
+    pivotData:      { isFetching: false },
+    kpiTotalData:   { isFetching: false },
+    kpiData:        { isFetching: false },
 }
 
 const data = (state = initialState, action) => {
     switch (action.type) {
+
+        //=========== State Data ================
+        case actions.REQUEST_STATE_DATA:
+            var data = state.stateData.data;
+            return Object.assign({}, state, { 
+                stateData: {
+                    source: action.source,
+                    isFetching: true,
+                    data: data
+                }
+            });
+
+        case actions.RECEIVE_STATE_DATA:
+            return Object.assign({}, state, {
+                stateData: {
+                    source: state.stateData.source,
+                    isFetching: false,
+                    data: action.data
+                }
+            });
 
         //=========== Trend Data ================
         case actions.REQUEST_TREND_DATA:
@@ -99,26 +110,6 @@ const data = (state = initialState, action) => {
                     data: action.data
                 }
             });
-
-        //=========== Kpi Data============
-        case actions.REQUEST_KPI_DATA:
-            return Object.assign({}, state, { 
-                kpiData: {
-                    source: action.source,
-                    isFetching: true,
-                    data: action.data
-                }
-            });
-        case actions.RECEIVE_KPI_DATA:
-            return Object.assign({}, state, {
-                kpiData: {
-                    source: state.kpiData.source,
-                    isFetching: false,
-                    data: action.data
-                }
-            });
-
-
 
         default:
             return state

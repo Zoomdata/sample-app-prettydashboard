@@ -5,10 +5,11 @@ import * as trendData     from '../config/queries/TicketSales/trendData';
 import * as tmapEventData from '../config/queries/TicketSales/tmapEventData';
 import * as pivotData     from '../config/queries/TicketSales/pivotData';
 import * as kpiTotalData       from '../config/queries/TicketSales/kpiTotalData';
+import * as stateData       from '../config/queries/TicketSales/stateData';
 import { createClient }   from '../config';
 
 let queryData = [];
-let trendQueryRunning, pivotQueryRunning, tMapEventQueryRunning, kpiTotalQueryRunning
+let stateQueryRunning, trendQueryRunning, pivotQueryRunning, tMapEventQueryRunning, kpiTotalQueryRunning
 
 function fetchDataApi(thread, group) {
     var queryGroup = group;
@@ -18,7 +19,9 @@ function fetchDataApi(thread, group) {
             resolve(queryData);
         });
         thread.on('thread:notDirtyData', function() {
-            if (queryGroup === 'trend') {
+            if (queryGroup === 'state') {
+                stateQueryRunning = false;
+            } else if (queryGroup === 'trend') {
                 trendQueryRunning = false;
             } else if (queryGroup === 'treeMapEvent') {
                 tMapEventQueryRunning = false;
@@ -79,35 +82,42 @@ var makeMultiSelectFilter = function(path) {
 }
 
 var categoryFilter = makeMultiSelectFilter('catname');
+var stateFilter = makeSingleFilter('state');
+var cityFilter = makeSingleFilter('city');
+
+function setFilters(getState, objDataQuery){
+        let state = getState();
+        let categories = [];
+        state.chartFilters.categories.map(function(c) {
+            if(c.checked){categories.push(c.val)}
+        });
+        let userstate = state.chartFilters.userstate;
+        let usercity = state.chartFilters.usercity;
+        var filters = categoryFilter(categories);
+        if(userstate != 0){
+            filters = filters.concat(stateFilter(userstate));
+        }
+        if(usercity != 0){
+            filters = filters.concat(cityFilter(usercity));
+        }
+        objDataQuery.filters.remove('catname');
+        objDataQuery.filters.remove('state');
+        objDataQuery.filters.remove('city');
+        objDataQuery.filters.add(filters);
+}
+
 
 function* changeKpiQuery(getState) {
     while(true) {
         yield take(actions.CHANGE_KPI_FILTER);
-        var state = getState();
-        var categories = []
-        state.chartFilters.categories.map(function(c) {
-            if(c.checked){categories.push(c.val)}
-        });
-        var filters = categoryFilter(categories);
-        KpiTotalDataQuery.filters.remove('catname');
-        KpiTotalDataQuery.filters.add(filters);
+        setFilters(getState, KpiTotalDataQuery)
         yield fork(fetchKpiTotalData, KpiTotalDataThread);
     }
 }
 function* changeTrendQuery(getState) {
     while(true) {
         yield take(actions.CHANGE_TREND_FILTER);
-        var state = getState();
-        var categories = []
-        state.chartFilters.categories.map(function(c) {
-            if(c.checked){categories.push(c.val)}
-        });
-        var filters = categoryFilter(categories);
-        //var filteredQueryConfig = Object.assign({}, trendData.queryConfig, 
-            //{ filters: filters});
-
-        TrendDataQuery.filters.remove('catname');
-        TrendDataQuery.filters.add(filters);
+        setFilters(getState, TrendDataQuery);
         yield fork(fetchTrendData, TrendDataThread);
     }
 }
@@ -133,14 +143,7 @@ function* fetchTrendData(client, source, queryConfig) {
 function* changeTreeMapQuery(getState) {
     while(true) {
         yield take(actions.CHANGE_TREEMAP_FILTER);
-        var state = getState();
-        var categories = []
-        state.chartFilters.categories.map(function(c) {
-            if(c.checked){categories.push(c.val)}
-        });
-        var filters = categoryFilter(categories);
-        TMapEventDataQuery.filters.remove('catname');
-        TMapEventDataQuery.filters.add(filters);
+        setFilters(getState, TMapEventDataQuery);
         yield fork(fetchTreeMapEvent, TMapEventDataThread);
     }
 }
@@ -167,14 +170,7 @@ function* fetchTreeMapEvent(client, source, queryConfig) {
 function* changePivotQuery(getState) {
     while(true) {
         yield take(actions.CHANGE_PIVOT_FILTER);
-        var state = getState();
-        var categories = []
-        state.chartFilters.categories.map(function(c) {
-            if(c.checked){categories.push(c.val)}
-        });
-        var filters = categoryFilter(categories);
-        PivotDataQuery.filters.remove('catname');
-        PivotDataQuery.filters.add(filters);
+        setFilters(getState, PivotDataQuery);
         yield fork(fetchPivotData, PivotDataThread);
     }
 }
@@ -216,7 +212,26 @@ function* fetchKpiTotalData(client, source, queryConfig) {
     }
 }
 
+function* fetchStateData(client, source, queryConfig) {
+    stateQueryRunning = true;
+    if (!StateDataQuery) {
+        const query = yield call(getQuery, client, source, queryConfig);
+        StateDataQuery = query;
+    }
+    yield put(actions.requestStateData(stateData.source));
+    if(!StateDataThread){
+        const thread = yield call(getThread, client, StateDataQuery);
+        StateDataThread = thread;
+    }
+    while (stateQueryRunning) {
+        const data = yield call(fetchDataApi, StateDataThread, 'state');
+        if (stateQueryRunning) {
+            yield put(actions.receiveStateData(data));
+        }
+    }
+}
 function* startup(client) {
+    yield fork(fetchStateData, client, stateData.source, stateData.queryConfig);
     yield fork(fetchTrendData, client, trendData.source, trendData.queryConfig);
     yield fork(fetchTreeMapEvent, client, tmapEventData.source, tmapEventData.queryConfig);
     yield fork(fetchPivotData, client, pivotData.source, pivotData.queryConfig);
@@ -236,6 +251,8 @@ export default function* root(getState) {
 }
 
 export let ZoomdataClient = undefined;
+export let StateDataQuery = undefined;
+export let StateDataThread = undefined;
 export let TrendDataQuery = undefined;
 export let TrendDataThread = undefined;
 export let TMapEventDataQuery = undefined;
