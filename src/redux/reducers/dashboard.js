@@ -1,8 +1,12 @@
 //My reducers
 import { ADD_WIDGET, CLOSE_WIDGET, RESIZE_WIDGET, SET_CHART, FIRST_RENDER, SET_TABLE_FILTER } from '../actions';
+
+/*
+ * Object with the widget default specs when the dasboard renders for the first time
+ */
 const initialState = {
   initial: false,
-  zoom: '',
+  zoom: '', //Contains the type of the widget that is about to be maximized
   name:'',
   tableFilter:'All', //This will have to be moved to sagas
   widgets:[
@@ -19,7 +23,7 @@ const initialState = {
           }
       },
       { id: 2, 
-          name: 'TICKET SOLDS & TRANSACTIONS', 
+          name: 'TICKETS SOLD & TRANSACTIONS', 
           type:'TREND', 
           drow: 5, dcol: 10, 
           dsizex: 9, dsizey: 6, 
@@ -102,7 +106,7 @@ function getType(elems,id){
 
 const data = (state = initialState, action) => {
     switch (action.type) {
-        case SET_CHART:
+        case SET_CHART: //Chart that is about to be maximized
             var res = getType(state.widgets, action.id)
             let obj = Object.assign({}, state, {zoom: res[0], name:res[1]})
             return obj;
