@@ -1,11 +1,11 @@
 import { take, put, call, fork, select } from 'redux-saga/effects';
 import * as actions from '../redux/actions';
 //-----Ticket Sales-----
-import * as trendData     from '../config/queries/TicketSales/trendData';
-import * as tmapEventData from '../config/queries/TicketSales/tmapEventData';
-import * as pivotData     from '../config/queries/TicketSales/pivotData';
-import * as kpiTotalData       from '../config/queries/TicketSales/kpiTotalData';
-import * as stateData       from '../config/queries/TicketSales/stateData';
+import * as trendData     from '../config/queries/trendData';
+import * as tmapEventData from '../config/queries/tmapEventData';
+import * as pivotData     from '../config/queries/pivotData';
+import * as kpiTotalData  from '../config/queries/kpiTotalData';
+import * as stateData     from '../config/queries/stateData';
 import { createClient }   from '../config';
 
 var currentLocation = '';
@@ -116,8 +116,8 @@ var makeMultiSelectFilter = function(path) {
 }
 
 var categoryFilter = makeMultiSelectFilter('catname');
-var stateFilter = makeSingleFilter('state');
-var cityFilter = makeSingleFilter('city');
+var stateFilter = makeSingleFilter('venuestate');
+var cityFilter = makeSingleFilter('venuecity');
 
 function setFilters(getState, objDataQuery){
         let state = getState();
@@ -135,8 +135,8 @@ function setFilters(getState, objDataQuery){
             filters = filters.concat(cityFilter(usercity));
         }
         objDataQuery.filters.remove('catname');
-        objDataQuery.filters.remove('state');
-        objDataQuery.filters.remove('city');
+        objDataQuery.filters.remove('venuestate');
+        objDataQuery.filters.remove('venuecity');
         objDataQuery.filters.add(filters);
 }
 
