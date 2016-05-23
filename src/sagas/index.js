@@ -8,6 +8,7 @@ import * as kpiTotalData       from '../config/queries/TicketSales/kpiTotalData'
 import * as stateData       from '../config/queries/TicketSales/stateData';
 import { createClient }   from '../config';
 
+var currentLocation = '';
 let queryData = [];
 let stateQueryRunning, trendQueryRunning, pivotQueryRunning, tMapEventQueryRunning, kpiTotalQueryRunning
 
@@ -50,6 +51,32 @@ function getThread(client, query) {
     return client.run(query);
 }
 
+function parseURLParams() {
+    var queryStart = currentLocation.indexOf("?") + 1,
+        queryEnd   = currentLocation.indexOf("#") + 1 || currentLocation.length + 1,
+        query = currentLocation.slice(queryStart, queryEnd - 1),
+        pairs = query.replace(/\+/g, " ").split("&"),
+        parms = {}, i, n, v, nv;
+    if (query === currentLocation || query === "") { return; }
+    for (i = 0; i < pairs.length; i++) {
+        nv = pairs[i].split("=");
+        n = decodeURIComponent(nv[0]);
+        v = decodeURIComponent(nv[1]);
+        if (!parms.hasOwnProperty(n)) { parms[n] = [] }
+        parms[n].push(nv.length === 2 ? v : null);
+    }
+    return parms;
+}
+
+function modifyQuery(query){
+    let params = parseURLParams();
+    if(!params){ return query; }
+    query.time = {}
+    if(params.timeField){ query.time.timeField = params.timeField[0] }
+    if(params.from){ query.time.from = params.from[0].replace(' ','+') }
+    if(params.to){ query.time.to = params.to[0].replace(' ','+') }
+    return query
+}
 
 var makeSingleFilter = function(path) {
     return function(value) {
@@ -123,6 +150,7 @@ function* changeTrendQuery(getState) {
 }
 
 function* fetchTrendData(client, source, queryConfig) {
+    queryConfig = modifyQuery(queryConfig)
     trendQueryRunning = true;
     if (!TrendDataQuery) {
         const query = yield call(getQuery, client, source, queryConfig);
@@ -149,6 +177,7 @@ function* changeTreeMapQuery(getState) {
 }
 
 function* fetchTreeMapEvent(client, source, queryConfig) {
+    queryConfig = modifyQuery(queryConfig)
     tMapEventQueryRunning = true;
     if (!TMapEventDataQuery) {
         const query = yield call(getQuery, client, source, queryConfig);
@@ -175,6 +204,7 @@ function* changePivotQuery(getState) {
     }
 }
 function* fetchPivotData(client, source, queryConfig) {
+    queryConfig = modifyQuery(queryConfig)
     pivotQueryRunning = true;
     if (!PivotDataQuery) {
         const query = yield call(getQuery, client, source, queryConfig);
@@ -194,6 +224,7 @@ function* fetchPivotData(client, source, queryConfig) {
 }
 
 function* fetchKpiTotalData(client, source, queryConfig) {
+    queryConfig = modifyQuery(queryConfig)
     kpiTotalQueryRunning = true;
     if (!KpiTotalDataQuery) {
         const query = yield call(getQuery, client, source, queryConfig);
@@ -213,6 +244,7 @@ function* fetchKpiTotalData(client, source, queryConfig) {
 }
 
 function* fetchStateData(client, source, queryConfig) {
+    queryConfig = modifyQuery(queryConfig)
     stateQueryRunning = true;
     if (!StateDataQuery) {
         const query = yield call(getQuery, client, source, queryConfig);
@@ -239,6 +271,7 @@ function* startup(client) {
 }
 
 export default function* root(getState) {
+    currentLocation = parent.document.location.href;
     const client = yield call(createClient);
     ZoomdataClient = client;
     yield call(client.sources.update, {name: 'Ticket Sales'});
