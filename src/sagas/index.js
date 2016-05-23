@@ -51,23 +51,30 @@ function getThread(client, query) {
     return client.run(query);
 }
 
+/**
+ * Parses the currentLocation var wich contains the current URL in the browser in 
+ * order to extract the parameters used to filter (by time) the data on the dashboard
+ */
 function parseURLParams() {
     var queryStart = currentLocation.indexOf("?") + 1,
         queryEnd   = currentLocation.indexOf("#") + 1 || currentLocation.length + 1,
         query = currentLocation.slice(queryStart, queryEnd - 1),
         pairs = query.replace(/\+/g, " ").split("&"),
-        parms = {}, i, n, v, nv;
+        params = {}, i, n, v, nv;
     if (query === currentLocation || query === "") { return; }
     for (i = 0; i < pairs.length; i++) {
         nv = pairs[i].split("=");
         n = decodeURIComponent(nv[0]);
         v = decodeURIComponent(nv[1]);
-        if (!parms.hasOwnProperty(n)) { parms[n] = [] }
-        parms[n].push(nv.length === 2 ? v : null);
+        if (!params.hasOwnProperty(n)) { params[n] = [] }
+        params[n].push(nv.length === 2 ? v : null);
     }
-    return parms;
+    return params;
 }
 
+/**
+ * Modify the query for each fetch function adding the time parameter
+ */
 function modifyQuery(query){
     let params = parseURLParams();
     if(!params){ return query; }
@@ -150,7 +157,9 @@ function* changeTrendQuery(getState) {
 }
 
 function* fetchTrendData(client, source, queryConfig) {
-    queryConfig = modifyQuery(queryConfig)
+    if(queryConfig){
+        queryConfig = modifyQuery(queryConfig)
+    }
     trendQueryRunning = true;
     if (!TrendDataQuery) {
         const query = yield call(getQuery, client, source, queryConfig);
@@ -177,7 +186,9 @@ function* changeTreeMapQuery(getState) {
 }
 
 function* fetchTreeMapEvent(client, source, queryConfig) {
-    queryConfig = modifyQuery(queryConfig)
+    if(queryConfig){
+        queryConfig = modifyQuery(queryConfig);
+    }
     tMapEventQueryRunning = true;
     if (!TMapEventDataQuery) {
         const query = yield call(getQuery, client, source, queryConfig);
@@ -204,7 +215,9 @@ function* changePivotQuery(getState) {
     }
 }
 function* fetchPivotData(client, source, queryConfig) {
-    queryConfig = modifyQuery(queryConfig)
+    if(queryConfig){
+        queryConfig = modifyQuery(queryConfig);
+    }
     pivotQueryRunning = true;
     if (!PivotDataQuery) {
         const query = yield call(getQuery, client, source, queryConfig);
@@ -224,7 +237,9 @@ function* fetchPivotData(client, source, queryConfig) {
 }
 
 function* fetchKpiTotalData(client, source, queryConfig) {
-    queryConfig = modifyQuery(queryConfig)
+    if(queryConfig){
+        queryConfig = modifyQuery(queryConfig);
+    }
     kpiTotalQueryRunning = true;
     if (!KpiTotalDataQuery) {
         const query = yield call(getQuery, client, source, queryConfig);
@@ -244,7 +259,9 @@ function* fetchKpiTotalData(client, source, queryConfig) {
 }
 
 function* fetchStateData(client, source, queryConfig) {
-    queryConfig = modifyQuery(queryConfig)
+    if(queryConfig){
+        queryConfig = modifyQuery(queryConfig);
+    }
     stateQueryRunning = true;
     if (!StateDataQuery) {
         const query = yield call(getQuery, client, source, queryConfig);
@@ -270,6 +287,9 @@ function* startup(client) {
     yield fork(fetchKpiTotalData, client, kpiTotalData.source, kpiTotalData.queryConfig);
 }
 
+/**
+ * Invokes the startup() method to perform the initial data requests.  
+ */
 export default function* root(getState) {
     currentLocation = parent.document.location.href;
     const client = yield call(createClient);
