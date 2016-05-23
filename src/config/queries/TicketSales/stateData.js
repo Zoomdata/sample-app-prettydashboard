@@ -5,18 +5,18 @@ export const queryConfig = {
     player: null,
     groups: [
       {
-        name: 'state',
+        name: 'venuestate',
         sort: {
             dir: 'asc',
-            name: 'state'
+            name: 'venuestate'
         },
         limit: 70
       },
       {
-        name: 'city',
+        name: 'venuecity',
         sort: {
             dir: 'asc',
-            name: 'city'
+            name: 'venuecity'
         },
         limit: 200
       },

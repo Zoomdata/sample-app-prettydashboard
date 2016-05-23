@@ -70,19 +70,19 @@ export default class Tree extends Component {
       let data = [];
       _(items).forEach(function(item){
           if(item.group[0] != null || item.group[0] != undefined){
-            let cityObj = _.find(data, function(o) { return o.name == item.group[0];});
+            let venueObj = _.find(data, function(o) { return o.name == item.group[0];});
             let value = (metric == 'count') ? item.current.count : item.current.metrics[metric][func]
-            if(cityObj === undefined){
+            if(venueObj === undefined){
                 data.push({
                     name: item.group[0],
                     value: value,
                     children:[{name: item.group[1], value: value}]
                 })
             }else{
-                    let pos = cityObj.children.length;
-                    _.set(cityObj, 'value.', cityObj.value + value);
-                    _.set(cityObj,['children',pos,'name'], item.group[1])
-                    _.set(cityObj,['children',pos,'value'], value)
+                    let pos = venueObj.children.length;
+                    _.set(venueObj, 'value.', venueObj.value + value);
+                    _.set(venueObj,['children',pos,'name'], item.group[1])
+                    _.set(venueObj,['children',pos,'value'], value)
                 }
           }})
         
@@ -105,7 +105,7 @@ export default class Tree extends Component {
             },
             series : [
                 {
-                    name:'Venue City',
+                    name:'Venue',
                     type:'treemap',
                     size: ['98%', '90%'], //[width, height]
                     center: ['50%', '47%'],//[x,y] 

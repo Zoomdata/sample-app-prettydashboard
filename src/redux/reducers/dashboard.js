@@ -11,7 +11,7 @@ const initialState = {
   tableFilter:'All', //This will have to be moved to sagas
   widgets:[
       { id: 1, 
-          name: 'CITIES - VENUES', 
+          name: 'VENUES - EVENTS', 
           type:'TREEMAPEVENT', 
           drow: 2, dcol: 1, 
           dsizex: 9, dsizey: 6, 

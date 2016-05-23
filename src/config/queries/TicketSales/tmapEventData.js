@@ -5,19 +5,19 @@ export const queryConfig = {
     player: null,
     groups: [
         {
-        name: 'venuecity',
-        limit: 100,
-        sort: {
-            dir: 'desc',
-            name: 'venuecity'
-          }
-      },
-        {
         name: 'venuename',
         limit: 100,
         sort: {
             dir: 'desc',
             name: 'venuename'
+          }
+      },
+        {
+        name: 'eventname',
+        limit: 100,
+        sort: {
+            dir: 'desc',
+            name: 'eventname'
           }
       }
     ],

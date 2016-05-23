@@ -21,19 +21,21 @@ const mapStateToProps = (state) => {
 class DashboardMenu extends React.Component{
 
     getUserData(ustate, data){
-        let cities = [{name:'Select City', code: 0}];
-        let zdStates = [{name:'Select State', code: 0}];
+        let cities = [{name:'Venue City', code: 0}];
+        let zdStates = [{name:'Venue State', code: 0}];
         let usedZdStates = []
         if(data){
           _(data).forEach(function(item){
               let s = item.group[0]
-              let stateName = (states[s] == undefined) ? s : states[s]
-              if(usedZdStates.indexOf(s) == -1){
-                  zdStates.push({code: s, name: stateName})
-                  usedZdStates.push(s)
-              }
-              if (item.group[0] == ustate) {
-                  cities.push({name: item.group[1], code: item.group[1]})
+              if(s !== null){
+                  let stateName = (states[s] == undefined) ? s : states[s]
+                  if(usedZdStates.indexOf(s) == -1){
+                      zdStates.push({code: s, name: stateName})
+                      usedZdStates.push(s)
+                  }
+                  if (item.group[0] == ustate) {
+                      cities.push({name: item.group[1], code: item.group[1]})
+                  }
               }
           })
         }
