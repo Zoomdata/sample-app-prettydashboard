@@ -4,9 +4,9 @@ import ZoomdataSDK from 'zoomdata-client';
 import { serverProd } from './zd-connection/production';
 import { serverDev } from './zd-connection/development';
 
-var production = false;
+var production = true;
 var server = production ? serverProd : serverDev;
-const {credentials, application, oauthOptions} = serverDev;
+const {credentials, application, oauthOptions} = server;
 
 const oauthFinish = () => {
     // isOauthRedirect :: String -> Bool
