@@ -18,3 +18,7 @@ npm start
 #In the browser:
 http://localhost:8090
 ```
+
+## Developer Notes
+
+Set the production flag to false on config/index.js while developing and testing.  This flag makes the app point to the ZD app dev server instead of the ZD production server. 
