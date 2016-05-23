@@ -6,18 +6,20 @@ export const queryConfig = {
     groups: [
         {
         name: 'venuename',
-        limit: 100,
+        limit: 50,
         sort: {
             dir: 'desc',
-            name: 'venuename'
+            name: 'pricepaid',
+            metricFunc: 'sum'
           }
       },
         {
         name: 'eventname',
-        limit: 100,
+        limit: 10,
         sort: {
             dir: 'desc',
-            name: 'eventname'
+            name: 'pricepaid',
+            metricFunc: 'sum'
           }
       }
     ],
