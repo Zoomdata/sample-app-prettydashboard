@@ -30,7 +30,6 @@ export default class Tree extends Component {
         }
         var newChartOptions = this.makeChartOptions(nextProps);
         this.chart.setOption(newChartOptions);
-        this.chart.on('CLICK', nextProps.onClick);
     }
 
     makeChartOptions(nextProps) {
@@ -50,7 +49,9 @@ export default class Tree extends Component {
           let count = 0
           _(params.data.children).forEach(function(child){
               if(count <= 6){
-                  children += '<li>'+child.name+': '+numeral(child.value).format(fmtPattern)+'</li>'
+                  let name = (child.name.length > 25 ) ? child.name.slice(0,24)+'...' : child.name;
+                  console.log(name);
+                  children += '<li>'+name+': '+numeral(child.value).format(fmtPattern)+'</li>'
               }
               count++;
           })
@@ -85,6 +86,13 @@ export default class Tree extends Component {
                     _.set(venueObj,['children',pos,'value'], value)
                 }
           }})
+        //Sort alphabetically by name
+        data = _.sortBy(data, function(o) { return o.name; });
+        for (let i = 0, len = data.length; i < len; i++) {
+            //Sort children alphabetically by name too
+            data[i].children = _.sortBy(data[i].children, function(o) { return o.name; });
+        }
+
         
         var width = this.props.width
         var height = this.props.height
@@ -154,21 +162,13 @@ export default class Tree extends Component {
                 this.createChart();
             }
             this.chart.resize()
-            this.updateChart(this.props);
-	}
-
-	shouldComponentUpdate(nextProps, nextState) {
-		return true;
+            //this.updateChart(this.props);
 	}
 
 	componentWillReceiveProps(nextProps) {
         this.setState({fetching: this.props.fetching})
-		this.updateChart(nextProps);
+		//this.updateChart(nextProps);
 	}
-
-    loadChart(){
-
-    }
 
 	render(){
         let styles={

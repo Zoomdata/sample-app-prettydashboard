@@ -14,30 +14,30 @@ const mapStateToProps = (state) => {
     }
 };
 
-const loadTreeMap = (tmap, echartobj, width, height, type, zoom, metric) => {
-  if (!tmap.data) {
-        return (<LoaderData />);
-  }
-  else if(tmap.data.length == 0){
-        return(<NoData height={height}/>) ;
-  }
-  else {
-    return (
-        <Tree 
-          items={tmap.data}
-          fetching={tmap.isFetching}
-          echartobj={echartobj}
-          type={type}
-          width={width}
-          metric={metric}
-          height={height}
-          zoom={zoom}
-        />
-    );
-  }
-}
-
 class TreeMapEvent extends React.Component{
+
+    loadTreeMap(tmap, echartobj, width, height, type, zoom, metric){
+      if (!tmap.data) {
+            return (<LoaderData />);
+      }
+      else if(tmap.data.length == 0){
+            return(<NoData height={height}/>) ;
+      }
+      else {
+        return (
+            <Tree 
+              items={tmap.data}
+              fetching={tmap.isFetching}
+              echartobj={echartobj}
+              type={type}
+              width={width}
+              metric={metric}
+              height={height}
+              zoom={zoom}
+            />
+        );
+      }
+    }
 
     render(){
         let height = this.props.height - 40;
@@ -50,7 +50,7 @@ class TreeMapEvent extends React.Component{
         return(
             //jsx code
             <div className="treemapevent">
-                    {loadTreeMap(this.props.tmap, 
+                    {this.loadTreeMap(this.props.tmap, 
                                this.props.echartobj,
                                width, 
                                height, 
