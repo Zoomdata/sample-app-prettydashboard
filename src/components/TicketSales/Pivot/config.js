@@ -2,10 +2,15 @@ import React, { Component } from 'react';
 import {AgGridReact} from 'ag-grid-react';
 import 'ag-grid-root/ag-grid.css';
 import 'ag-grid-root/theme-dark.css';
+import './style.css';
 var numeral = require('numeral');
 let pageSize = 100;;
 let allOfTheData;
 
+/**
+ * Pivot is a react component that renders a table visualization by using 
+ * AgGridReact. 
+ */
 export default class Pivot extends Component {
     constructor(state,context){
         super(state,context);
