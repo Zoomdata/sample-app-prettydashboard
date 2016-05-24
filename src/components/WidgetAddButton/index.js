@@ -3,6 +3,10 @@ import { addWidget } from '../../redux/actions'
 import { connect } from 'react-redux';
 import $ from 'jquery';
 
+/*
+This is a react component that use materialize.css which behaves as a floating
+button and allows to create new empty widgets. NOT USED AT THIS MOMENT on the dashboard.
+*/
 class AddWidgetButton extends React.Component{
 
   handleEmptyWidgetClick(){

@@ -1,5 +1,9 @@
 import * as actions from '../actions';
 
+/**
+ * Specifies how the application state changes in response of "data" actions.  These data
+ * actions are triggered from the Sagas implementation (request and receive data events).
+ */
 const initialState = {
     stateData:      { isFetching: false },
     trendData:      { isFetching: false },

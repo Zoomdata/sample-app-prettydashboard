@@ -1,4 +1,8 @@
 import React from 'react';
+/*
+ This component renders the loading spinner used the first time the dashboard renders.
+ It uses materialize.css
+*/
 class LoaderData extends React.Component{
 
     render() {

@@ -7,6 +7,9 @@ import { setCategoriesFilter,
          changeTreeMapFilter,
          changePivotFilter } from '../../redux/actions';
 
+/*
+ * Component that list the categories as checkboxes. 
+*/
 class CategoriesCheck extends React.Component{
 
   onChange(e){

@@ -5,15 +5,7 @@ import NoData from '../NoData';
 import LoaderData from '../LoaderData';
 import Tree  from './config';
 
-const mapStateToProps = (state) => {
-    return {
-        data: state.chartData.tmapEventData.data,
-        tmap: state.chartData.tmapEventData,
-        metric: state.chartFilters.mapmetric,
-        zoom: state.dashboard.zoom,
-    }
-};
-
+//This component wraps the <Tree /> chart component
 class TreeMapEvent extends React.Component{
 
     loadTreeMap(tmap, echartobj, width, height, type, zoom, metric){
@@ -61,5 +53,14 @@ class TreeMapEvent extends React.Component{
               )
     }
 }
+
+const mapStateToProps = (state) => {
+    return {
+        data: state.chartData.tmapEventData.data,
+        tmap: state.chartData.tmapEventData,
+        metric: state.chartFilters.mapmetric,
+        zoom: state.dashboard.zoom,
+    }
+};
 
 export default connect(mapStateToProps)(TreeMapEvent);

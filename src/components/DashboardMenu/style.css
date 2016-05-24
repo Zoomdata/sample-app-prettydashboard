@@ -1,17 +1,25 @@
 .dash-menu,.filters,.category,.select-filter{
     display: -webkit-flex;
+    display: flex;
     -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
     -webkit-justify-content: space-between;
+    justify-content: space-between;
 }
 
 .filters,.category{
+    flex-wrap: wrap;
     -webkit-flex-wrap: wrap;
     -webkit-justify-content: flex-start;
+    justify-content: flex-start;
     -webkit-align-items:center;
+    align-items:center;
 }
 .select-filter{
     -webkit-justify-content: center;
+    justify-content: center;
     -webkit-align-items:baseline;
+    align-items:baseline;
 }
 .category{
     color: #DDD;
@@ -33,6 +41,7 @@
 }
 .select{
     -webkit-appareance: none;
+    appareance:none;
     border-radius:15px;
     margin-left: 20px;
     margin-bottom:5%;

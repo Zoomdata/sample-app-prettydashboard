@@ -4,6 +4,16 @@ import MetricSelect  from '../TicketSales/TreeMap/metricSelect';
 import { closeWidget, setChart } from '../../redux/actions';
 import { connect } from 'react-redux';
 import { light } from '../../utils/light-theme';
+
+/*
+  The WidegetHeader component is used as a header for each widget. It renders
+  the different options (close, maximize and config) for each widget. Also contains
+  the title of the widget and the mini-loading spinner indicator when a filter action
+  is triggered and the data is being fetched.
+
+  Also renders the MetricSelect component specific for the TreeMap since this component
+  is the only one that contains the config option.
+*/
 class WidgetHeader extends React.Component{
 
     constructor(props, context){

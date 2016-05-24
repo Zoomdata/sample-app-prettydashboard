@@ -5,6 +5,13 @@ import LoaderData from '../LoaderData';
 import KPI from './config';
 import {connect} from 'react-redux';
 
+/*
+  VisibleKPI wraps a specific KPI indicator component based on the props. 
+  These indicator are:
+    Likes Jazz
+    Likes Rock
+    Likes Sport
+*/
 class VisibleKPI extends React.Component{
 
     loadKPIs(kpidata, type, width, height, categories ){

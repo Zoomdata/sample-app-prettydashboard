@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import $ from 'jquery';
 import './style.css';
 var numeral = require('numeral');
+
 class KPI extends React.Component{
 
     constructor(state,context){
@@ -15,6 +16,9 @@ class KPI extends React.Component{
         };
     }
 
+    /* Based on the type of the widget (which is found in the file redux/reducers/dashboard.js)
+       this function renders the respective KPI
+       */
     createKpi(props){
         let kpi = this.props.kpi;
         let totals = (!props.totals) ? [] : props.totals
@@ -49,6 +53,10 @@ class KPI extends React.Component{
         })
     }
 
+    /*
+     Performs the KPI animation. This function is executed once the component
+     is mounted since it uses jquery 
+    */
     startKpiAnimation(){
           let kpi = $(ReactDOM.findDOMNode(this)).find('.kpidata');
           let value = this.state.values.dec

@@ -1,6 +1,6 @@
 import { take, put, call, fork, select } from 'redux-saga/effects';
 import * as actions from '../redux/actions';
-//-----Ticket Sales-----
+//-----Ticket Sales queries-----
 import * as trendData     from '../config/queries/trendData';
 import * as tmapEventData from '../config/queries/tmapEventData';
 import * as pivotData     from '../config/queries/pivotData';
@@ -12,6 +12,10 @@ var currentLocation = '';
 let queryData = [];
 let stateQueryRunning, trendQueryRunning, pivotQueryRunning, tMapEventQueryRunning, kpiTotalQueryRunning
 
+/**
+ * fetchDataApi uses the Zoomdata SDK thread object to retrieve the query results.  The 
+ * thread:notDirtyData event occurs when data is fully sharpen (e.g. results are complete).
+ */
 function fetchDataApi(thread, group) {
     var queryGroup = group;
     let prom = new Promise( function(resolve, reject) {
@@ -52,8 +56,8 @@ function getThread(client, query) {
 }
 
 /**
- * Parses the currentLocation var wich contains the current URL in the browser in 
- * order to extract the parameters used to filter (by time) the data on the dashboard
+ * Parses the currentLocation variable wich contains the current URL of the browser in 
+ * order to extract the GET parameters used to filter (by time) the data on the dashboard
  */
 function parseURLParams() {
     var queryStart = currentLocation.indexOf("?") + 1,
@@ -73,7 +77,7 @@ function parseURLParams() {
 }
 
 /**
- * Modify the query for each fetch function adding the time parameter
+ * Modify the query for each fetch function by adding the time parameter
  */
 function modifyQuery(query){
     let params = parseURLParams();
@@ -119,6 +123,7 @@ var categoryFilter = makeMultiSelectFilter('catname');
 var stateFilter = makeSingleFilter('venuestate');
 var cityFilter = makeSingleFilter('venuecity');
 
+/* Set the global filters (category, venuestate and venuecity) to each query */
 function setFilters(getState, objDataQuery){
         let state = getState();
         let categories = [];

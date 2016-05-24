@@ -10,19 +10,21 @@ let STATE = 'STATE';
 let CITY = 'CITY';
 
 
-const mapStateToProps = (state) => {
-    return { 
-        data: state.chartData.stateData.data,
-        ustate: state.chartFilters.userstate,
-        city: state.chartFilters.usercity
-    }
-};
-
+/* This component is an special widget used as menu. It is single <li> tag
+ * and also render:
+ * <CategoriesCheck/> (Categories checkboxs filters)
+ * Two instances of <UserSelect>, one for the States and other for the Cities
+*/
 class DashboardMenu extends React.Component{
 
+    /*
+    This function creates the states array matching those obtained
+    from ZD and the stored on states.js (since no state name is provided, only ISO2). 
+    Also creates the arrays of cities specified for each obtained state
+    */
     getUserData(ustate, data){
-        let cities = [{name:'Venue City', code: 0}];
         let zdStates = [{name:'Venue State', code: 0}];
+        let cities = [{name:'Venue City', code: 0}];
         let usedZdStates = []
         if(data){
           _(data).forEach(function(item){
@@ -81,5 +83,13 @@ class DashboardMenu extends React.Component{
               )
     }
 }
+
+const mapStateToProps = (state) => {
+    return { 
+        data: state.chartData.stateData.data,
+        ustate: state.chartFilters.userstate,
+        city: state.chartFilters.usercity
+    }
+};
 
 export default connect(mapStateToProps)(DashboardMenu);

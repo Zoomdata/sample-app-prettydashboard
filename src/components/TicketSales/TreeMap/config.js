@@ -7,6 +7,12 @@ var moment = require('moment');
 var numeral = require('numeral');
 import { dark } from '../../../utils/dark-theme';
 
+/**
+ * Tree is a react component that renders a tree map visualization by integrating
+ * ECharts. This is the only component that uses Echart v2.7.7 which is not present
+ * as a npm module but as an included file in the index.html file on /dist. This was
+ * due to a unexpected visualization using Echart v3
+ */
 export default class Tree extends Component {
 
     constructor(state,context){
@@ -40,17 +46,16 @@ export default class Tree extends Component {
             items = this.props.items;
         }
 
-
+    //Prints the item tooltip using the first 6 childs (second data dimension) and the 
+    //total of the parent (first data dimension)
       var genericTooltipFormatter = function(metric) {
         return function(params) {
-          //let value = (metric == 'count') ? item.current.count : item.current.metrics[metric][func]
           let fmtPattern = (metric.value == 'count' || metric.value == 'qtysold') ? '0,000.' : '$0,000.'
           let children = '';
           let count = 0
           _(params.data.children).forEach(function(child){
               if(count <= 6){
                   let name = (child.name.length > 25 ) ? child.name.slice(0,24)+'...' : child.name;
-                  console.log(name);
                   children += '<li>'+name+': '+numeral(child.value).format(fmtPattern)+'</li>'
               }
               count++;
@@ -68,6 +73,9 @@ export default class Tree extends Component {
       var tooltipFormatter = genericTooltipFormatter(this.props.metric);
       let metric = this.props.metric.value;
       let func = this.props.metric.type;
+
+      //This creates the array of venue objects (first dimension) which is composed by the name, value 
+      //and an array of events (second dimension) which is used as the series data for the chart options
       let data = [];
       _(items).forEach(function(item){
           if(item.group[0] != null || item.group[0] != undefined){

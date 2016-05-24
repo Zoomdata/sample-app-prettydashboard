@@ -7,6 +7,11 @@ import { setTrendLoanGrade, setTrendLoanStatus, setTrendEmpLength, changeTrendFi
 import Trend  from './config';
 import _ from 'lodash/core';
 
+/**
+ * VisibleTrend is a wrapper for the Trend component.  It uses uses react-redux 
+ * to connect VisibleTrend with the application state (mapStateToProps) and with 
+ * mapDispatchToProps to allow it to dispatch Redux actions. 
+ */
 const mapDispatchToProps = (dispatch) => {
   return {
     onEmpLengthSelected: (event, href, eventKey) => {
