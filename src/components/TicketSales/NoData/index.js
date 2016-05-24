@@ -1,5 +1,9 @@
 import React from 'react';
 import './style.css';
+/*
+ This component renders a simple 'No data' information when there is no matching
+ data with the selected filters
+*/
 class NoData extends React.Component{
 
     render() {

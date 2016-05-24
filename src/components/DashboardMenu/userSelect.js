@@ -10,6 +10,10 @@ import { setStateFilter,
          changeTreeMapFilter,
          changePivotFilter } from '../../redux/actions';
 
+/*
+ * Component that renders a select for the states and for the cities based
+ * on the props from DashboardMenu
+*/
 class UserSelect extends React.Component{
 
     constructor(state,context){

@@ -5,39 +5,31 @@ import NoData from '../NoData';
 import LoaderData from '../LoaderData';
 import Tree  from './config';
 
-const mapStateToProps = (state) => {
-    return {
-        data: state.chartData.tmapEventData.data,
-        tmap: state.chartData.tmapEventData,
-        metric: state.chartFilters.mapmetric,
-        zoom: state.dashboard.zoom,
-    }
-};
-
-const loadTreeMap = (tmap, echartobj, width, height, type, zoom, metric) => {
-  if (!tmap.data) {
-        return (<LoaderData />);
-  }
-  else if(tmap.data.length == 0){
-        return(<NoData height={height}/>) ;
-  }
-  else {
-    return (
-        <Tree 
-          items={tmap.data}
-          fetching={tmap.isFetching}
-          echartobj={echartobj}
-          type={type}
-          width={width}
-          metric={metric}
-          height={height}
-          zoom={zoom}
-        />
-    );
-  }
-}
-
+//This component wraps the <Tree /> chart component
 class TreeMapEvent extends React.Component{
+
+    loadTreeMap(tmap, echartobj, width, height, type, zoom, metric){
+      if (!tmap.data) {
+            return (<LoaderData />);
+      }
+      else if(tmap.data.length == 0){
+            return(<NoData height={height}/>) ;
+      }
+      else {
+        return (
+            <Tree 
+              items={tmap.data}
+              fetching={tmap.isFetching}
+              echartobj={echartobj}
+              type={type}
+              width={width}
+              metric={metric}
+              height={height}
+              zoom={zoom}
+            />
+        );
+      }
+    }
 
     render(){
         let height = this.props.height - 40;
@@ -50,7 +42,7 @@ class TreeMapEvent extends React.Component{
         return(
             //jsx code
             <div className="treemapevent">
-                    {loadTreeMap(this.props.tmap, 
+                    {this.loadTreeMap(this.props.tmap, 
                                this.props.echartobj,
                                width, 
                                height, 
@@ -61,5 +53,14 @@ class TreeMapEvent extends React.Component{
               )
     }
 }
+
+const mapStateToProps = (state) => {
+    return {
+        data: state.chartData.tmapEventData.data,
+        tmap: state.chartData.tmapEventData,
+        metric: state.chartFilters.mapmetric,
+        zoom: state.dashboard.zoom,
+    }
+};
 
 export default connect(mapStateToProps)(TreeMapEvent);

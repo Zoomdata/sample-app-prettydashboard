@@ -1,31 +1,23 @@
+/*
+ * Initializes the modal (represented by the WidgetDetail react component) to 
+ * avoid the modal can be dismissed by the ESC key
+ */
 $(document).ready(function(){
     $('.modal-trigger').leanModal({
           dismissible: false
         });
 })
-var jwidget = function(data){
-      var widget = ' <li> \
-                <div class="card card-panel dark-grey">\
-                      <section class="card-header">\
-                            <a href="#modal1" class="tooltipped modal-trigger" data-position="bottom" data-delay="50" data-tooltip="Full Screen">\
-                                <i class="material-icons md-light">open_in_new</i></a>\
-                            <a href="#" class="del tooltipped" data-position="bottom" data-delay="50" data-tooltip="Delete">\
-                                <i class="material-icons md-light">close</i></a>\
-                      </section>\
-                        <div class="card-body">\
-                            <h3>+widget!</h3>\
-                            <p>A new dash generation</p>\
-                        </div>\
-                </div>\
-              </li>'
-    gridster.add_widget(widget, 2, 1);
-}
 
 var gridster;
 
+/*
+ * Initializes the gridster object which takes the <ul> element inside de div
+ * with class 'gridster' (Dashboard react component) and creates a gridster instance
+ * Check http://gridster.net/#documentation for more information.
+ */
 $(function(){
      gridster = $(".gridster ul").gridster({
-     widget_base_dimensions: [60, 60],
+     widget_base_dimensions: [60, 60], 
      widget_margins: [5, 5],
      autogrow_cols: true,
      draggable: {

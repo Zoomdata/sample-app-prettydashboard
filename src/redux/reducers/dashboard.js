@@ -1,8 +1,11 @@
 //My reducers
 import { ADD_WIDGET, CLOSE_WIDGET, RESIZE_WIDGET, SET_CHART, FIRST_RENDER, SET_TABLE_FILTER } from '../actions';
 
-/*
- * Object with the widget default specs when the dasboard renders for the first time
+
+/**
+ * Specifies how the application state changes mainly in response of user UI interaction. The
+ * user actions are triggered from the application React components. As initial state defines
+ * an object with the widget default specs when the dasboard renders for the first time
  */
 const initialState = {
   initial: false,
@@ -11,7 +14,7 @@ const initialState = {
   tableFilter:'All', //This will have to be moved to sagas
   widgets:[
       { id: 1, 
-          name: 'CITIES - VENUES', 
+          name: 'VENUES - EVENTS', 
           type:'TREEMAPEVENT', 
           drow: 2, dcol: 1, 
           dsizex: 9, dsizey: 6, 

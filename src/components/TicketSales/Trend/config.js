@@ -7,6 +7,10 @@ var moment = require('moment');
 var numeral = require('numeral');
 import { dark } from '../../../utils/dark-theme';
 
+/**
+ * Trend is a react component that renders a trend visualization by integrating
+ * ECharts. 
+ */
 export default class Trend extends Component {
 
 	createChart() {

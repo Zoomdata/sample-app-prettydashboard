@@ -9,6 +9,14 @@ import TreeMapEvent  from '../TicketSales/TreeMap';
 import VisibleKPI   from '../TicketSales/KPI';
 var echarts = require('echarts');
 
+/*
+This component act as a container to render the element depending
+on the props. It allows to render one of this:
+   Visible KPI
+   Tree Map
+   Pivot
+   Trend
+*/
 class WidgetBody extends React.Component{
 
     constructor(state, context){

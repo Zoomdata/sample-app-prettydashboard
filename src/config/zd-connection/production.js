@@ -9,7 +9,7 @@ export const serverProd = {
           path: '/zoomdata'
     },
     oauthOptions: {
-        client_id: "emQtZGF0YS1hcHAtMDIxNDY0MDA0ODEwMjMwMzU0ZTRiOWMtYWRhYy00Y2I1LWE1NzgtYWFmOTFmOWNiNzAw",
+        client_id: "emQtZGF0YS1hcHAtMDMxNDY0MDE4MzI0MDU0OWQzZjgxNzItM2VhMi00NjE5LTk3ZmQtMjhmZTRhMzIxNTRm",
         redirect_uri: "https://developer.zoomdata.com/sample/prettydashboard",
         auth_uri: "https://developer.zoomdata.com/zoomdata/oauth/authorize",
         scope: ['read']

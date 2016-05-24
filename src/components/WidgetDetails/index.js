@@ -4,6 +4,11 @@ import VisibleTrend  from '../TicketSales/Trend';
 import TreeMapEvent  from '../TicketSales/TreeMap';
 import VisiblePivot  from '../TicketSales/Pivot';
 
+/*
+WidgetDetails is a react component that renders an animated modal used to maximize the 
+selected chart. It behaves similar to the WidgetBody component since it renders one of
+this components: VisibleTrend, TreeMapEvent or VisiblePivot
+*/
 class WidgetDetails extends React.Component{
 
       closeFullScreen(){
@@ -11,21 +16,7 @@ class WidgetDetails extends React.Component{
       }
 
     getChart(id, type) {
-        if(type.indexOf('KPI') > -1)
-            { return (
-                    <div>
-                        <VisibleKPIs key={id} type={type}/>
-                    </div>
-                )
-            }
-        else if(type === 'DONUT')
-            { return (
-                    <div>
-                        <VisibleDonut key={id} type={type}/>
-                    </div>
-                )
-            }
-        else if(type === 'TREND') //Trend
+        if(type === 'TREND') //Trend
             { return ( 
                 <div>
                     <VisibleTrend key={id} type={type}/>

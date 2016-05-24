@@ -1,10 +1,20 @@
 import React from 'react';
 import './style.css';
-import Widgets from '../Widget';
+import Widget from '../Widget';
 import WidgetDetails from '../WidgetDetails';
 import DashboardMenu from '../DashboardMenu';
 import { connect } from 'react-redux';
 import $ from 'jquery';
+/*
+ * Entry point of the application. It creates the structure of the dashboard by adding
+ * the classname 'gridster' and making reference of this div in the dist/js/gridster-app.js
+ * file. Check this file for more information.
+ * This component renders three main components 
+ * <DashboardMenu/>
+ * The list of the Widgets (declared on redux/reducers/dashboard.js)
+ * <WidgetDetails/>
+ *
+ */
 class Dashboard extends React.Component{
 
     render(){
@@ -16,7 +26,7 @@ class Dashboard extends React.Component{
                                     <DashboardMenu/>
                                     {this.props.widgets.map((w, i) => {
                                         return (
-                                                <Widgets 
+                                                <Widget
                                                     key={i}
                                                     id={w.id}
                                                     drow={w.drow}

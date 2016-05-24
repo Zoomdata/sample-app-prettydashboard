@@ -7,6 +7,12 @@ var moment = require('moment');
 var numeral = require('numeral');
 import { dark } from '../../../utils/dark-theme';
 
+/**
+ * Tree is a react component that renders a tree map visualization by integrating
+ * ECharts. This is the only component that uses Echart v2.7.7 which is not present
+ * as a npm module but as an included file in the index.html file on /dist. This was
+ * due to a unexpected visualization using Echart v3
+ */
 export default class Tree extends Component {
 
     constructor(state,context){
@@ -30,7 +36,6 @@ export default class Tree extends Component {
         }
         var newChartOptions = this.makeChartOptions(nextProps);
         this.chart.setOption(newChartOptions);
-        this.chart.on('CLICK', nextProps.onClick);
     }
 
     makeChartOptions(nextProps) {
@@ -41,16 +46,17 @@ export default class Tree extends Component {
             items = this.props.items;
         }
 
-
+    //Prints the item tooltip using the first 6 childs (second data dimension) and the 
+    //total of the parent (first data dimension)
       var genericTooltipFormatter = function(metric) {
         return function(params) {
-          //let value = (metric == 'count') ? item.current.count : item.current.metrics[metric][func]
           let fmtPattern = (metric.value == 'count' || metric.value == 'qtysold') ? '0,000.' : '$0,000.'
           let children = '';
           let count = 0
           _(params.data.children).forEach(function(child){
               if(count <= 6){
-                  children += '<li>'+child.name+': '+numeral(child.value).format(fmtPattern)+'</li>'
+                  let name = (child.name.length > 25 ) ? child.name.slice(0,24)+'...' : child.name;
+                  children += '<li>'+name+': '+numeral(child.value).format(fmtPattern)+'</li>'
               }
               count++;
           })
@@ -67,24 +73,34 @@ export default class Tree extends Component {
       var tooltipFormatter = genericTooltipFormatter(this.props.metric);
       let metric = this.props.metric.value;
       let func = this.props.metric.type;
+
+      //This creates the array of venue objects (first dimension) which is composed by the name, value 
+      //and an array of events (second dimension) which is used as the series data for the chart options
       let data = [];
       _(items).forEach(function(item){
           if(item.group[0] != null || item.group[0] != undefined){
-            let cityObj = _.find(data, function(o) { return o.name == item.group[0];});
+            let venueObj = _.find(data, function(o) { return o.name == item.group[0];});
             let value = (metric == 'count') ? item.current.count : item.current.metrics[metric][func]
-            if(cityObj === undefined){
+            if(venueObj === undefined){
                 data.push({
                     name: item.group[0],
                     value: value,
                     children:[{name: item.group[1], value: value}]
                 })
             }else{
-                    let pos = cityObj.children.length;
-                    _.set(cityObj, 'value.', cityObj.value + value);
-                    _.set(cityObj,['children',pos,'name'], item.group[1])
-                    _.set(cityObj,['children',pos,'value'], value)
+                    let pos = venueObj.children.length;
+                    _.set(venueObj, 'value.', venueObj.value + value);
+                    _.set(venueObj,['children',pos,'name'], item.group[1])
+                    _.set(venueObj,['children',pos,'value'], value)
                 }
           }})
+        //Sort alphabetically by name
+        data = _.sortBy(data, function(o) { return o.name; });
+        for (let i = 0, len = data.length; i < len; i++) {
+            //Sort children alphabetically by name too
+            data[i].children = _.sortBy(data[i].children, function(o) { return o.name; });
+        }
+
         
         var width = this.props.width
         var height = this.props.height
@@ -105,7 +121,7 @@ export default class Tree extends Component {
             },
             series : [
                 {
-                    name:'Venue City',
+                    name:'Venue',
                     type:'treemap',
                     size: ['98%', '90%'], //[width, height]
                     center: ['50%', '47%'],//[x,y] 
@@ -154,21 +170,13 @@ export default class Tree extends Component {
                 this.createChart();
             }
             this.chart.resize()
-            this.updateChart(this.props);
-	}
-
-	shouldComponentUpdate(nextProps, nextState) {
-		return true;
+            //this.updateChart(this.props);
 	}
 
 	componentWillReceiveProps(nextProps) {
         this.setState({fetching: this.props.fetching})
-		this.updateChart(nextProps);
+		//this.updateChart(nextProps);
 	}
-
-    loadChart(){
-
-    }
 
 	render(){
         let styles={

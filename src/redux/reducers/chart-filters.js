@@ -1,3 +1,7 @@
+/**
+ * Specifies how the application state changes in response of user "filter" actions.  These
+ * user actions are triggered from the application React components.
+ */
 import { SET_CATEGORIES_FILTER, 
             SET_TREEMAP_FILTER, 
             SET_CITY_FILTER, 

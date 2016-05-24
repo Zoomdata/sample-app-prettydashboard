@@ -1,17 +1,21 @@
 import { take, put, call, fork, select } from 'redux-saga/effects';
 import * as actions from '../redux/actions';
-//-----Ticket Sales-----
-import * as trendData     from '../config/queries/TicketSales/trendData';
-import * as tmapEventData from '../config/queries/TicketSales/tmapEventData';
-import * as pivotData     from '../config/queries/TicketSales/pivotData';
-import * as kpiTotalData       from '../config/queries/TicketSales/kpiTotalData';
-import * as stateData       from '../config/queries/TicketSales/stateData';
+//-----Ticket Sales queries-----
+import * as trendData     from '../config/queries/trendData';
+import * as tmapEventData from '../config/queries/tmapEventData';
+import * as pivotData     from '../config/queries/pivotData';
+import * as kpiTotalData  from '../config/queries/kpiTotalData';
+import * as stateData     from '../config/queries/stateData';
 import { createClient }   from '../config';
 
 var currentLocation = '';
 let queryData = [];
 let stateQueryRunning, trendQueryRunning, pivotQueryRunning, tMapEventQueryRunning, kpiTotalQueryRunning
 
+/**
+ * fetchDataApi uses the Zoomdata SDK thread object to retrieve the query results.  The 
+ * thread:notDirtyData event occurs when data is fully sharpen (e.g. results are complete).
+ */
 function fetchDataApi(thread, group) {
     var queryGroup = group;
     let prom = new Promise( function(resolve, reject) {
@@ -51,23 +55,30 @@ function getThread(client, query) {
     return client.run(query);
 }
 
+/**
+ * Parses the currentLocation variable wich contains the current URL of the browser in 
+ * order to extract the GET parameters used to filter (by time) the data on the dashboard
+ */
 function parseURLParams() {
     var queryStart = currentLocation.indexOf("?") + 1,
         queryEnd   = currentLocation.indexOf("#") + 1 || currentLocation.length + 1,
         query = currentLocation.slice(queryStart, queryEnd - 1),
         pairs = query.replace(/\+/g, " ").split("&"),
-        parms = {}, i, n, v, nv;
+        params = {}, i, n, v, nv;
     if (query === currentLocation || query === "") { return; }
     for (i = 0; i < pairs.length; i++) {
         nv = pairs[i].split("=");
         n = decodeURIComponent(nv[0]);
         v = decodeURIComponent(nv[1]);
-        if (!parms.hasOwnProperty(n)) { parms[n] = [] }
-        parms[n].push(nv.length === 2 ? v : null);
+        if (!params.hasOwnProperty(n)) { params[n] = [] }
+        params[n].push(nv.length === 2 ? v : null);
     }
-    return parms;
+    return params;
 }
 
+/**
+ * Modify the query for each fetch function by adding the time parameter
+ */
 function modifyQuery(query){
     let params = parseURLParams();
     if(!params){ return query; }
@@ -109,9 +120,10 @@ var makeMultiSelectFilter = function(path) {
 }
 
 var categoryFilter = makeMultiSelectFilter('catname');
-var stateFilter = makeSingleFilter('state');
-var cityFilter = makeSingleFilter('city');
+var stateFilter = makeSingleFilter('venuestate');
+var cityFilter = makeSingleFilter('venuecity');
 
+/* Set the global filters (category, venuestate and venuecity) to each query */
 function setFilters(getState, objDataQuery){
         let state = getState();
         let categories = [];
@@ -128,8 +140,8 @@ function setFilters(getState, objDataQuery){
             filters = filters.concat(cityFilter(usercity));
         }
         objDataQuery.filters.remove('catname');
-        objDataQuery.filters.remove('state');
-        objDataQuery.filters.remove('city');
+        objDataQuery.filters.remove('venuestate');
+        objDataQuery.filters.remove('venuecity');
         objDataQuery.filters.add(filters);
 }
 
@@ -150,7 +162,9 @@ function* changeTrendQuery(getState) {
 }
 
 function* fetchTrendData(client, source, queryConfig) {
-    queryConfig = modifyQuery(queryConfig)
+    if(queryConfig){
+        queryConfig = modifyQuery(queryConfig)
+    }
     trendQueryRunning = true;
     if (!TrendDataQuery) {
         const query = yield call(getQuery, client, source, queryConfig);
@@ -177,7 +191,9 @@ function* changeTreeMapQuery(getState) {
 }
 
 function* fetchTreeMapEvent(client, source, queryConfig) {
-    queryConfig = modifyQuery(queryConfig)
+    if(queryConfig){
+        queryConfig = modifyQuery(queryConfig);
+    }
     tMapEventQueryRunning = true;
     if (!TMapEventDataQuery) {
         const query = yield call(getQuery, client, source, queryConfig);
@@ -204,7 +220,9 @@ function* changePivotQuery(getState) {
     }
 }
 function* fetchPivotData(client, source, queryConfig) {
-    queryConfig = modifyQuery(queryConfig)
+    if(queryConfig){
+        queryConfig = modifyQuery(queryConfig);
+    }
     pivotQueryRunning = true;
     if (!PivotDataQuery) {
         const query = yield call(getQuery, client, source, queryConfig);
@@ -224,7 +242,9 @@ function* fetchPivotData(client, source, queryConfig) {
 }
 
 function* fetchKpiTotalData(client, source, queryConfig) {
-    queryConfig = modifyQuery(queryConfig)
+    if(queryConfig){
+        queryConfig = modifyQuery(queryConfig);
+    }
     kpiTotalQueryRunning = true;
     if (!KpiTotalDataQuery) {
         const query = yield call(getQuery, client, source, queryConfig);
@@ -244,7 +264,9 @@ function* fetchKpiTotalData(client, source, queryConfig) {
 }
 
 function* fetchStateData(client, source, queryConfig) {
-    queryConfig = modifyQuery(queryConfig)
+    if(queryConfig){
+        queryConfig = modifyQuery(queryConfig);
+    }
     stateQueryRunning = true;
     if (!StateDataQuery) {
         const query = yield call(getQuery, client, source, queryConfig);
@@ -270,6 +292,9 @@ function* startup(client) {
     yield fork(fetchKpiTotalData, client, kpiTotalData.source, kpiTotalData.queryConfig);
 }
 
+/**
+ * Invokes the startup() method to perform the initial data requests.  
+ */
 export default function* root(getState) {
     currentLocation = parent.document.location.href;
     const client = yield call(createClient);

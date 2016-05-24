@@ -5,19 +5,21 @@ export const queryConfig = {
     player: null,
     groups: [
         {
-        name: 'venuecity',
-        limit: 100,
+        name: 'venuename',
+        limit: 50,
         sort: {
             dir: 'desc',
-            name: 'venuecity'
+            name: 'pricepaid',
+            metricFunc: 'sum'
           }
       },
         {
-        name: 'venuename',
-        limit: 100,
+        name: 'eventname',
+        limit: 10,
         sort: {
             dir: 'desc',
-            name: 'venuename'
+            name: 'pricepaid',
+            metricFunc: 'sum'
           }
       }
     ],

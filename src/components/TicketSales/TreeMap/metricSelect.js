@@ -10,6 +10,12 @@ let metrics = [
     { type:'sum', value:'commission',name:'Commission'}, 
     { type:'calc', value:'calc_avg_sales_price',name:'Avg Sales Price'}, 
     { type:'calc', value:'calc_avg_commission',name:'Avg Commission'} ]
+
+/*
+   MetricSelect renders a select element used as a metric filter for the 
+   TreeMap component. This component is used on the WidgetHeader component but
+   is declared here since is exclusively for the TreeMap.
+*/
 class MetricSelect extends React.Component{
 
     constructor(state,context){

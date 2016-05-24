@@ -5,7 +5,13 @@ import ReactDOM from 'react-dom';
 import $ from 'jquery';
 import echarts from 'echarts';
 import { resizeWidget } from '../../redux/actions';
-class Widgets extends React.Component{
+/*
+ * Widget renders each widget based on the specs (props) 
+ * declared on redux/reducers/dashboard.js. Also renders for each widget:
+ * WidgetHeader
+ * WidgetBody
+ */
+class Widget extends React.Component{
 
     handleDrag(elem){
          let grid = $('#gridcontainer')
@@ -19,6 +25,11 @@ class Widgets extends React.Component{
          }
     }
 
+    /*
+        Waits for the onclick event on the widget( fired on the resize handler 
+        in dist/js/gridster-app.js ) to calculate current size of the widget
+        and update it on the store.
+     */
      resizeWidget(elem, dispatch){
          let grid = $('#gridcontainer')
          let nw = $(elem).width();
@@ -35,6 +46,7 @@ class Widgets extends React.Component{
                 height: $(elem).height()
              }))
      }
+
 
       componentDidMount() {
         let elem = document.getElementById(this.props.type);
@@ -79,4 +91,4 @@ class Widgets extends React.Component{
     }
 }
 
-export default Widgets
+export default Widget
