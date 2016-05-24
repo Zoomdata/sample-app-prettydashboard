@@ -11,7 +11,7 @@ const {credentials, application, oauthOptions} = server;
 const oauthFinish = () => {
     // isOauthRedirect :: String -> Bool
     const isOauthRedirect = (hashString) => (
-        hashString.indexOf('#access_token') !== -1
+        hashString.indexOf('#access_token') !== -1 || hashString.indexOf('&access_token') !== -1
     );
 
     /* This function mutates location to remove the retrieved credentials */
