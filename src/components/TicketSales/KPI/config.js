@@ -94,7 +94,7 @@ class KPI extends React.Component{
         return (
                 <div className="kpi" style={{width:width, height:height}} >
                     <i className={this.state.iconclass} 
-                        style={{fontSize: 20 * width / 100 }}>
+                        style={{fontSize: 20 * width / 100, marginRight:'15%' }}>
                         {this.state.icon}
                     </i>
                     <div style={{marginTop:0, padding:0}}>

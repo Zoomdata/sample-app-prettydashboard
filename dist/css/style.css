@@ -130,48 +130,6 @@ nav{
   width: 100%;
 }
 
-/*-- Google Material Icons --*/
-@font-face {
-  font-family: 'Material Icons';
-  font-style: normal;
-  font-weight: 400;
-  src: url(./iconfont/MaterialIcons-Regular.eot); /* For IE6-8 */
-  src: local('Material Icons'),
-       local('MaterialIcons-Regular'),
-       url(./iconfont/MaterialIcons-Regular.woff2) format('woff2'),
-       url(./iconfont/MaterialIcons-Regular.woff) format('woff'),
-       url(./iconfont/MaterialIcons-Regular.ttf) format('truetype');
-}
-
-.material-icons{
-      font-size: 15px;  /* Preferred icon size */
-      font-weight: bold;
-      font-family: 'Material Icons';
-      font-style: normal;
-      display: inline-block;
-      line-height: 1;
-      text-transform: none;
-      letter-spacing: normal;
-      word-wrap: normal;
-      white-space: nowrap;
-      direction: ltr;
-
-    /* Support for all WebKit browsers. */
-    -webkit-font-smoothing: antialiased;
-    /* Support for Safari and Chrome. */
-    text-rendering: optimizeLegibility;
-
-    /* Support for Firefox. */
-    -moz-osx-font-smoothing: grayscale;
-
-    /* Support for IE. */
-    font-feature-settings: 'liga';
-  }
-.material-icons.md-dark { color: rgba(0, 0, 0, 0.54); }
-.material-icons.md-dark.md-inactive { color: rgba(0, 0, 0, 0.26); }
-.material-icons.md-light { color: rgba(255, 255, 255, 0.7); }
-.material-icons.md-light.md-inactive { color: rgba(255, 255, 255, 0.3); }
-
 
 .KPI{
     padding-left:30px;
