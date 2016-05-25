@@ -1,8 +1,12 @@
 # zd-data-app-03
 
-Try this application live at http://demos.zoomdata.com/zd-data-app-03. 
+Try this application live at https://developer.zoomdata.com/sample/prettydashboard. Use the following credentials:
+```
+user: zoomdata
+pass: zoomdata
+```
 
-This is an advanced dashboard example that uses the Zoomdata SDK v2.2 to query the Ticket Sales datasource hosted by a Zoomdata instance at pubsdk.zoomdata.com.
+This is an advanced dashboard example that uses the Zoomdata v2.2 SDK to query the Ticket Sales datasource hosted by a Zoomdata instance at pubsdk.zoomdata.com.
 
 ## Commands
 
