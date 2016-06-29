@@ -8,17 +8,17 @@ pass: zoomdata
 
 This is an advanced dashboard example that uses the Zoomdata v2.2 SDK to query the Ticket Sales datasource hosted by a Zoomdata instance at developer.zoomdata.com.
 
-## Commands
+##Commands
 
 `cd YOUR-INSTALLATION-FOLDER`
 
-#Install the dependencies
+1 Install the dependencies
 `npm install`
 
-#Start for development
+1 Start for development
 `npm start`
 
-#In the browser:
+1 In the browser:
 `http://localhost:8090`
 
 ## Developer Notes
