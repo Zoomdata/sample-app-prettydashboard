@@ -10,7 +10,7 @@ This is an advanced dashboard example that uses the Zoomdata v2.2 SDK to query t
 
 ##Commands
 
-`cd YOUR-INSTALLATION-FOLDER`
+1. `cd YOUR-INSTALLATION-FOLDER`
 
 1. Install the dependencies
 `npm install`
