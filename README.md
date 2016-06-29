@@ -12,13 +12,13 @@ This is an advanced dashboard example that uses the Zoomdata v2.2 SDK to query t
 
 `cd YOUR-INSTALLATION-FOLDER`
 
-1 Install the dependencies
+1. Install the dependencies
 `npm install`
 
-1 Start for development
+1. Start for development
 `npm start`
 
-1 In the browser:
+1. In the browser:
 `http://localhost:8090`
 
 ## Developer Notes
