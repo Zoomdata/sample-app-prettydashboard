@@ -6,22 +6,20 @@ user: zoomdata
 pass: zoomdata
 ```
 
-This is an advanced dashboard example that uses the Zoomdata v2.2 SDK to query the Ticket Sales datasource hosted by a Zoomdata instance at pubsdk.zoomdata.com.
+This is an advanced dashboard example that uses the Zoomdata v2.2 SDK to query the Ticket Sales datasource hosted by a Zoomdata instance at developer.zoomdata.com.
 
 ## Commands
 
-```
-cd zd-data-app-03
+`cd YOUR-INSTALLATION-FOLDER`
 
-# Install the dependencies
-npm install
+#Install the dependencies
+`npm install`
 
-# Start for development
-npm start
+#Start for development
+`npm start`
 
 #In the browser:
-http://localhost:8090
-```
+`http://localhost:8090`
 
 ## Developer Notes
 
