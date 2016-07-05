@@ -60,20 +60,24 @@ function getThread(client, query) {
  * order to extract the GET parameters used to filter (by time) the data on the dashboard
  */
 function parseURLParams() {
-    var queryStart = currentLocation.indexOf("?") + 1,
-        queryEnd   = currentLocation.indexOf("#") + 1 || currentLocation.length + 1,
-        query = currentLocation.slice(queryStart, queryEnd - 1),
-        pairs = query.replace(/\+/g, " ").split("&"),
-        params = {}, i, n, v, nv;
-    if (query === currentLocation || query === "") { return; }
-    for (i = 0; i < pairs.length; i++) {
-        nv = pairs[i].split("=");
-        n = decodeURIComponent(nv[0]);
-        v = decodeURIComponent(nv[1]);
-        if (!params.hasOwnProperty(n)) { params[n] = [] }
-        params[n].push(nv.length === 2 ? v : null);
+    if(currentLocation.indexOf('parentloc=') > -1){
+        let url = currentLocation.split('parentloc=');
+        var queryStart = url[1].indexOf("?") + 1,
+            queryEnd   = url[1].indexOf("#") + 1 || url[1].length + 1,
+            query = url[1].slice(queryStart, queryEnd - 1),
+            pairs = query.replace(/\+/g, " ").split("&"),
+            params = {}, i, n, v, nv;
+        if (query === url[1] || query === "") { return; }
+        for (i = 0; i < pairs.length; i++) {
+            nv = pairs[i].split("=");
+            n = decodeURIComponent(nv[0]);
+            v = decodeURIComponent(nv[1]);
+            if (!params.hasOwnProperty(n)) { params[n] = [] }
+            params[n].push(nv.length === 2 ? v : null);
+        }
+        return params;
     }
-    return params;
+    return false;
 }
 
 /**
@@ -182,6 +186,7 @@ function* fetchTrendData(client, source, queryConfig) {
         }
     }
 }
+
 function* changeTreeMapQuery(getState) {
     while(true) {
         yield take(actions.CHANGE_TREEMAP_FILTER);
@@ -296,7 +301,25 @@ function* startup(client) {
  * Invokes the startup() method to perform the initial data requests.  
  */
 export default function* root(getState) {
-    currentLocation = parent.document.location.href;
+    currentLocation = window.location.href;
+    //Web storage is used whenever the app is called from an iframe tag
+    //to keep GET values after oauth redirect
+    if (typeof(Storage) !== "undefined") {
+        if(localStorage.getItem('redirect') !== 'true'){
+            console.log('Setting redirect info');
+            localStorage.setItem('url', currentLocation);
+            localStorage.setItem('redirect', 'true');
+        }
+        else{
+            console.log('Getting redirect info');
+            localStorage.removeItem("redirect");
+            currentLocation = localStorage.getItem('url')
+        }
+    } else {
+        // Sorry! No Web Storage support..
+        console.error('Your browser does not support web storage');
+    }
+    console.log('Url location:',currentLocation);
     const client = yield call(createClient);
     ZoomdataClient = client;
     yield call(client.sources.update, {name: 'Ticket Sales'});
