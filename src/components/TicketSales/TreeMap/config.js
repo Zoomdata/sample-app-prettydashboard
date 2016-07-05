@@ -17,7 +17,10 @@ export default class Tree extends Component {
 
     constructor(state,context){
         super(state,context);
-        this.state = {fetching:false};
+        this.state = {
+                    fetching:false,
+                    metric: 'pricepaid'
+        };
     }
 
 	createChart() {
@@ -73,7 +76,6 @@ export default class Tree extends Component {
       var tooltipFormatter = genericTooltipFormatter(this.props.metric);
       let metric = this.props.metric.value;
       let func = this.props.metric.type;
-
       //This creates the array of venue objects (first dimension) which is composed by the name, value 
       //and an array of events (second dimension) which is used as the series data for the chart options
       let data = [];
@@ -169,13 +171,17 @@ export default class Tree extends Component {
                 this.chart.dispose();
                 this.createChart();
             }
+            if(this.props.metric.value != this.state.metric){
+                this.updateChart(this.props);
+            }
             this.chart.resize()
-            //this.updateChart(this.props);
 	}
 
 	componentWillReceiveProps(nextProps) {
-        this.setState({fetching: this.props.fetching})
-		//this.updateChart(nextProps);
+        this.setState({
+            fetching: this.props.fetching,
+            metric: this.props.metric.value
+        })
 	}
 
 	render(){
