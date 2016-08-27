@@ -7,7 +7,9 @@ export const queryConfig = {
       timeField: "saletime"
     },
     groups: [{
-        name: '$to_day(saletime)',
+        name: 'saletime',
+        type: 'TIME', 
+        func: 'DAY',
         limit: 1000,
         sort: {
             dir: 'asc',

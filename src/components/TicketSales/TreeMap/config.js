@@ -91,10 +91,10 @@ export default class Tree extends Component {
                 })
             }else{
                     let pos = venueObj.children.length;
-                    _.set(venueObj, 'value.', venueObj.value + value);
+                    _.set(venueObj, 'value', venueObj.value + value);
                     _.set(venueObj,['children',pos,'name'], item.group[1])
                     _.set(venueObj,['children',pos,'value'], value)
-                }
+            }
           }})
         //Sort alphabetically by name
         data = _.sortBy(data, function(o) { return o.name; });
@@ -103,7 +103,6 @@ export default class Tree extends Component {
             data[i].children = _.sortBy(data[i].children, function(o) { return o.name; });
         }
 
-        
         var width = this.props.width
         var height = this.props.height
         return {

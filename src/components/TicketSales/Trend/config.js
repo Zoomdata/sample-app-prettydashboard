@@ -42,8 +42,7 @@ export default class Trend extends Component {
         }
 
         var labels = items.map(function(item, index) {
-            var currentTime = moment(item.group[0],'YYYY-MM-DD HH:mm:ss');
-            return currentTime.format('MM/DD/YYYY');
+            return moment(item.group[0]).utcOffset(0).format('MM/DD/YYYY');
         }); 
 
         var qtySold = items.map(function(item) { //Loan amount

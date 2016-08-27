@@ -59,7 +59,7 @@ module.exports = {
       }
     ],
     noParse: [
-        /[\/\\]node_modules[\/\\]zoomdata-client[\/\\]distribute[\/\\]sdk[\/\\]2\.0[\/\\]zoomdata-client\.js$/
+        /[\/\\]node_modules[\/\\]zoomdata-client[\/\\]distribute[\/\\]sdk[\/\\]zoomdata-client\.js$/
     ]
   }
 }
