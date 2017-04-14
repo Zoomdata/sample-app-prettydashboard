@@ -30,7 +30,7 @@ class KPI extends React.Component{
             } 
             else if(kpi.indexOf('ROCK') > -1){
                 vals.nov =  item.current.metrics.calc_likes_rock_november.calc * 100;
-                vals.dec =  item.current.metrics.calc_likes_rock_sold_dicember.calc * 100;
+                vals.dec =  item.current.metrics.calc_likes_rock_december.calc * 100;
             }
             else if(kpi.indexOf('SPORTS') > -1){
                 vals.nov =  item.current.metrics.calc_likes_sports_november.calc * 100;

@@ -45,8 +45,8 @@ function fetchDataApi(thread, group) {
 }
 
 function getQuery(client, source, queryConfig) {
-    return client.createQuery(
-        {name: source},
+    return client.createQuery( 
+        { name: source }, 
         queryConfig
     )
 }
