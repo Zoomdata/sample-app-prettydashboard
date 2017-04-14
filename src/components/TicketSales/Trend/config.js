@@ -85,7 +85,7 @@ export default class Trend extends Component {
             },
                 dataZoom : {
                     show : true,
-                    realtime : false,
+                    realtime : true,
                     start : 0,
                     end : 100,
                 },
