@@ -21,7 +21,7 @@ export const queryConfig = {
     metrics: [
                 {
                     "func": "calc",
-                    "name": "calc_like_jazz_november"
+                    "name": "calc_likes_jazz_november"
                 },
                 {
                     "func": "calc",

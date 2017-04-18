@@ -1,8 +1,8 @@
 .kpi{
-    display:-webkit-flex;
-    -webkit-flex-direction:column;
-    -webkit-justify-content: center;
-    -webkit-align-items: center;
+    /*display:-webkit-flex;*/
+    /*-webkit-flex-direction:column;*/
+    /*-webkit-justify-content: center;*/
+    /*-webkit-align-items: center;*/
     color: #FFF;
     text-align:center;
 }

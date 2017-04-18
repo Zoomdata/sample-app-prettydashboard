@@ -2,13 +2,13 @@ import ZoomdataSDK from 'zoomdata-client';
 
 var applicationConfig = {
      secure: true,
-     host: 'prototype.zoomdata.com',
+     host: '52.72.193.58',
      port: 8443,
      path: '/zoomdata'
 }
 
 var credentialsConfig = {
-      key: "58f03673e4b054c21d0c5651"
+      key: "58f4f2dae4b08525c1801b07"
   };
 
 function initClient() {
