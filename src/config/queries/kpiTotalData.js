@@ -1,4 +1,4 @@
-export const source = 'Ticket Sales';
+export const source = 'Ticket Sales S3';
 export const queryConfig = {
     tz: 'EST',
     filters: [
