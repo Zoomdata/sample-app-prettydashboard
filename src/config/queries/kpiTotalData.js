@@ -1,4 +1,4 @@
-export const source = 'Ticket Sales';
+export const source = 'Ticket Sales S3';
 export const queryConfig = {
     tz: 'EST',
     filters: [
@@ -21,11 +21,11 @@ export const queryConfig = {
     metrics: [
                 {
                     "func": "calc",
-                    "name": "calc_likes_jazz_december"
+                    "name": "calc_likes_jazz_november"
                 },
                 {
                     "func": "calc",
-                    "name": "calc_like_jazz_november"
+                    "name": "calc_likes_jazz_december"
                 },
                 {
                     "func": "calc",
@@ -33,7 +33,7 @@ export const queryConfig = {
                 },
                 {
                     "func": "calc",
-                    "name": "calc_likes_rock_sold_dicember"
+                    "name": "calc_likes_rock_december"
                 },
                 {
                     "func": "calc",

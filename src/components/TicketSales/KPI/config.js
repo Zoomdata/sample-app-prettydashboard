@@ -25,12 +25,12 @@ class KPI extends React.Component{
         let vals = { nov: 0, dec: 0 }
         totals.map(function (item) {
             if(kpi.indexOf('JAZZ') > -1){
-                vals.nov =  item.current.metrics.calc_like_jazz_november.calc * 100;
+                vals.nov =  item.current.metrics.calc_likes_jazz_november.calc * 100;
                 vals.dec =  item.current.metrics.calc_likes_jazz_december.calc * 100;
             } 
             else if(kpi.indexOf('ROCK') > -1){
                 vals.nov =  item.current.metrics.calc_likes_rock_november.calc * 100;
-                vals.dec =  item.current.metrics.calc_likes_rock_sold_dicember.calc * 100;
+                vals.dec =  item.current.metrics.calc_likes_rock_december.calc * 100;
             }
             else if(kpi.indexOf('SPORTS') > -1){
                 vals.nov =  item.current.metrics.calc_likes_sports_november.calc * 100;

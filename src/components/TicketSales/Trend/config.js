@@ -73,7 +73,7 @@ export default class Trend extends Component {
         var multiSeriesTooltipMoneyFormatter = genericMultiSeriesTooltipFormatter(true);
         var multiSeriesTooltipQtyFormatter = genericMultiSeriesTooltipFormatter(false);
 
-        let zoomposition = this.props.height - 10
+        let zoomposition = this.props.height - 12
         var option1 = {
             color: ['#fdc086','#386cb0'], 
             tooltip: {
@@ -85,7 +85,7 @@ export default class Trend extends Component {
             },
                 dataZoom : {
                     show : true,
-                    realtime : false,
+                    realtime : true,
                     start : 0,
                     end : 100,
                 },
