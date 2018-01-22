@@ -181,9 +181,7 @@ function* fetchTrendData(client, source, queryConfig) {
     }
     while (trendQueryRunning) {
         const data = yield call(fetchDataApi, TrendDataThread, 'trend');
-        if (trendQueryRunning) {
-            yield put(actions.receiveTrendData(data));
-        }
+        yield put(actions.receiveTrendData(data));
     }
 }
 
@@ -211,9 +209,7 @@ function* fetchTreeMapEvent(client, source, queryConfig) {
     }
     while (tMapEventQueryRunning) {
         const data = yield call(fetchDataApi, TMapEventDataThread, 'treeMapEvent');
-        if (tMapEventQueryRunning) {
-            yield put(actions.receiveTMapEventData(data));
-        }
+        yield put(actions.receiveTMapEventData(data));
     }
 }
 
@@ -240,9 +236,7 @@ function* fetchPivotData(client, source, queryConfig) {
     }
     while (pivotQueryRunning) {
         const data = yield call(fetchDataApi, PivotDataThread, 'pivot');
-        if (pivotQueryRunning) {
-            yield put(actions.receivePivotData(data));
-        }
+        yield put(actions.receivePivotData(data));
     }
 }
 
@@ -262,9 +256,7 @@ function* fetchKpiTotalData(client, source, queryConfig) {
     }
     while (kpiTotalQueryRunning) {
         const data = yield call(fetchDataApi, KpiTotalDataThread, 'kpiTotal');
-        if (kpiTotalQueryRunning) {
-            yield put(actions.receiveKpiTotalData(data));
-        }
+        yield put(actions.receiveKpiTotalData(data));
     }
 }
 
@@ -322,7 +314,7 @@ export default function* root(getState) {
     console.log('Url location:',currentLocation);
     const client = yield call(createClient);
     ZoomdataClient = client;
-    yield call(client.sources.update, {name: 'Ticket Sales'});
+    yield call(client.sources.update, {name: 'Ticket Sales S3'});
     yield fork(startup, ZoomdataClient);
     //Filters change listeners
     yield fork(changeKpiQuery, getState);
