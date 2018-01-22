@@ -7,17 +7,56 @@
     <link rel='shortcut icon' href='images/favicon.ico' type='image/x-icon'/ > 
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <title>Ticket Sales</title>
-    <link rel="stylesheet" type="text/css" href="css/jquery.gridster.css">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+      <!--<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">-->
     <link rel="stylesheet" type="text/css" href="materialize/css/materialize.min.css">
-    <link rel="stylesheet" type="text/css" href="css/ag-darkdash.css">
-    <link rel="stylesheet" type="text/css" href="css/style.css">
     <script src="js/echarts/echarts-all.js"></script>
     <script type="text/javascript" charset="utf-8">
          var echartObj = echarts;
     </script>
   </head>
   <body>
+        <link rel="stylesheet" type="text/css" href="css/jquery.gridster.css">
+        <link rel="stylesheet" type="text/css" href="css/style.css">
+        <style type="text/css" media="screen">
+            /*-- Google Material Icons --*/
+            @font-face {
+              font-family: 'Material Icons';
+              font-style: normal;
+              font-weight: 400;
+              src: url(./iconfont/MaterialIcons-Regular.eot); /* For IE6-8 */
+              src: local('Material Icons'),
+                   local('MaterialIcons-Regular'),
+                   url(./css/iconfont/MaterialIcons-Regular.woff2) format('woff2'),
+                   url(./css/iconfont/MaterialIcons-Regular.woff) format('woff'),
+                   url(./css/iconfont/MaterialIcons-Regular.ttf) format('truetype');
+            }
+            .material-icons{
+                  font-size: 15px;  /* Preferred icon size */
+                  width: 15px;
+                  font-weight: bold;
+                  font-family: 'Material Icons';
+                  font-style: normal;
+                  display: inline-block;
+                  line-height: 1;
+                  text-transform: none;
+                  letter-spacing: normal;
+                  word-wrap: normal;
+                  white-space: nowrap;
+                  direction: ltr;
+                /* Support for all WebKit browsers. */
+                -webkit-font-smoothing: antialiased;
+                /* Support for Safari and Chrome. */
+                text-rendering: optimizeLegibility;
+                /* Support for Firefox. */
+                -moz-osx-font-smoothing: grayscale;
+                /* Support for IE. */
+                font-feature-settings: 'liga';
+              }
+            .material-icons.md-dark { color: rgba(0, 0, 0, 0.54); }
+            .material-icons.md-dark.md-inactive { color: rgba(0, 0, 0, 0.26); }
+            .material-icons.md-light { color: rgba(255, 255, 255, 0.7); }
+            .material-icons.md-light.md-inactive { color: rgba(255, 255, 255, 0.3); }
+        </style>
       <div id=app></div>
   </body>
     <script type="text/javascript" src="js/jquery.min.js"></script>

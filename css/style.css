@@ -130,15 +130,6 @@ nav{
   width: 100%;
 }
 
-/*-- Google Material Icons --*/
-.material-icons{
-      font-size: 15px;  /* Preferred icon size */
-      font-weight: bold }
-.material-icons.md-dark { color: rgba(0, 0, 0, 0.54); }
-.material-icons.md-dark.md-inactive { color: rgba(0, 0, 0, 0.26); }
-.material-icons.md-light { color: rgba(255, 255, 255, 0.7); }
-.material-icons.md-light.md-inactive { color: rgba(255, 255, 255, 0.3); }
-
 
 .KPI{
     padding-left:30px;
