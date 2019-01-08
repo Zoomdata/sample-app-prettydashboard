@@ -276,7 +276,7 @@ function* fetchStateData(client, source, queryConfig) {
     }
     while (stateQueryRunning) {
         const data = yield call(fetchDataApi, StateDataThread, 'state');
-        if (stateQueryRunning) {
+        if (!stateQueryRunning) {
             yield put(actions.receiveStateData(data));
         }
     }
