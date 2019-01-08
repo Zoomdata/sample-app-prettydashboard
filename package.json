@@ -10,7 +10,7 @@
     "build:client": "webpack --watch",
     "build:server": "webpack --config webpack.server.config.js --port 8090",
     "build": "npm run build:client && npm run build:server",
-    "deploy":"gh-pages -d dist"
+    "deploy": "gh-pages -d dist"
   },
   "repository": {
     "type": "git",
