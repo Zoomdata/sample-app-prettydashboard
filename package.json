@@ -39,7 +39,7 @@
     "redux": "^3.3.1",
     "redux-responsive": "^1.1.0",
     "redux-saga": "^0.9.4",
-    "zoomdata-client": "^2.6.3-4"
+    "zoomdata-client": "4.9.0-7.20190923224146.20325ad7.release"
   },
   "devDependencies": {
     "babel-core": "^6.7.2",
